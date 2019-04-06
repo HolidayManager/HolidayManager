@@ -1,0 +1,56 @@
+{
+  "_from": "@fullcalendar/resource-common@^4.0.2",
+  "_id": "@fullcalendar/resource-common@4.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-RvDXVi/FpfiO8XxOACBufAkDeJeXl86P8LDICiFcc0WrwnqVVbxI5fBOD0/HIn/7U00IddY5PZdKwikezs9elQ==",
+  "_location": "/@fullcalendar/resource-common",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@fullcalendar/resource-common@^4.0.2",
+    "name": "@fullcalendar/resource-common",
+    "escapedName": "@fullcalendar%2fresource-common",
+    "scope": "@fullcalendar",
+    "rawSpec": "^4.0.2",
+    "saveSpec": null,
+    "fetchSpec": "^4.0.2"
+  },
+  "_requiredBy": [
+    "/@fullcalendar/resource-timeline"
+  ],
+  "_resolved": "https://registry.npmjs.org/@fullcalendar/resource-common/-/resource-common-4.0.2.tgz",
+  "_shasum": "e3d6aced75e609c2eb772b70cfe1a485020a8528",
+  "_spec": "@fullcalendar/resource-common@^4.0.2",
+  "_where": "/home/cosmovelox/node_modules/@fullcalendar/resource-timeline",
+  "author": {
+    "name": "Adam Shaw",
+    "email": "arshaw@arshaw.com",
+    "url": "http://arshaw.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/fullcalendar/fullcalendar-scheduler/issues"
+  },
+  "bundleDependencies": false,
+  "copyright": "2019 Adam Shaw",
+  "deprecated": false,
+  "description": "Offers base support for resources. Required for all resource-related plugins.",
+  "docs": "https://fullcalendar.io/docs/scheduler",
+  "homepage": "https://fullcalendar.io/scheduler",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "main.js",
+  "name": "@fullcalendar/resource-common",
+  "peerDependencies": {
+    "@fullcalendar/core": "^4.0.2"
+  },
+  "releaseDate": "2019-04-03",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fullcalendar/fullcalendar-scheduler.git",
+    "homepage": "https://github.com/fullcalendar/fullcalendar-scheduler"
+  },
+  "title": "FullCalendar Resources Common Plugin",
+  "types": "main.d.ts",
+  "unpkg": "main.min.js",
+  "version": "4.0.2"
+}
