@@ -1,0 +1,4 @@
+Select * from holiday as h
+JOIN User as u ON holiday.idUser=User.idUser
+JOIN USER_AS_RESPONSABLE as ur on User.idUser=ur.idUser
+JOIN Responsable as r ON ur.idResponsable=r.idResponsable WHERE h.status='P' AND r.idUser=$idAdmin
