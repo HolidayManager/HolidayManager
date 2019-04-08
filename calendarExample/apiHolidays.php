@@ -17,7 +17,7 @@ $holidays = [
     ],
     [
         'resourceId'         =>     'b',
-        "title"      =>     'Seek',
+        "title"      =>     'Sick',
         'start'      =>     '2019-04-13T12:00:00+00:00',
         'end'        =>     '2019-04-18T12:00:00+00:00',
         'color'      =>     'orange'
