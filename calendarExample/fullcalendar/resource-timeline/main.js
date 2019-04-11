@@ -5,9 +5,10 @@ Docs & License: https://fullcalendar.io/scheduler
 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@fullcalendar/core'), require('@fullcalendar/timeline'), require('@fullcalendar/resource-common')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@fullcalendar/core', '@fullcalendar/timeline', '@fullcalendar/resource-common'], factory) :
-    (global = global || self, factory(global.FullCalendarResourceTimeline = {}, global.FullCalendar, global.FullCalendarTimeline, global.FullCalendarResourceCommon));
-}(this, function (exports, core, TimelinePlugin, ResourceCommonPlugin) { 'use strict';
+        typeof define === 'function' && define.amd ? define(['exports', '@fullcalendar/core', '@fullcalendar/timeline', '@fullcalendar/resource-common'], factory) :
+            (global = global || self, factory(global.FullCalendarResourceTimeline = {}, global.FullCalendar, global.FullCalendarTimeline, global.FullCalendarResourceCommon));
+}(this, function (exports, core, TimelinePlugin, ResourceCommonPlugin) {
+    'use strict';
 
     var TimelinePlugin__default = 'default' in TimelinePlugin ? TimelinePlugin['default'] : TimelinePlugin;
     var ResourceCommonPlugin__default = 'default' in ResourceCommonPlugin ? ResourceCommonPlugin['default'] : ResourceCommonPlugin;
@@ -28,20 +29,28 @@ Docs & License: https://fullcalendar.io/scheduler
     ***************************************************************************** */
     /* global Reflect, Promise */
 
-    var extendStatics = function(d, b) {
+    var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            ({__proto__: []} instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            }) ||
+            function (d, b) {
+                for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+            };
         return extendStatics(d, b);
     };
 
     function __extends(d, b) {
         extendStatics(d, b);
-        function __() { this.constructor = d; }
+
+        function __() {
+            this.constructor = d;
+        }
+
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    var __assign = function() {
+    var __assign = function () {
         __assign = Object.assign || function __assign(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
@@ -54,6 +63,7 @@ Docs & License: https://fullcalendar.io/scheduler
 
     var Row = /** @class */ (function (_super) {
         __extends(Row, _super);
+
         function Row(context, spreadsheetParent, spreadsheetNextSibling, timeAxisParent, timeAxisNextSibling) {
             var _this = _super.call(this, context) || this;
             _this.isSizeDirty = false;
@@ -61,6 +71,7 @@ Docs & License: https://fullcalendar.io/scheduler
             timeAxisParent.insertBefore(_this.timeAxisTr = document.createElement('tr'), timeAxisNextSibling);
             return _this;
         }
+
         Row.prototype.destroy = function () {
             core.removeElement(this.spreadsheetTr);
             core.removeElement(this.timeAxisTr);
@@ -77,23 +88,25 @@ Docs & License: https://fullcalendar.io/scheduler
         if (isExpanded) {
             classList.remove('fc-icon-plus-square');
             classList.add('fc-icon-minus-square');
-        }
-        else {
+        } else {
             classList.remove('fc-icon-minus-square');
             classList.add('fc-icon-plus-square');
         }
     }
+
     function clearExpanderIcon(el) {
         var classList = el.classList;
         classList.remove('fc-icon-minus-square');
         classList.remove('fc-icon-plus-square');
     }
+
     function updateTrResourceId(tr, resourceId) {
         tr.setAttribute('data-resource-id', resourceId);
     }
 
     var GroupRow = /** @class */ (function (_super) {
         __extends(GroupRow, _super);
+
         function GroupRow() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this._renderCells = core.memoizeRendering(_this.renderCells, _this.unrenderCells);
@@ -108,6 +121,7 @@ Docs & License: https://fullcalendar.io/scheduler
             };
             return _this;
         }
+
         GroupRow.prototype.render = function (props) {
             this._renderCells(props.group, props.spreadsheetColCnt);
             this._updateExpanderIcon(props.isExpanded);
@@ -120,15 +134,15 @@ Docs & License: https://fullcalendar.io/scheduler
         GroupRow.prototype.renderCells = function (group, spreadsheetColCnt) {
             var spreadsheetContentEl = this.renderSpreadsheetContent(group);
             this.spreadsheetTr.appendChild(core.createElement('td', {
-                className: 'fc-divider',
-                colSpan: spreadsheetColCnt // span across all columns
-            }, this.spreadsheetHeightEl = core.createElement('div', null, spreadsheetContentEl)) // needed by setTrInnerHeight
+                    className: 'fc-divider',
+                    colSpan: spreadsheetColCnt // span across all columns
+                }, this.spreadsheetHeightEl = core.createElement('div', null, spreadsheetContentEl)) // needed by setTrInnerHeight
             );
             this.expanderIconEl = spreadsheetContentEl.querySelector('.fc-icon');
             this.expanderIconEl.parentElement.addEventListener('click', this.onExpanderClick);
             // insert a single cell, with a single empty <div>.
             // there will be no content
-            this.timeAxisTr.appendChild(core.createElement('td', { className: 'fc-divider' }, this.timeAxisHeightEl = document.createElement('div')));
+            this.timeAxisTr.appendChild(core.createElement('td', {className: 'fc-divider'}, this.timeAxisHeightEl = document.createElement('div')));
         };
         GroupRow.prototype.unrenderCells = function () {
             this.spreadsheetTr.innerHTML = '';
@@ -175,6 +189,7 @@ Docs & License: https://fullcalendar.io/scheduler
 
     var SpreadsheetRow = /** @class */ (function (_super) {
         __extends(SpreadsheetRow, _super);
+
         function SpreadsheetRow(context, tr) {
             var _this = _super.call(this, context) || this;
             _this._renderRow = core.memoizeRendering(_this.renderRow, _this.unrenderRow);
@@ -191,6 +206,7 @@ Docs & License: https://fullcalendar.io/scheduler
             _this.tr = tr;
             return _this;
         }
+
         SpreadsheetRow.prototype.render = function (props) {
             this._renderRow(props.resource, props.rowSpans, props.depth, props.colSpecs);
             this._updateTrResourceId(this.tr, props.resource.id); // TODO: only use public ID?
@@ -209,15 +225,13 @@ Docs & License: https://fullcalendar.io/scheduler
                 var rowSpan = rowSpans[i];
                 if (rowSpan === 0) { // not responsible for group-based rows. VRowGroup is
                     continue;
-                }
-                else if (rowSpan == null) {
+                } else if (rowSpan == null) {
                     rowSpan = 1;
                 }
                 var text = void 0;
                 if (colSpec.field) {
                     text = resourceFields[colSpec.field];
-                }
-                else {
+                } else {
                     text = ResourceCommonPlugin.buildResourceTextFunc(colSpec.text, calendar)(resource);
                 }
                 var contentEl = core.htmlToElement('<div class="fc-cell-content">' +
@@ -267,8 +281,7 @@ Docs & License: https://fullcalendar.io/scheduler
                     expanderEl.addEventListener('click', this.onExpanderClick);
                     expanderEl.classList.add('fc-expander');
                     updateExpanderIcon(expanderIconEl, isExpanded);
-                }
-                else {
+                } else {
                     expanderEl.removeEventListener('click', this.onExpanderClick);
                     expanderEl.classList.remove('fc-expander');
                     clearExpanderIcon(expanderIconEl);
@@ -277,6 +290,7 @@ Docs & License: https://fullcalendar.io/scheduler
         };
         return SpreadsheetRow;
     }(core.Component));
+
     /*
     Renders the HTML responsible for the subrow expander area,
     as well as the space before it (used to align expanders of similar depths)
@@ -288,21 +302,23 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         html +=
             '<span class="fc-expander-space">' +
-                '<span class="fc-icon"></span>' +
-                '</span>';
+            '<span class="fc-icon"></span>' +
+            '</span>';
         return html;
     }
 
     var ResourceRow = /** @class */ (function (_super) {
         __extends(ResourceRow, _super);
+
         function ResourceRow(context, a, b, c, d, timeAxis) {
             var _this = _super.call(this, context, a, b, c, d) || this;
             _this._updateTrResourceId = core.memoizeRendering(updateTrResourceId);
             _this.spreadsheetRow = new SpreadsheetRow(context, _this.spreadsheetTr);
-            _this.timeAxisTr.appendChild(core.createElement('td', { className: _this.theme.getClass('widgetContent') }, _this.innerContainerEl = document.createElement('div')));
+            _this.timeAxisTr.appendChild(core.createElement('td', {className: _this.theme.getClass('widgetContent')}, _this.innerContainerEl = document.createElement('div')));
             _this.lane = new TimelinePlugin.TimelineLane(context, _this.innerContainerEl, _this.innerContainerEl, timeAxis);
             return _this;
         }
+
         ResourceRow.prototype.destroy = function () {
             this.spreadsheetRow.destroy();
             this.lane.destroy();
@@ -349,6 +365,7 @@ Docs & License: https://fullcalendar.io/scheduler
     var COL_MIN_WIDTH = 30;
     var SpreadsheetHeader = /** @class */ (function (_super) {
         __extends(SpreadsheetHeader, _super);
+
         function SpreadsheetHeader(context, parentEl) {
             var _this = _super.call(this, context) || this;
             _this.resizables = [];
@@ -359,6 +376,7 @@ Docs & License: https://fullcalendar.io/scheduler
             }));
             return _this;
         }
+
         SpreadsheetHeader.prototype.destroy = function () {
             for (var _i = 0, _a = this.resizables; _i < _a.length; _i++) {
                 var resizable = _a[_i];
@@ -375,14 +393,14 @@ Docs & License: https://fullcalendar.io/scheduler
             if (props.superHeaderText) {
                 html +=
                     '<tr class="fc-super">' +
-                        '<th class="' + theme.getClass('widgetHeader') + '" colspan="' + colSpecs.length + '">' +
-                        '<div class="fc-cell-content">' +
-                        '<span class="fc-cell-text">' +
-                        core.htmlEscape(props.superHeaderText) +
-                        '</span>' +
-                        '</div>' +
-                        '</th>' +
-                        '</tr>';
+                    '<th class="' + theme.getClass('widgetHeader') + '" colspan="' + colSpecs.length + '">' +
+                    '<div class="fc-cell-content">' +
+                    '<span class="fc-cell-text">' +
+                    core.htmlEscape(props.superHeaderText) +
+                    '</span>' +
+                    '</div>' +
+                    '</th>' +
+                    '</tr>';
             }
             html += '<tr>';
             for (var i = 0; i < colSpecs.length; i++) {
@@ -390,20 +408,20 @@ Docs & License: https://fullcalendar.io/scheduler
                 var isLast = i === (colSpecs.length - 1);
                 html +=
                     "<th class=\"" + theme.getClass('widgetHeader') + "\">" +
-                        '<div>' +
-                        '<div class="fc-cell-content">' +
-                        (o.isMain ?
-                            '<span class="fc-expander-space">' +
-                                '<span class="fc-icon"></span>' +
-                                '</span>' :
-                            '') +
-                        '<span class="fc-cell-text">' +
-                        core.htmlEscape(o.labelText || '') + // what about normalizing this value ahead of time?
-                        '</span>' +
-                        '</div>' +
-                        (!isLast ? '<div class="fc-col-resizer"></div>' : '') +
-                        '</div>' +
-                        '</th>';
+                    '<div>' +
+                    '<div class="fc-cell-content">' +
+                    (o.isMain ?
+                        '<span class="fc-expander-space">' +
+                        '<span class="fc-icon"></span>' +
+                        '</span>' :
+                        '') +
+                    '<span class="fc-cell-text">' +
+                    core.htmlEscape(o.labelText || '') + // what about normalizing this value ahead of time?
+                    '</span>' +
+                    '</div>' +
+                    (!isLast ? '<div class="fc-col-resizer"></div>' : '') +
+                    '</div>' +
+                    '</th>';
             }
             html += '</tr>';
             html += '</tbody>';
@@ -440,6 +458,7 @@ Docs & License: https://fullcalendar.io/scheduler
 
     var Spreadsheet = /** @class */ (function (_super) {
         __extends(Spreadsheet, _super);
+
         function Spreadsheet(context, headParentEl, bodyParentEl) {
             var _this = _super.call(this, context) || this;
             _this._renderCells = core.memoizeRendering(_this.renderCells, _this.unrenderCells);
@@ -451,14 +470,15 @@ Docs & License: https://fullcalendar.io/scheduler
                 _this.applyColWidths(colWidths);
             });
             bodyEnhancedScroller.canvas.contentEl
-                .appendChild(_this.bodyContainerEl = core.createElement('div', { className: 'fc-rows' }, '<table>' +
-                '<colgroup />' +
-                '<tbody />' +
-                '</table>'));
+                .appendChild(_this.bodyContainerEl = core.createElement('div', {className: 'fc-rows'}, '<table>' +
+                    '<colgroup />' +
+                    '<tbody />' +
+                    '</table>'));
             _this.bodyColGroup = _this.bodyContainerEl.querySelector('colgroup');
             _this.bodyTbody = _this.bodyContainerEl.querySelector('tbody');
             return _this;
         }
+
         Spreadsheet.prototype.destroy = function () {
             this.header.destroy();
             this.layout.destroy();
@@ -477,7 +497,9 @@ Docs & License: https://fullcalendar.io/scheduler
             });
             this.bodyColGroup.innerHTML = colTags;
             this.bodyColEls = Array.prototype.slice.call(this.bodyColGroup.querySelectorAll('col'));
-            this.applyColWidths(colSpecs.map(function (colSpec) { return colSpec.width; }));
+            this.applyColWidths(colSpecs.map(function (colSpec) {
+                return colSpec.width;
+            }));
         };
         Spreadsheet.prototype.unrenderCells = function () {
             this.bodyColGroup.innerHTML = '';
@@ -488,8 +510,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 var o = colSpecs_1[_i];
                 if (o.isMain) {
                     html += '<col class="fc-main-col"/>';
-                }
-                else {
+                } else {
                     html += '<col/>';
                 }
             }
@@ -506,8 +527,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 var styleVal;
                 if (typeof colWidth === 'number') {
                     styleVal = colWidth + 'px';
-                }
-                else if (typeof colWidth == null) {
+                } else if (typeof colWidth == null) {
                     styleVal = '';
                 }
                 headEl.style.width = bodyEl.style.width = styleVal;
@@ -519,6 +539,7 @@ Docs & License: https://fullcalendar.io/scheduler
     var MIN_RESOURCE_AREA_WIDTH = 30; // definitely bigger than scrollbars
     var ResourceTimelineView = /** @class */ (function (_super) {
         __extends(ResourceTimelineView, _super);
+
         function ResourceTimelineView(context, viewSpec, dateProfileGenerator, parentEl) {
             var _this = _super.call(this, context, viewSpec, dateProfileGenerator, parentEl) || this;
             _this.isStickyScrollDirty = false;
@@ -540,8 +561,7 @@ Docs & License: https://fullcalendar.io/scheduler
                     labelText: labelText || defaultLabelText,
                     text: ResourceCommonPlugin.buildResourceTextFunc(_this.opt('resourceText'), _this.calendar)
                 });
-            }
-            else {
+            } else {
                 superHeaderText = labelText;
             }
             var plainColSpecs = [];
@@ -553,8 +573,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 var colSpec = allColSpecs_1[_i];
                 if (colSpec.group) {
                     groupColSpecs.push(colSpec);
-                }
-                else {
+                } else {
                     plainColSpecs.push(colSpec);
                 }
             }
@@ -562,8 +581,7 @@ Docs & License: https://fullcalendar.io/scheduler
             if (groupColSpecs.length) {
                 groupSpecs = groupColSpecs;
                 isVGrouping = true;
-            }
-            else {
+            } else {
                 var hGroupField = _this.opt('resourceGroupField');
                 if (hGroupField) {
                     isHGrouping = true;
@@ -609,7 +627,7 @@ Docs & License: https://fullcalendar.io/scheduler
             _this.miscHeight = _this.el.offsetHeight;
             _this.spreadsheet = new Spreadsheet(_this.context, _this.resourceAreaHeadEl, _this.el.querySelector('tbody .fc-resource-area'));
             _this.timeAxis = new TimelinePlugin.TimeAxis(_this.context, _this.el.querySelector('thead .fc-time-area'), _this.el.querySelector('tbody .fc-time-area'));
-            var timeAxisRowContainer = core.createElement('div', { className: 'fc-rows' }, '<table><tbody /></table>');
+            var timeAxisRowContainer = core.createElement('div', {className: 'fc-rows'}, '<table><tbody /></table>');
             _this.timeAxis.layout.bodyScroller.enhancedScroll.canvas.contentEl.appendChild(timeAxisRowContainer);
             _this.timeAxisTbody = timeAxisRowContainer.querySelector('tbody');
             _this.lane = new TimelinePlugin.TimelineLane(_this.context, null, _this.timeAxis.layout.bodyScroller.enhancedScroll.canvas.bgEl, _this.timeAxis);
@@ -630,6 +648,7 @@ Docs & License: https://fullcalendar.io/scheduler
             });
             return _this;
         }
+
         ResourceTimelineView.prototype.renderSkeletonHtml = function () {
             var theme = this.theme;
             return "<table class=\"" + theme.getClass('tableGrid') + "\"> <thead class=\"fc-head\"> <tr> <td class=\"fc-resource-area " + theme.getClass('widgetHeader') + "\"></td> <td class=\"fc-divider fc-col-resizer " + theme.getClass('widgetHeader') + "\"></td> <td class=\"fc-time-area " + theme.getClass('widgetHeader') + "\"></td> </tr> </thead> <tbody class=\"fc-body\"> <tr> <td class=\"fc-resource-area " + theme.getClass('widgetContent') + "\"></td> <td class=\"fc-divider fc-col-resizer " + theme.getClass('widgetHeader') + "\"></td> <td class=\"fc-time-area " + theme.getClass('widgetContent') + "\"></td> </tr> </tbody> </table>";
@@ -642,19 +661,22 @@ Docs & License: https://fullcalendar.io/scheduler
                 dateProfile: props.dateProfile
             });
             // for all-resource bg events / selections / business-hours
-            this.lane.receiveProps(__assign({}, splitProps[''], { dateProfile: props.dateProfile, nextDayThreshold: this.nextDayThreshold, businessHours: hasResourceBusinessHours ? null : props.businessHours }));
+            this.lane.receiveProps(__assign({}, splitProps[''], {
+                dateProfile: props.dateProfile,
+                nextDayThreshold: this.nextDayThreshold,
+                businessHours: hasResourceBusinessHours ? null : props.businessHours
+            }));
             var newRowNodes = this.buildRowNodes(props.resourceStore, this.groupSpecs, this.orderSpecs, this.isVGrouping, props.resourceEntityExpansions, this.opt('resourcesInitiallyExpanded'));
             this._updateHasNesting(this.hasNesting(newRowNodes));
             this.diffRows(newRowNodes);
             this.renderRows(props.dateProfile, hasResourceBusinessHours ? props.businessHours : null, // CONFUSING, comment
-            splitProps);
+                splitProps);
         };
         ResourceTimelineView.prototype.updateHasNesting = function (isNesting) {
             var classList = this.el.classList;
             if (isNesting) {
                 classList.remove('fc-flat');
-            }
-            else {
+            } else {
                 classList.add('fc-flat');
             }
         };
@@ -674,8 +696,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 if (oldIFound != null && oldIFound >= oldI) {
                     this.removeRows(newI, oldIFound - oldI, oldNodes); // won't do anything if same index
                     oldI = oldIFound + 1;
-                }
-                else {
+                } else {
                     this.addRow(newI, newNode);
                 }
             }
@@ -707,8 +728,7 @@ Docs & License: https://fullcalendar.io/scheduler
         ResourceTimelineView.prototype.buildChildComponent = function (node, spreadsheetTbody, spreadsheetNext, timeAxisTbody, timeAxisNext) {
             if (node.group) {
                 return new GroupRow(this.context, spreadsheetTbody, spreadsheetNext, timeAxisTbody, timeAxisNext);
-            }
-            else if (node.resource) {
+            } else if (node.resource) {
                 return new ResourceRow(this.context, spreadsheetTbody, spreadsheetNext, timeAxisTbody, timeAxisNext, this.timeAxis);
             }
         };
@@ -724,10 +744,20 @@ Docs & License: https://fullcalendar.io/scheduler
                         isExpanded: rowNode.isExpanded,
                         group: rowNode.group
                     });
-                }
-                else {
+                } else {
                     var resource = rowNode.resource;
-                    rowComponent.receiveProps(__assign({}, splitProps[resource.id], { dateProfile: dateProfile, nextDayThreshold: this.nextDayThreshold, businessHours: resource.businessHours || fallbackBusinessHours, colSpecs: this.colSpecs, id: rowNode.id, rowSpans: rowNode.rowSpans, depth: rowNode.depth, isExpanded: rowNode.isExpanded, hasChildren: rowNode.hasChildren, resource: rowNode.resource }));
+                    rowComponent.receiveProps(__assign({}, splitProps[resource.id], {
+                        dateProfile: dateProfile,
+                        nextDayThreshold: this.nextDayThreshold,
+                        businessHours: resource.businessHours || fallbackBusinessHours,
+                        colSpecs: this.colSpecs,
+                        id: rowNode.id,
+                        rowSpans: rowNode.rowSpans,
+                        depth: rowNode.depth,
+                        isExpanded: rowNode.isExpanded,
+                        hasChildren: rowNode.hasChildren,
+                        resource: rowNode.resource
+                    }));
                 }
             }
         };
@@ -746,9 +776,9 @@ Docs & License: https://fullcalendar.io/scheduler
                 this.bodyScrollJoiner.update();
                 this.timeAxis.layout.scrollJoiner.update(); // hack
                 this.rowPositions = new core.PositionCache(this.timeAxis.slats.el, this.rowComponents.map(function (rowComponent) {
-                    return rowComponent.timeAxisTr;
-                }), false, // isHorizontal
-                true // isVertical
+                        return rowComponent.timeAxisTr;
+                    }), false, // isHorizontal
+                    true // isVertical
                 );
                 this.rowPositions.build();
                 this.isStickyScrollDirty = true;
@@ -969,6 +999,7 @@ Docs & License: https://fullcalendar.io/scheduler
         ResourceTimelineView.needsResourceData = true; // for ResourceViewProps
         return ResourceTimelineView;
     }(core.View));
+
     function hasResourceBusinessHours(resourceStore) {
         for (var resourceId in resourceStore) {
             var resource = resourceStore[resourceId];
@@ -978,13 +1009,13 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return false;
     }
+
     function hasNesting(nodes) {
         for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
             var node = nodes_1[_i];
             if (node.group) {
                 return true;
-            }
-            else if (node.resource) {
+            } else if (node.resource) {
                 if (node.hasChildren) {
                     return true;
                 }
@@ -1005,19 +1036,19 @@ Docs & License: https://fullcalendar.io/scheduler
             },
             resourceTimelineDay: {
                 type: 'resourceTimeline',
-                duration: { days: 1 }
+                duration: {days: 1}
             },
             resourceTimelineWeek: {
                 type: 'resourceTimeline',
-                duration: { weeks: 1 }
+                duration: {weeks: 1}
             },
             resourceTimelineMonth: {
                 type: 'resourceTimeline',
-                duration: { months: 1 }
+                duration: {months: 1}
             },
             resourceTimelineYear: {
                 type: 'resourceTimeline',
-                duration: { years: 1 }
+                duration: {years: 1}
             }
         }
     });
@@ -1025,6 +1056,6 @@ Docs & License: https://fullcalendar.io/scheduler
     exports.ResourceTimelineView = ResourceTimelineView;
     exports.default = main;
 
-    Object.defineProperty(exports, '__esModule', { value: true });
+    Object.defineProperty(exports, '__esModule', {value: true});
 
 }));

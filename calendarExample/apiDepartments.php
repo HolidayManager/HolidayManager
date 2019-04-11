@@ -3,17 +3,17 @@
  * the data comming from the database need to follow this syntax
  * for be display inside the calandar*/
 $departments = [
-    [ 'id' => 'a',
+    ['id' => 'a',
         'building' => 'Technical Department',
-        'title' => 'Impiccichè Giuseppe' ],
-    [ 
+        'title' => 'Impiccichè Giuseppe'],
+    [
         'id' => 'b',
-        'building'  => 'Technical Department',
-        'title'  => 'Casoni Adrien' ],
-    [ 
+        'building' => 'Technical Department',
+        'title' => 'Casoni Adrien'],
+    [
         'id' => 'c',
-        'building'  => 'Administration Department',
-        'title' => 'Tae Hee Kim' 
+        'building' => 'Administration Department',
+        'title' => 'Tae Hee Kim'
     ]
 ];
 

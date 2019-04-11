@@ -5,9 +5,10 @@ Docs & License: https://fullcalendar.io/scheduler
 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@fullcalendar/core')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@fullcalendar/core'], factory) :
-    (global = global || self, factory(global.FullCalendarResourceCommon = {}, global.FullCalendar));
-}(this, function (exports, core) { 'use strict';
+        typeof define === 'function' && define.amd ? define(['exports', '@fullcalendar/core'], factory) :
+            (global = global || self, factory(global.FullCalendarResourceCommon = {}, global.FullCalendar));
+}(this, function (exports, core) {
+    'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -25,20 +26,28 @@ Docs & License: https://fullcalendar.io/scheduler
     ***************************************************************************** */
     /* global Reflect, Promise */
 
-    var extendStatics = function(d, b) {
+    var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            ({__proto__: []} instanceof Array && function (d, b) {
+                d.__proto__ = b;
+            }) ||
+            function (d, b) {
+                for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+            };
         return extendStatics(d, b);
     };
 
     function __extends(d, b) {
         extendStatics(d, b);
-        function __() { this.constructor = d; }
+
+        function __() {
+            this.constructor = d;
+        }
+
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    var __assign = function() {
+    var __assign = function () {
         __assign = Object.assign || function __assign(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
@@ -53,6 +62,7 @@ Docs & License: https://fullcalendar.io/scheduler
         function ResourceDataAdder() {
             this.filterResources = core.memoize(filterResources);
         }
+
         ResourceDataAdder.prototype.transform = function (viewProps, viewSpec, calendarProps, view) {
             if (viewSpec.class.needsResourceData) {
                 return {
@@ -63,6 +73,7 @@ Docs & License: https://fullcalendar.io/scheduler
         };
         return ResourceDataAdder;
     }());
+
     function filterResources(resourceStore, doFilterResourcesWithEvents, eventStore, activeRange) {
         if (doFilterResourcesWithEvents) {
             var instancesInRange = filterEventInstancesInRange(eventStore.instances, activeRange);
@@ -71,16 +82,17 @@ Docs & License: https://fullcalendar.io/scheduler
             return core.filterHash(resourceStore, function (resource, resourceId) {
                 return hasEvents_1[resourceId];
             });
-        }
-        else {
+        } else {
             return resourceStore;
         }
     }
+
     function filterEventInstancesInRange(eventInstances, activeRange) {
         return core.filterHash(eventInstances, function (eventInstance) {
             return core.rangesIntersect(eventInstance.range, activeRange);
         });
     }
+
     function computeHasEvents(eventInstances, eventDefs) {
         var hasEvents = {};
         for (var instanceId in eventInstances) {
@@ -92,6 +104,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return hasEvents;
     }
+
     /*
     mark resources as having events if any of their ancestors have them
     NOTE: resourceStore might not have all the resources that hasEvents{} has keyed
@@ -104,20 +117,21 @@ Docs & License: https://fullcalendar.io/scheduler
                 resourceId = resource.parentId; // now functioning as the parentId
                 if (resourceId) {
                     res[resourceId] = true;
-                }
-                else {
+                } else {
                     break;
                 }
             }
         }
         return res;
     }
+
     // for when non-resource view should be given EventUi info (for event coloring/constraints based off of resource data)
     var ResourceEventConfigAdder = /** @class */ (function () {
         function ResourceEventConfigAdder() {
             this.buildResourceEventUis = core.memoizeOutput(buildResourceEventUis, core.isObjectsSimilar);
             this.injectResourceEventUis = core.memoize(injectResourceEventUis);
         }
+
         ResourceEventConfigAdder.prototype.transform = function (viewProps, viewSpec, calendarProps) {
             if (!viewSpec.class.needsResourceData) { // is a non-resource view?
                 return {
@@ -127,21 +141,23 @@ Docs & License: https://fullcalendar.io/scheduler
         };
         return ResourceEventConfigAdder;
     }());
+
     function buildResourceEventUis(resourceStore) {
         return core.mapHash(resourceStore, function (resource) {
             return resource.ui;
         });
     }
+
     function injectResourceEventUis(eventUiBases, eventDefs, resourceEventUis) {
         return core.mapHash(eventUiBases, function (eventUi, defId) {
             if (defId) { // not the '' key
                 return injectResourceEventUi(eventUi, eventDefs[defId], resourceEventUis);
-            }
-            else {
+            } else {
                 return eventUi;
             }
         });
     }
+
     function injectResourceEventUi(origEventUi, eventDef, resourceEventUis) {
         var parts = [];
         // first resource takes precedence, which fights with the ordering of combineEventUis, thus the unshifts
@@ -160,15 +176,19 @@ Docs & License: https://fullcalendar.io/scheduler
     };
     var defs = [];
     var uid = 0;
+
     function registerResourceSourceDef(def) {
         defs.push(def);
     }
+
     function getResourceSourceDef(id) {
         return defs[id];
     }
+
     function doesSourceIgnoreRange(source) {
         return Boolean(defs[source.sourceDefId].ignoreRange);
     }
+
     function parseResourceSource(input) {
         for (var i = defs.length - 1; i >= 0; i--) { // later-added plugins take precedence
             var def = defs[i];
@@ -181,6 +201,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return null;
     }
+
     function parseResourceSourceProps(input, meta, sourceDefId) {
         var props = core.refineProps(input, RESOURCE_SOURCE_PROPS);
         props.sourceId = String(uid++);
@@ -194,7 +215,7 @@ Docs & License: https://fullcalendar.io/scheduler
         return props;
     }
 
-    function reduceResourceSource (source, action, dateProfile, calendar) {
+    function reduceResourceSource(source, action, dateProfile, calendar) {
         switch (action.type) {
             case 'INIT':
                 return createSource(calendar.opt('resources'), calendar);
@@ -214,7 +235,9 @@ Docs & License: https://fullcalendar.io/scheduler
                 return source;
         }
     }
+
     var uid$1 = 0;
+
     function createSource(input, calendar, forceFetch) {
         if (input) {
             var source = parseResourceSource(input);
@@ -225,16 +248,17 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return null;
     }
+
     function handleRange(source, activeRange, calendar) {
         if (calendar.opt('refetchResourcesOnNavigate') &&
             !doesSourceIgnoreRange(source) &&
             (!source.fetchRange || !core.rangesEqual(source.fetchRange, activeRange))) {
             return fetchSource(source, activeRange, calendar);
-        }
-        else {
+        } else {
             return source;
         }
     }
+
     function fetchSource(source, fetchRange, calendar) {
         var sourceDef = getResourceSourceDef(source.sourceDefId);
         var fetchId = String(uid$1++);
@@ -260,11 +284,12 @@ Docs & License: https://fullcalendar.io/scheduler
                 error: error
             });
         });
-        return __assign({}, source, { isFetching: true, latestFetchId: fetchId });
+        return __assign({}, source, {isFetching: true, latestFetchId: fetchId});
     }
+
     function receiveResponse(source, fetchId, fetchRange) {
         if (fetchId === source.latestFetchId) {
-            return __assign({}, source, { isFetching: false, fetchRange: fetchRange });
+            return __assign({}, source, {isFetching: false, fetchRange: fetchRange});
         }
         return source;
     }
@@ -278,11 +303,14 @@ Docs & License: https://fullcalendar.io/scheduler
     };
     var PRIVATE_ID_PREFIX = '_fc:';
     var uid$2 = 0;
+
     /*
     needs a full store so that it can populate children too
     */
     function parseResource(input, parentId, store, calendar) {
-        if (parentId === void 0) { parentId = ''; }
+        if (parentId === void 0) {
+            parentId = '';
+        }
         var leftovers0 = {};
         var props = core.refineProps(input, RESOURCE_PROPS, {}, leftovers0);
         var leftovers1 = {};
@@ -312,6 +340,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return props;
     }
+
     /*
     TODO: use this in more places
     */
@@ -322,7 +351,7 @@ Docs & License: https://fullcalendar.io/scheduler
         return id;
     }
 
-    function reduceResourceStore (store, action, source, calendar) {
+    function reduceResourceStore(store, action, source, calendar) {
         switch (action.type) {
             case 'INIT':
                 return {};
@@ -343,6 +372,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 return store;
         }
     }
+
     function receiveRawResources(existingStore, inputs, fetchId, source, calendar) {
         if (source.latestFetchId === fetchId) {
             var nextStore = {};
@@ -351,34 +381,35 @@ Docs & License: https://fullcalendar.io/scheduler
                 parseResource(input, '', nextStore, calendar);
             }
             return nextStore;
-        }
-        else {
+        } else {
             return existingStore;
         }
     }
+
     function addResource(existingStore, additions) {
         // TODO: warn about duplicate IDs
         return __assign({}, existingStore, additions);
     }
+
     function removeResource(existingStore, resourceId) {
         var newStore = __assign({}, existingStore);
         delete newStore[resourceId];
         // promote children
         for (var childResourceId in newStore) { // a child, *maybe* but probably not
             if (newStore[childResourceId].parentId === resourceId) {
-                newStore[childResourceId] = __assign({}, newStore[childResourceId], { parentId: '' });
+                newStore[childResourceId] = __assign({}, newStore[childResourceId], {parentId: ''});
             }
         }
         return newStore;
     }
+
     function setResourceProp(existingStore, resourceId, name, value) {
         var _a, _b;
         var existingResource = existingStore[resourceId];
         // TODO: sanitization
         if (existingResource) {
             return __assign({}, existingStore, (_a = {}, _a[resourceId] = __assign({}, existingResource, (_b = {}, _b[name] = value, _b)), _a));
-        }
-        else {
+        } else {
             return existingStore;
         }
     }
@@ -395,13 +426,15 @@ Docs & License: https://fullcalendar.io/scheduler
         }
     }
 
-    function resourcesReducers (state, action, calendar) {
+    function resourcesReducers(state, action, calendar) {
         var resourceSource = reduceResourceSource(state.resourceSource, action, state.dateProfile, calendar);
         var resourceStore = reduceResourceStore(state.resourceStore, action, resourceSource, calendar);
         var resourceEntityExpansions = reduceResourceEntityExpansions(state.resourceEntityExpansions, action);
-        return __assign({}, state, { resourceSource: resourceSource,
+        return __assign({}, state, {
+            resourceSource: resourceSource,
             resourceStore: resourceStore,
-            resourceEntityExpansions: resourceEntityExpansions });
+            resourceEntityExpansions: resourceEntityExpansions
+        });
     }
 
     var RESOURCE_RELATED_PROPS = {
@@ -413,6 +446,7 @@ Docs & License: https://fullcalendar.io/scheduler
         },
         resourceEditable: Boolean
     };
+
     function parseEventDef(def, props, leftovers) {
         var resourceRelatedProps = core.refineProps(props, RESOURCE_RELATED_PROPS, {}, leftovers);
         var resourceIds = resourceRelatedProps.resourceIds;
@@ -434,6 +468,7 @@ Docs & License: https://fullcalendar.io/scheduler
             };
         }
     }
+
     /*
     TODO: all this would be much easier if we were using a hash!
     */
@@ -451,6 +486,7 @@ Docs & License: https://fullcalendar.io/scheduler
             }
         }
     }
+
     /*
     HACK
     TODO: use EventUi system instead of this
@@ -471,6 +507,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return resourceEditable;
     }
+
     function transformEventDrop(mutation, calendar) {
         var resourceMutation = mutation.resourceMutation;
         if (resourceMutation) {
@@ -478,8 +515,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 oldResource: calendar.getResourceById(resourceMutation.matchResourceId),
                 newResource: calendar.getResourceById(resourceMutation.setResourceId)
             };
-        }
-        else {
+        } else {
             return {
                 oldResource: null,
                 newResource: null
@@ -494,9 +530,8 @@ Docs & License: https://fullcalendar.io/scheduler
             if (hit0.component.allowAcrossResources === false &&
                 resourceId0 !== resourceId1) {
                 return false;
-            }
-            else {
-                return { resourceId: resourceId0 };
+            } else {
+                return {resourceId: resourceId0};
             }
         }
     }
@@ -506,6 +541,7 @@ Docs & License: https://fullcalendar.io/scheduler
             this._calendar = calendar;
             this._resource = rawResource;
         }
+
         ResourceApi.prototype.setProp = function (name, value) {
             this._calendar.dispatch({
                 type: 'SET_RESOURCE_PROP',
@@ -525,8 +561,7 @@ Docs & License: https://fullcalendar.io/scheduler
             var parentId = this._resource.parentId;
             if (parentId) {
                 return new ResourceApi(calendar, calendar.state.resourceSource[parentId]);
-            }
-            else {
+            } else {
                 return null;
             }
         };
@@ -561,53 +596,73 @@ Docs & License: https://fullcalendar.io/scheduler
             return eventApis;
         };
         Object.defineProperty(ResourceApi.prototype, "id", {
-            get: function () { return this._resource.id; },
+            get: function () {
+                return this._resource.id;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "title", {
-            get: function () { return this._resource.title; },
+            get: function () {
+                return this._resource.title;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventConstraint", {
-            get: function () { return this._resource.ui.constraints[0] || null; },
+            get: function () {
+                return this._resource.ui.constraints[0] || null;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventOverlap", {
-            get: function () { return this._resource.ui.overlap; },
+            get: function () {
+                return this._resource.ui.overlap;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventAllow", {
-            get: function () { return this._resource.ui.allows[0] || null; },
+            get: function () {
+                return this._resource.ui.allows[0] || null;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventBackgroundColor", {
-            get: function () { return this._resource.ui.backgroundColor; },
+            get: function () {
+                return this._resource.ui.backgroundColor;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventBorderColor", {
-            get: function () { return this._resource.ui.borderColor; },
+            get: function () {
+                return this._resource.ui.borderColor;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventTextColor", {
-            get: function () { return this._resource.ui.textColor; },
+            get: function () {
+                return this._resource.ui.textColor;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "eventClassNames", {
             // NOTE: user can't modify these because Object.freeze was called in event-def parsing
-            get: function () { return this._resource.ui.classNames; },
+            get: function () {
+                return this._resource.ui.classNames;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ResourceApi.prototype, "extendedProps", {
-            get: function () { return this._resource.extendedProps; },
+            get: function () {
+                return this._resource.extendedProps;
+            },
             enumerable: true,
             configurable: true
         });
@@ -616,20 +671,21 @@ Docs & License: https://fullcalendar.io/scheduler
 
     core.Calendar.prototype.addResource = function (input, scrollTo) {
         var _a;
-        if (scrollTo === void 0) { scrollTo = true; }
+        if (scrollTo === void 0) {
+            scrollTo = true;
+        }
         var resourceHash;
         var resource;
         if (input instanceof ResourceApi) {
             resource = input._resource;
             resourceHash = (_a = {}, _a[resource.id] = resource, _a);
-        }
-        else {
+        } else {
             resourceHash = {};
             resource = parseResource(input, '', resourceHash, this);
         }
         // HACK
         if (scrollTo) {
-            this.component.view.addScroll({ forcedRowId: resource.id });
+            this.component.view.addScroll({forcedRowId: resource.id});
         }
         this.dispatch({
             type: 'ADD_RESOURCE',
@@ -679,14 +735,16 @@ Docs & License: https://fullcalendar.io/scheduler
             type: 'REFETCH_RESOURCES'
         });
     };
+
     function transformDatePoint(dateSpan, calendar) {
         return dateSpan.resourceId ?
-            { resource: calendar.getResourceById(dateSpan.resourceId) } :
+            {resource: calendar.getResourceById(dateSpan.resourceId)} :
             {};
     }
+
     function transformDateSpan(dateSpan, calendar) {
         return dateSpan.resourceId ?
-            { resource: calendar.getResourceById(dateSpan.resourceId) } :
+            {resource: calendar.getResourceById(dateSpan.resourceId)} :
             {};
     }
 
@@ -696,11 +754,13 @@ Docs & License: https://fullcalendar.io/scheduler
     */
     var ResourceSplitter = /** @class */ (function (_super) {
         __extends(ResourceSplitter, _super);
+
         function ResourceSplitter() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+
         ResourceSplitter.prototype.getKeyInfo = function (props) {
-            return __assign({ '': {} }, props.resourceStore // already has `ui` and `businessHours` keys!
+            return __assign({'': {}}, props.resourceStore // already has `ui` and `businessHours` keys!
             );
         };
         ResourceSplitter.prototype.getKeysForDateSpan = function (dateSpan) {
@@ -718,22 +778,27 @@ Docs & License: https://fullcalendar.io/scheduler
 
     function isPropsValidWithResources(props, calendar) {
         var splitter = new ResourceSplitter();
-        var sets = splitter.splitProps(__assign({}, props, { resourceStore: calendar.state.resourceStore }));
+        var sets = splitter.splitProps(__assign({}, props, {resourceStore: calendar.state.resourceStore}));
         for (var resourceId in sets) {
             var props_1 = sets[resourceId];
             // merge in event data from the non-resource segment
             if (resourceId && sets['']) { // current segment is not the non-resource one, and there IS a non-resource one
-                props_1 = __assign({}, props_1, { eventStore: core.mergeEventStores(sets[''].eventStore, props_1.eventStore), eventUiBases: __assign({}, sets[''].eventUiBases, props_1.eventUiBases) });
+                props_1 = __assign({}, props_1, {
+                    eventStore: core.mergeEventStores(sets[''].eventStore, props_1.eventStore),
+                    eventUiBases: __assign({}, sets[''].eventUiBases, props_1.eventUiBases)
+                });
             }
-            if (!core.isPropsValid(props_1, calendar, { resourceId: resourceId }, filterConfig.bind(null, resourceId))) {
+            if (!core.isPropsValid(props_1, calendar, {resourceId: resourceId}, filterConfig.bind(null, resourceId))) {
                 return false;
             }
         }
         return true;
     }
+
     function filterConfig(resourceId, config) {
-        return __assign({}, config, { constraints: filterConstraints(resourceId, config.constraints) });
+        return __assign({}, config, {constraints: filterConstraints(resourceId, config.constraints)});
     }
+
     function filterConstraints(resourceId, constraints) {
         return constraints.map(function (constraint) {
             var defs = constraint.defs;
@@ -753,7 +818,7 @@ Docs & License: https://fullcalendar.io/scheduler
 
     function transformExternalDef(dateSpan) {
         return dateSpan.resourceId ?
-            { resourceId: dateSpan.resourceId } :
+            {resourceId: dateSpan.resourceId} :
             {};
     }
 
@@ -779,14 +844,11 @@ Docs & License: https://fullcalendar.io/scheduler
             var resourceId = null;
             if (typeof resource === 'string') {
                 resourceId = resource;
-            }
-            else if (typeof resource === 'number') {
+            } else if (typeof resource === 'number') {
                 resourceId = String(resource);
-            }
-            else if (resource instanceof ResourceApi) {
+            } else if (resource instanceof ResourceApi) {
                 resourceId = resource.id; // guaranteed to always have an ID. hmmm
-            }
-            else {
+            } else {
                 console.warn('unknown resource type: ' + resource);
             }
             if (resourceId) {
@@ -820,6 +882,7 @@ Docs & License: https://fullcalendar.io/scheduler
         'font-size': '12px',
         'border-top-right-radius': '3px'
     };
+
     function injectLicenseWarning(containerEl, calendar) {
         var key = calendar.opt('schedulerLicenseKey');
         if (!isImmuneUrl(window.location.href) && !isValidKey(key)) {
@@ -828,6 +891,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 '</div>');
         }
     }
+
     /*
     This decryption is not meant to be bulletproof. Just a way to remind about an upgrade.
     */
@@ -848,6 +912,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return false;
     }
+
     function isImmuneUrl(url) {
         return /\w+\:\/\/fullcalendar\.io\/|\/demos\/[\w-]+\.html$/.test(url);
     }
@@ -855,6 +920,7 @@ Docs & License: https://fullcalendar.io/scheduler
     var optionChangeHandlers = {
         resources: handleResources
     };
+
     function handleResources(newSourceInput, calendar) {
         var oldSourceInput = calendar.state.resourceSource._raw;
         if (!core.isValuesSimilar(oldSourceInput, newSourceInput, 2)) {
@@ -870,8 +936,7 @@ Docs & License: https://fullcalendar.io/scheduler
         parseMeta: function (raw) {
             if (Array.isArray(raw)) {
                 return raw;
-            }
-            else if (Array.isArray(raw.resources)) {
+            } else if (Array.isArray(raw.resources)) {
                 return raw.resources;
             }
             return null;
@@ -887,8 +952,7 @@ Docs & License: https://fullcalendar.io/scheduler
         parseMeta: function (raw) {
             if (typeof raw === 'function') {
                 return raw;
-            }
-            else if (typeof raw.resources === 'function') {
+            } else if (typeof raw.resources === 'function') {
                 return raw.resources;
             }
             return null;
@@ -909,8 +973,8 @@ Docs & License: https://fullcalendar.io/scheduler
             // TODO: make more dry with EventSourceFunc
             // TODO: accept a response?
             core.unpromisify(func.bind(null, publicArg), function (rawResources) {
-                success({ rawResources: rawResources }); // needs an object response
-            }, failure // send errorObj directly to failure callback
+                    success({rawResources: rawResources}); // needs an object response
+                }, failure // send errorObj directly to failure callback
             );
         }
     });
@@ -918,9 +982,8 @@ Docs & License: https://fullcalendar.io/scheduler
     registerResourceSourceDef({
         parseMeta: function (raw) {
             if (typeof raw === 'string') {
-                raw = { url: raw };
-            }
-            else if (!raw || typeof raw !== 'object' || !raw.url) {
+                raw = {url: raw};
+            } else if (!raw || typeof raw !== 'object' || !raw.url) {
                 return null;
             }
             return {
@@ -933,12 +996,13 @@ Docs & License: https://fullcalendar.io/scheduler
             var meta = arg.resourceSource.meta;
             var requestParams = buildRequestParams(meta, arg.range, arg.calendar);
             core.requestJson('GET', meta.url, requestParams, function (rawResources, xhr) {
-                successCallback({ rawResources: rawResources, xhr: xhr });
+                successCallback({rawResources: rawResources, xhr: xhr});
             }, function (message, xhr) {
-                failureCallback({ message: message, xhr: xhr });
+                failureCallback({message: message, xhr: xhr});
             });
         }
     });
+
     // TODO: somehow consolidate with event json feed
     function buildRequestParams(meta, range, calendar) {
         var dateEnv = calendar.dateEnv;
@@ -970,8 +1034,7 @@ Docs & License: https://fullcalendar.io/scheduler
         if (typeof meta.extraParams === 'function') {
             // supplied as a function that returns a key/value object
             customRequestParams = meta.extraParams();
-        }
-        else {
+        } else {
             // probably supplied as a straight key/value object
             customRequestParams = meta.extraParams || {};
         }
@@ -984,8 +1047,7 @@ Docs & License: https://fullcalendar.io/scheduler
             return function (resource) {
                 return resourceTextSetting(new ResourceApi(calendar, resource));
             };
-        }
-        else {
+        } else {
             return function (resource) {
                 return resource.title || getPublicId(resource.id);
             };
@@ -994,6 +1056,7 @@ Docs & License: https://fullcalendar.io/scheduler
 
     var ResourceDayHeader = /** @class */ (function (_super) {
         __extends(ResourceDayHeader, _super);
+
         function ResourceDayHeader(context, parentEl) {
             var _this = _super.call(this, context) || this;
             _this.datesAboveResources = _this.opt('datesAboveResources');
@@ -1007,6 +1070,7 @@ Docs & License: https://fullcalendar.io/scheduler
             _this.thead = _this.el.querySelector('thead');
             return _this;
         }
+
         ResourceDayHeader.prototype.destroy = function () {
             core.removeElement(this.el);
         };
@@ -1016,12 +1080,10 @@ Docs & License: https://fullcalendar.io/scheduler
                 core.computeFallbackHeaderFormat(props.datesRepDistinctDays, props.dates.length));
             if (props.dates.length === 1) {
                 html = this.renderResourceRow(props.resources);
-            }
-            else {
+            } else {
                 if (this.datesAboveResources) {
                     html = this.renderDayAndResourceRows(props.dates, props.resources);
-                }
-                else {
+                } else {
                     html = this.renderResourceAndDayRows(props.resources, props.dates);
                 }
             }
@@ -1071,7 +1133,7 @@ Docs & License: https://fullcalendar.io/scheduler
             return '<th class="fc-resource-cell"' +
                 ' data-resource-id="' + resource.id + '"' +
                 (date ?
-                    ' data-date="' + dateEnv.formatIso(date, { omitTime: true }) + '"' :
+                    ' data-date="' + dateEnv.formatIso(date, {omitTime: true}) + '"' :
                     '') +
                 (colspan > 1 ?
                     ' colspan="' + colspan + '"' :
@@ -1132,6 +1194,7 @@ Docs & License: https://fullcalendar.io/scheduler
             this.colCnt = dayTable.colCnt * resources.length;
             this.cells = this.buildCells();
         }
+
         AbstractResourceDayTable.prototype.buildCells = function () {
             var _a = this, rowCnt = _a.rowCnt, dayTable = _a.dayTable, resources = _a.resources;
             var rows = [];
@@ -1159,9 +1222,11 @@ Docs & License: https://fullcalendar.io/scheduler
     */
     var ResourceDayTable = /** @class */ (function (_super) {
         __extends(ResourceDayTable, _super);
+
         function ResourceDayTable() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+
         ResourceDayTable.prototype.computeCol = function (dateI, resourceI) {
             return resourceI * this.dayTable.colCnt + dateI;
         };
@@ -1185,9 +1250,11 @@ Docs & License: https://fullcalendar.io/scheduler
     */
     var DayResourceTable = /** @class */ (function (_super) {
         __extends(DayResourceTable, _super);
+
         function DayResourceTable() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+
         DayResourceTable.prototype.computeCol = function (dateI, resourceI) {
             return dateI * this.resources.length + resourceI;
         };
@@ -1222,6 +1289,7 @@ Docs & License: https://fullcalendar.io/scheduler
             this.indicesById = indicesById;
             this.length = resources.length;
         }
+
         return ResourceIndex;
     }());
     /*
@@ -1229,9 +1297,11 @@ Docs & License: https://fullcalendar.io/scheduler
     */
     var VResourceSplitter = /** @class */ (function (_super) {
         __extends(VResourceSplitter, _super);
+
         function VResourceSplitter() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+
         VResourceSplitter.prototype.getKeyInfo = function (props) {
             var resourceDayTable = props.resourceDayTable;
             var hash = core.mapHash(resourceDayTable.resourceIndex.indicesById, function (i) {
@@ -1263,6 +1333,7 @@ Docs & License: https://fullcalendar.io/scheduler
             this.joinEventDrags = core.memoize(this.joinInteractions);
             this.joinEventResizes = core.memoize(this.joinInteractions);
         }
+
         /*
         propSets also has a '' key for things with no resource
         */
@@ -1311,7 +1382,7 @@ Docs & License: https://fullcalendar.io/scheduler
                 for (var _c = 0, _d = segGroups[resourceCnt]; _c < _d.length; _c++) { // one beyond. the all-resource
                     var seg = _d[_c];
                     transformedSegs.push.apply(// one beyond. the all-resource
-                    transformedSegs, this.transformSeg(seg, resourceDayTable, i));
+                        transformedSegs, this.transformSeg(seg, resourceDayTable, i));
                 }
             }
             return transformedSegs;
@@ -1378,15 +1449,17 @@ Docs & License: https://fullcalendar.io/scheduler
     function flattenResources(resourceStore, orderSpecs) {
         return buildRowNodes(resourceStore, [], orderSpecs, false, {}, true)
             .map(function (node) {
-            return node.resource;
-        });
+                return node.resource;
+            });
     }
+
     function buildRowNodes(resourceStore, groupSpecs, orderSpecs, isVGrouping, expansions, expansionDefault) {
         var complexNodes = buildHierarchy(resourceStore, isVGrouping ? -1 : 1, groupSpecs, orderSpecs);
         var flatNodes = [];
         flattenNodes(complexNodes, flatNodes, isVGrouping, [], 0, expansions, expansionDefault);
         return flatNodes;
     }
+
     function flattenNodes(complexNodes, res, isVGrouping, rowSpans, depth, expansions, expansionDefault) {
         for (var i = 0; i < complexNodes.length; i++) {
             var complexNode = complexNodes[i];
@@ -1401,17 +1474,15 @@ Docs & License: https://fullcalendar.io/scheduler
                         var firstRowSpans = firstRow.rowSpans = firstRow.rowSpans.slice();
                         firstRowSpans[rowSpanIndex] = res.length - firstRowIndex;
                     }
-                }
-                else {
+                } else {
                     var id = group.spec.field + ':' + group.value;
                     var isExpanded = expansions[id] != null ? expansions[id] : expansionDefault;
-                    res.push({ id: id, group: group, isExpanded: isExpanded });
+                    res.push({id: id, group: group, isExpanded: isExpanded});
                     if (isExpanded) {
                         flattenNodes(complexNode.children, res, isVGrouping, rowSpans, depth + 1, expansions, expansionDefault);
                     }
                 }
-            }
-            else if (complexNode.resource) {
+            } else if (complexNode.resource) {
                 var id = complexNode.resource.id;
                 var isExpanded = expansions[id] != null ? expansions[id] : expansionDefault;
                 res.push({
@@ -1429,6 +1500,7 @@ Docs & License: https://fullcalendar.io/scheduler
             }
         }
     }
+
     function buildHierarchy(resourceStore, maxDepth, groupSpecs, orderSpecs) {
         var resourceNodes = buildResourceNodes(resourceStore, orderSpecs);
         var builtNodes = [];
@@ -1440,6 +1512,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return builtNodes;
     }
+
     function buildResourceNodes(resourceStore, orderSpecs) {
         var nodeHash = {};
         for (var resourceId in resourceStore) {
@@ -1461,15 +1534,16 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return nodeHash;
     }
+
     function insertResourceNode(resourceNode, nodes, groupSpecs, depth, maxDepth, orderSpecs) {
         if (groupSpecs.length && (maxDepth === -1 || depth <= maxDepth)) {
             var groupNode = ensureGroupNodes(resourceNode, nodes, groupSpecs[0]);
             insertResourceNode(resourceNode, groupNode.children, groupSpecs.slice(1), depth + 1, maxDepth, orderSpecs);
-        }
-        else {
+        } else {
             insertResourceNodeInSiblings(resourceNode, nodes, orderSpecs);
         }
     }
+
     function ensureGroupNodes(resourceNode, nodes, groupSpec) {
         var groupValue = resourceNode.resourceFields[groupSpec.field];
         var groupNode;
@@ -1483,14 +1557,12 @@ Docs & License: https://fullcalendar.io/scheduler
                     if (cmp === 0) {
                         groupNode = node;
                         break;
-                    }
-                    else if (cmp < 0) {
+                    } else if (cmp < 0) {
                         break;
                     }
                 }
             }
-        }
-        else { // the groups are unordered
+        } else { // the groups are unordered
             for (newGroupIndex = 0; newGroupIndex < nodes.length; newGroupIndex++) {
                 var node = nodes[newGroupIndex];
                 if (node.group && groupValue === node.group.value) {
@@ -1511,6 +1583,7 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         return groupNode;
     }
+
     function insertResourceNodeInSiblings(resourceNode, siblings, orderSpecs) {
         var i;
         for (i = 0; i < siblings.length; i++) {
@@ -1521,12 +1594,14 @@ Docs & License: https://fullcalendar.io/scheduler
         }
         siblings.splice(i, 0, resourceNode);
     }
+
     function buildResourceFields(resource) {
         var obj = __assign({}, resource.extendedProps, resource.ui, resource);
         delete obj.ui;
         delete obj.extendedProps;
         return obj;
     }
+
     function isGroupsEqual(group0, group1) {
         return group0.spec === group1.spec && group0.value === group1.value;
     }
@@ -1564,6 +1639,6 @@ Docs & License: https://fullcalendar.io/scheduler
     exports.flattenResources = flattenResources;
     exports.isGroupsEqual = isGroupsEqual;
 
-    Object.defineProperty(exports, '__esModule', { value: true });
+    Object.defineProperty(exports, '__esModule', {value: true});
 
 }));
