@@ -1,33 +1,59 @@
 Project Tasks:
 
+	Priority:
+		Create data
+		Login (for admin first)
+		smtp server (for user)
+		google api with calendar
+		
+
 	Administrator system:
 		As admin, I want to maintain the system
-		As admin, I want to create a manager
+		As admin, I want to add (create) department
+		As admin, I want to update department
+		As admin, I want to delete department
+		As admin, I want to add (create)a manager
 		As admin, I want to delete manager
 		As admin, I want to update manager
-		As admin, I want to create user
+		As admin, I want to add (create) user
 		As admin, I want to delete user
-		As admin, I want to add user
-		As admin, I want to create manager
-		As admin, I want to delete department
-
+		As admin, I want to update user
+		As admin, I want to add user roles (with symfony)
+		
 		
 	Manager:
 		As manager, I want to update holidays
 		As manager, I want to delete holidays
 		As manager, I want to confirm holidays
 		As manager, I want to refuse holidays
+		As manager, I can add holiday for myself (1 year = january to december)
+		Only ONE manager per department
+		There will group of managers
+		
 		
 	
 	User(employee):
-		As user, I want to request holidays
+		As user, I want to request holidays (1 year = january to december)
 		As user, I want to delete holidays
 		As user, I want to see my holidays status
 		As user, I'm able to see the holidays calendar
 		of other user (colleague)
 		As user, I can see my personnal data
-		As user, I can reset my personnal and receive an email
-		As....
+		As user, I can reset my personnal password and receive an email
+		Group of users have only ONE manager
+		Position for users
 		
 		
+		
+	Department:
+		Department can only be read with select option
+		Create migration to fix department label
+		
+	
+		
+		
+	Nice to have features:
+		Advanced Calendar,
+		Department section
+		Default Holidays (jour férié)
 		
