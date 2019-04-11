@@ -1,0 +1,32 @@
+Project Tasks:
+
+	Administrator system:
+		As admin, I want to maintain the system
+		As admin, I want to create a manager
+		As admin, I want to delete manager
+		As admin, I want to update manager
+		As admin, I want to create user
+		As admin, I want to delete user
+		As admin, I want to add user
+		As admin, I want to create manager
+		As admin, I want to delete department
+
+		
+	Manager:
+		As manager, I want to update holidays
+		As manager, I want to delete holidays
+		As manager, I want to confirm holidays
+		As manager, I want to refuse holidays
+		
+	
+	User(employee):
+		As user, I want to request holidays
+		As user, I want to delete holidays
+		As user, I want to see my holidays status
+		As user, I'm able to see the holidays calendar
+		of other user (colleague)
+		As user, I can see my personnal data
+		As user, I can reset my personnal and receive an email
+		
+		
+		
