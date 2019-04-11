@@ -28,7 +28,7 @@ Project Tasks:
 		As manager, I want to refuse holidays
 		As manager, I can add holiday for myself (1 year = january to december)
 		Only ONE manager per department
-		There will group of managers
+		There will be group of managers
 		
 		
 	
@@ -44,12 +44,9 @@ Project Tasks:
 		Position for users
 		
 		
-		
 	Department:
 		Department can only be read with select option
 		Create migration to fix department label
-		
-	
 		
 		
 	Nice to have features:
