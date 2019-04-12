@@ -5,12 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\DepartmentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ManagerRepository")
  */
-class Department
+class Manager
 {
     /**
      * @ORM\Id()
@@ -20,15 +19,19 @@ class Department
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     * @Assert\Length(min="3",max="150")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="managers")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $label;
+    private $department;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="department")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $managerUser;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="managers")
      */
     private $users;
 
@@ -42,14 +45,26 @@ class Department
         return $this->id;
     }
 
-    public function getLabel(): ?string
+    public function getDepartment(): ?Department
     {
-        return $this->label;
+        return $this->department;
     }
 
-    public function setLabel(string $label): self
+    public function setDepartment(?Department $department): self
     {
-        $this->label = $label;
+        $this->department = $department;
+
+        return $this;
+    }
+
+    public function getManagerUser(): ?User
+    {
+        return $this->managerUser;
+    }
+
+    public function setManagerUser(User $managerUser): self
+    {
+        $this->managerUser = $managerUser;
 
         return $this;
     }
@@ -66,7 +81,6 @@ class Department
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setDepartment($this);
         }
 
         return $this;
@@ -76,10 +90,6 @@ class Department
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getDepartment() === $this) {
-                $user->setDepartment(null);
-            }
         }
 
         return $this;

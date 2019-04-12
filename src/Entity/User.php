@@ -4,62 +4,92 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserAuthenticatorRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class UserAuthenticator implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(min="4",max="180")
+     * @Assert\Regex(pattern="/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/")
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^[A-Z]+_[A-Z]+$/")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/")
+     * @Assert\Length(min="8")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(pattern="/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/")
+     * @Assert\Length(min="2",max="200")
+     *@Assert\NotBlank()
+     * @Assert\NotNull()
+     *
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(pattern="/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/")
+     * @Assert\Length(min="2",max="200")
+     * @Assert\NotBlank()
+     * @Assert\NotBlank()
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
+     *
      */
     private $holidayLeft;
 
@@ -68,7 +98,27 @@ class UserAuthenticator implements UserInterface
      */
     private $active;
 
-    public function getId(): ?int
+    /**
+     * @ORM\Column(type="guid")
+     */
+    private $activationToken;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     */
+    private $referenceYear;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $department;
+
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -140,6 +190,7 @@ class UserAuthenticator implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
 
     public function getFirstname(): ?string
     {
@@ -221,6 +272,42 @@ class UserAuthenticator implements UserInterface
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(string $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function getReferenceYear(): ?\DateTimeInterface
+    {
+        return $this->referenceYear;
+    }
+
+    public function setReferenceYear(\DateTimeInterface $referenceYear): self
+    {
+        $this->referenceYear = $referenceYear;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): self
+    {
+        $this->department = $department;
 
         return $this;
     }
