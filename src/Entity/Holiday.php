@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HolidayRepository")
@@ -24,21 +25,33 @@ class Holiday
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $endDate;
 
     /**
      * @ORM\Column(type="string", length=1)
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $status;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="1")
      */
     private $dateRequest;
 

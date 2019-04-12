@@ -47,7 +47,8 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Regex(pattern="/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/")
      * @Assert\Length(min="2",max="200")
-     *
+     *@Assert\NotBlank()
+     * @Assert\NotNull()
      *
      */
     private $firstname;
@@ -56,28 +57,39 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Regex(pattern="/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/")
      * @Assert\Length(min="2",max="200")
+     * @Assert\NotBlank()
+     * @Assert\NotBlank()
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email()
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
+     *
      */
     private $holidayLeft;
 
@@ -93,6 +105,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $referenceYear;
 
