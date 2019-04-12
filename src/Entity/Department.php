@@ -11,7 +11,7 @@ class Department
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
      */
     private $id;
@@ -21,7 +21,7 @@ class Department
      */
     private $label;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
