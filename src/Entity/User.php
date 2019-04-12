@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserAuthenticatorRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class UserAuthenticator implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -68,7 +68,18 @@ class UserAuthenticator implements UserInterface
      */
     private $active;
 
-    public function getId(): ?int
+    /**
+     * @ORM\Column(type="guid")
+     */
+    private $activationToken;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $referenceYear;
+
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -140,6 +151,7 @@ class UserAuthenticator implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
 
     public function getFirstname(): ?string
     {
@@ -221,6 +233,30 @@ class UserAuthenticator implements UserInterface
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(string $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function getReferenceYear(): ?\DateTimeInterface
+    {
+        return $this->referenceYear;
+    }
+
+    public function setReferenceYear(\DateTimeInterface $referenceYear): self
+    {
+        $this->referenceYear = $referenceYear;
 
         return $this;
     }

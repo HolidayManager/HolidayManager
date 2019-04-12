@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\UserAuthenticator;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method UserAuthenticator|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserAuthenticator|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserAuthenticator[]    findAll()
- * @method UserAuthenticator[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method User|null find($id, $lockMode = null, $lockVersion = null)
+ * @method User|null findOneBy(array $criteria, array $orderBy = null)
+ * @method User[]    findAll()
+ * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserAuthenticatorRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, UserAuthenticator::class);
+        parent::__construct($registry, User::class);
     }
 
     // /**
-    //  * @return UserAuthenticator[] Returns an array of UserAuthenticator objects
+    //  * @return User[] Returns an array of User objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class UserAuthenticatorRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?UserAuthenticator
+    public function findOneBySomeField($value): ?User
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
