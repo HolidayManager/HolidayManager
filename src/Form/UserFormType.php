@@ -40,8 +40,11 @@ class UserFormType extends AbstractType
             ->add('birthDate', DateType::class, ['label'    =>  'Birth Date'])
             ->add('startDate',DateType::class, ['label' =>  'Begin Date'])
             ->add('holidayLeft', IntegerType::class, ['label'   =>  'Holidays Left'])
-            ->add('department', EntityType::class, [
+            ->add('department',EntityType::class, [
                 'class'     =>      Department::class,
+                'choice_label'  =>  'label',
+                'expanded'      =>  false,
+                'multiple'      =>  false,
                 'label'     =>      'Department'
 
             ])

@@ -19,7 +19,7 @@ use Twig\Environment;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/create/user", name="user_create")
      */
     public function createUser(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
@@ -29,7 +29,7 @@ class UserController extends AbstractController
         $user = new User();
 
 
-        $form = $this->createForm(UserFormType::class, $user,["standalone"]);
+        $form = $this->createForm(UserFormType::class);
 
         $form->handleRequest($request);
 

@@ -1,0 +1,7 @@
+
+{{ 'MAIL.REGISTER.TITLE'| trans }}
+
+{{ 'MAIL.REGISTER.INFO'| trans({'%name%' : user.getUsername()}) }}
+
+{{ 'MAIL.REGISTER.HTML.LINK.INFO'| trans }}{{ url('activate_account', {'token' : user.getActivationToken()}) }}
+
