@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-<ul class=css>
-  <li><h5>HolidayManager SA</h5></li>
-  <div class=css>
-    <li>Test.Department:Marketing</li>
-    <li>Test.Employee</li>
-    <li>Test.Tae Hee</li>
-    <li>Test.Kim</li>
-  </div>
+<ul class="list-inline">
+  <li class="list-inline-item">HolidayManager SA</li>
+  {# it will be implemented after db setup
+  {% if is_granted('ROLE_USER') or is_granted('ROLE_MANAGER')}
+  #}
+
+  <li class="list-inline-item">Department</li>
+  <li class="list-inline-item">Firstname</li>
+  <li class="list-inline-item">Lastname</li>
+
+  {% endif %}
+  #}
+
+  <li class="list-inline-item">Roles</li>
+
 </ul>
