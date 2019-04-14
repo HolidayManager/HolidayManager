@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% if is_granted(ROLE_ADMIN) %}
+
+The new user {{user.getUsername()}} has been successfully created.
+
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th scope="col-6">Username</th>
+          <td scope="col-6">{{user.getUsername()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Password</th>
+          <td scope="col-6">{{user.getPassword()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Firstname</th>
+          <td scope="col-6">{{user.getFirstname()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Lastname</th>
+          <td scope="col-6">{{user.getLastname()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Email</th>
+          <td scope="col-6">{{user.getEmail()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Department</th>
+          <td scope="col-6">{{user.getDepartment()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Position</th>
+          <td scope="col-6">Manager{{user.getRoles()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Birthday</th>
+          <td scope="col-6">{{user.getBirthDate()}}</td>
+        </tr>
+        <tr>
+          <th scope="col-6">Holiday Left</th>
+          <td scope="col-6">{{user.getHolidayLeft()}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Send an activation email
+    </button>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
