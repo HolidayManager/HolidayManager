@@ -25,7 +25,8 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @Assert\Length(min="4",max="180")
-     * @Assert\Regex(pattern="/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/")
+     * @Assert\Regex(pattern="/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/",
+     *     message="Username can contain Uppercase, lowercase, number, underscore, dash")
      */
     private $username;
 
@@ -33,22 +34,23 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      * @Assert\NotNull()
      * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/^[A-Z]+_[A-Z]+$/")
+     *  ,message="Select role from the list")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/")
+     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/",
+     *     message="Password must contain: 8 letter or more, one Uppercase, one LowerCase, one special char and one number")
      * @Assert\Length(min="8")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Regex(pattern="/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/")
      * @Assert\Length(min="2",max="200")
+     * @Assert\Regex(pattern="/^[A-Za-z ]+$/",message="Lastname fild not correct")
      *@Assert\NotBlank()
      * @Assert\NotNull()
      *
@@ -57,8 +59,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Regex(pattern="/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/")
      * @Assert\Length(min="2",max="200")
+     * @Assert\Regex(pattern="/^[A-Za-z ]+$/",message="Lastname fild not correct")
      * @Assert\NotBlank()
      * @Assert\NotBlank()
      */
@@ -108,8 +110,6 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="date")
      * @Assert\Date()
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
      */
     private $referenceYear;
 
