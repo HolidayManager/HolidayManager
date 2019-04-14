@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Manager;
 use App\Entity\User;
 use App\Form\UserFormType;
 use App\Mailer\RegistrationMailer;
@@ -46,7 +47,7 @@ class UserController extends AbstractController
 
             $user->setActivationToken(Uuid::uuid4());
             $user->setActive(false);
-            $user->setReferenceYear(new \DateTime());
+            $user->setReferenceYear(new \DateTime("Y"));
 
             $mailer->sendMail($user);
 
@@ -54,6 +55,15 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            if(in_array('ROLE_MANAGER',$user->getRoles()))
+            {
+                $manager = new Manager();
+
+                $manager->setDepartment($user->getDepartment());
+                $manager->setManagerUser($user->getId());
+
+            }
 
             // do anything else you need here, like send an email
 
@@ -85,13 +95,13 @@ class UserController extends AbstractController
             throw new NotFoundHttpException('User not found');
         }
 
-        $user->setActivationToken(null)
+        $user->setActivationToken($token)
             ->setActive(true);
 
         $manager->flush();
 
         $tokenStorage->setToken(new UsernamePasswordToken($user,null,'main',$user->getRoles()));
 
-        return $twig->render('User/activateduser.html.twig');
+        return new Response($twig->render('User/activateduser.html.twig',["user" => $user]));
     }
 }

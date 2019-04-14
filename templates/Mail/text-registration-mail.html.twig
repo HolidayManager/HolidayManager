@@ -1,7 +1,7 @@
 
-{{ 'MAIL.REGISTER.TITLE'| trans }}
+'Activate your account'
 
-{{ 'MAIL.REGISTER.INFO'| trans({'%name%' : user.getUsername()}) }}
+Hi {{ user.getUsername() }} your account was successfully created on HolidayManager, just one more step to activate!!'
 
-{{ 'MAIL.REGISTER.HTML.LINK.INFO'| trans }}{{ url('activate_user', {'token' : user.getActivationToken()}) }}
+{{ url('activate_user', {'token' : user.getActivationToken()}) }}
 
