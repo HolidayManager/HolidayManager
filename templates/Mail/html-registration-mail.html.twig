@@ -9,8 +9,8 @@
 </head>
 <body>
     <h1>Activation account</h1>
-    <p>Welcome {{ user.getUsername()}) }} follow the link above for activate your account</p>
+    <p>Welcome {{ user.getUsername() }} follow the link above for activate your account</p>
     <
-    <a href="{{ url('activate_user', {'token' : user.getActivationToken()}) }}">click here for activate</a>
+    <a href="{{ url('activate_user', {'token': user.getActivationToken()}) }}">click here for activate</a>
 </body>
 </html>

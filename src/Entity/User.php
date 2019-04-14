@@ -41,8 +41,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/",
-     *     message="Password must contain: 8 letter or more, one Uppercase, one LowerCase, one special char and one number")
      * @Assert\Length(min="8")
      */
     private $password;

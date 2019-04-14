@@ -40,11 +40,14 @@ class UserController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 
             $user->setActivationToken(Uuid::uuid4());
+            $user->setActive(false);
+            $user->setReferenceYear(new \DateTime());
+
             $mailer->sendMail($user);
 
 
@@ -54,7 +57,7 @@ class UserController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return new Response($twig->render('User/createduser.html.twig'));
+            return new Response($twig->render('User/createduser.html.twig',['user'   => $user]));
         }
 
         return new Response($this->render('User/newuser.html.twig', [

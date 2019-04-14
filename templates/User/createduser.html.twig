@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+
+    {% block title %} User created successful!! {% endblock %}
+
+    {% block body %}
+        <h3>User created successfull!!</h3>
+
+        <p>The user <b>{{ user.getUsername() }}</b> has created succefull
+            and will receive an activation mail a the address {{ user.getEmail() }} </p>
+
+
+    {% endblock %}
+
+
