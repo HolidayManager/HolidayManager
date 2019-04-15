@@ -1,6 +1,10 @@
 {% block body %}
     <div class="">
-        <h1>Add Holidays</h1>
-            {{ form(form) }}
+        {{ form_start(form) }}
+            {{ form_label(form.name, 'Add Holidays') }}
+            {{ form_(form.startDate ) }}
+            {{ form_(form.endDate ) }}
+            {{ form_(form.dateRequest ) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
