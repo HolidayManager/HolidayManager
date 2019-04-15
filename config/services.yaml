@@ -9,7 +9,7 @@ parameters:
     register_mail_sender: 'noreplay-holidaymanager@libero.it'
     register_mail_text_template: 'Mail/text-registration-mail.html.twig'
     register_mail_html_template: 'Mail/html-registration-mail.html.twig'
-    password_mail_subject: 'Activate your account'
+    password_mail_subject: 'Password Restore'
     password_mail_sender: 'noreplay-holidaymanager@libero.it'
     password_mail_text_template: 'Mail/text-password-mail.html.twig'
     password_mail_html_template: 'Mail/html-password-mail.html.twig'
@@ -42,7 +42,7 @@ services:
             $htmlTemplate:  '%register_mail_html_template%'
     App\Mailer\PasswordMailer:
         arguments:
-            $subject:       '%register_mail_subject%'
-            $sender:        '%register_mail_sender%'
-            $textTemplate:  '%register_mail_text_template%'
-            $htmlTemplate:  '%register_mail_html_template%'
+            $subject:       '%password_mail_subject%'
+            $sender:        '%password_mail_sender%'
+            $textTemplate:  '%password_mail_text_template%'
+            $htmlTemplate:  '%password_mail_html_template%'

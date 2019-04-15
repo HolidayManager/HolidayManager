@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +32,9 @@ class PasswordController extends AbstractController
         $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class,["constraints"=>[
                 new NotBlank()
-            ]])
+            ],
+                'label' =>  "Email:"])
+            ->add("submit",SubmitType::class,["label"=>'Sent'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -53,7 +56,7 @@ class PasswordController extends AbstractController
 
                 $mailer->sendMail($user);
 
-                return new Response($twig->render('User/restorePassword.html.twig',["user"=>$user]));
+                return new Response($twig->render('User/emailPasswordRestoreSent.html.twig',["user"=>$user]));
 
             }
 
@@ -65,7 +68,7 @@ class PasswordController extends AbstractController
      * @Route("password/restore/{token}",name="restore_password")
      */
     public function restorePassword(Environment $twig, $token,UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, Request $request){
-        $defaultData = ['message' => 'Type your email here'];
+        $defaultData = ['message' => 'Type your password here'];
 
         $form = $this->createFormBuilder($defaultData)
             ->add('resetPassword', RepeatedType::class,[
@@ -82,7 +85,7 @@ class PasswordController extends AbstractController
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
 
-            $user = $userRepository->findBy(["activationToken"=>$token]);
+            $user = $userRepository->findOneBy(["activationToken"=>$token]);
 
             if($user)
             {
@@ -99,12 +102,12 @@ class PasswordController extends AbstractController
                 $entityManager->flush();
 
 
-                return new Response($twig->render('restorePassword.html.twig',["user"=>$user]));
+                return new Response($twig->render('User/restorePassword.html.twig',["user"=>$user]));
             }
 
-            return new Response($twig->render('errorRestorePassword.html.twig'));
-        }
 
+        }
+        return new Response($twig->render('User/errorRestorePassword.html.twig'));
     }
 
 }
