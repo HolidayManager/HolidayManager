@@ -20,7 +20,7 @@ use Twig\Environment;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/create/user", name="user_create")
+     * @Route("/user/create", name="user_create")
      */
     public function createUser(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
@@ -56,14 +56,14 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            if(in_array('ROLE_MANAGER',$user->getRoles()))
+            /*if(in_array('ROLE_MANAGER',$user->getRoles()))
             {
                 $manager = new Manager();
 
                 $manager->setDepartment($user->getDepartment());
                 $manager->setManagerUser($user->getId());
 
-            }
+            }*/
 
             // do anything else you need here, like send an email
 
@@ -104,4 +104,6 @@ class UserController extends AbstractController
 
         return new Response($twig->render('User/activateduser.html.twig',["user" => $user]));
     }
+
+
 }
