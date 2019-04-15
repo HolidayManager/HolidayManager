@@ -9,7 +9,7 @@
         <p>The user <b>{{ user.getUsername() }}</b> has created succefull
             and will receive an activation mail a the address {{ user.getEmail() }} </p>
 
-
+        <a href="{{ path('dashboard') }}">Go to dashboard</a>
     {% endblock %}
 
 

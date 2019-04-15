@@ -106,10 +106,73 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/delete/{user}")
+     * @Route("/user/delete/{user}",name="delete_user")
      */
-    public function deleteUser(User $user)
+    public function deleteUser(User $user,Environment $twig)
     {
+        $manager = $this->getDoctrine()->getManager();
+
+        if($user)
+        {
+            $manager->remove($user);
+
+            $manager->flush();
+
+            return new Response($twig->render('User/deleteConfirmation.html.twig',['user'   =>  $user]));
+        }
+
+        return new Response($twig->render('deleteError.html.twig'));
 
     }
+
+    /**
+     * @Route("/user/update/{user}",name="update_user")
+     */
+    public function updateUser(User $user,Environment $twig, Request $request,
+                               UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $form = $this->createForm(UserFormType::class, $user,['standalone'=>true]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+
+
+            $user->setReferenceYear(new \DateTime("Y"));
+
+
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            /*if(in_array('ROLE_MANAGER',$user->getRoles()))
+            {
+                $manager = new Manager();
+
+                $manager->setDepartment($user->getDepartment());
+                $manager->setManagerUser($user->getId());
+
+            }
+            */
+            // do anything else you need here, like send an email
+
+            return new Response($twig->render('User/updateConfirmation.html.twig',['user'   => $user]));
+        }
+
+        return new Response($this->render('User/newuser.html.twig', [
+            'createForm' => $form->createView(),
+        ]));
+
+    }
+
+
 }

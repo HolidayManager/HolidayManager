@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User delete confirmation{% endblock %}
+{% block body %} User {{ user.getUsername() }} deleted with success
+    <a href="{{ path('dashboard') }}">Go to dashboard</a>
+{% endblock %}
