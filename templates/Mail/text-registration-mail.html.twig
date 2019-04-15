@@ -1,0 +1,7 @@
+
+'Activate your account'
+
+Hi {{ user.getUsername() }} your account was successfully created on HolidayManager, just one more step to activate!!'
+
+{{ url('activate_user', {'token' : user.getActivationToken()}) }}
+

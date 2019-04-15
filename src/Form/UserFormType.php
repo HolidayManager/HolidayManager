@@ -6,23 +6,32 @@ use App\Entity\Department;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
+
         $builder
             ->add('username',TextType::class,['label' => 'Username'])
             ->add('roles', ChoiceType::class,[
+                'expanded'  =>  false,
+                'multiple'  =>  false,
                 'choices'   => [
                     'Employee' => 'ROLE_USER',
                     'Manager'   => 'ROLE_MANAGER',
@@ -30,6 +39,7 @@ class UserFormType extends AbstractType
                 ]
             ])
             ->add('password',RepeatedType::class,[
+                'type'      =>  PasswordType::class,
                 'label'   =>    'Password',
                 'first_options' =>  ['label'    =>  'Password'],
                 'second_options' =>  ['label'    =>  'Repeat Password'],
@@ -40,12 +50,27 @@ class UserFormType extends AbstractType
             ->add('birthDate', DateType::class, ['label'    =>  'Birth Date'])
             ->add('startDate',DateType::class, ['label' =>  'Begin Date'])
             ->add('holidayLeft', IntegerType::class, ['label'   =>  'Holidays Left'])
-            ->add('department', EntityType::class, [
+            ->add('department',EntityType::class, [
                 'class'     =>      Department::class,
+                'choice_label'  =>  'label',
+                'expanded'      =>  false,
+                'multiple'      =>  false,
                 'label'     =>      'Department'
 
             ])
         ;
+
+        $builder->get('roles')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($rolesArray) {
+                    // transform the array to a string
+                    return count($rolesArray)? $rolesArray[0]: null;
+                },
+                function ($rolesString) {
+                    // transform the string back to an array
+                    return [$rolesString];
+                }
+            ));
 
         if($options['standalone']==true)
         {

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% if (is_granted('ROLE_USER') or is_granted('ROLE_MANAGER')) %}
+
+{%  block title %} Dashboard {% endblock %}
+
+{% block body %}
+
+{% endblock %}
+
+{% endif %}
