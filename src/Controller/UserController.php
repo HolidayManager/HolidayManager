@@ -105,5 +105,11 @@ class UserController extends AbstractController
         return new Response($twig->render('User/activateduser.html.twig',["user" => $user]));
     }
 
+    /**
+     * @Route("/user/delete/{user}")
+     */
+    public function deleteUser(User $user)
+    {
 
+    }
 }
