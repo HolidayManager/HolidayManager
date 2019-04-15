@@ -25,7 +25,7 @@ class UserController extends AbstractController
     public function createUser(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
                              RegistrationMailer $mailer,
-                                Environment $twig): Response
+                               Environment $twig): Response
     {
         $user = new User();
 

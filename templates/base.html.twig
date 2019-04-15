@@ -2,17 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}HappyHoliday{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="public/css/style.css">
+        <link rel="stylesheet" href="/css/style.css">
+
+        <link href='./releases/core/4.0.2/main.min.css' rel='stylesheet' />
+        <link href='./releases/timeline/4.0.2/main.min.css' rel='stylesheet' />
+        <link href='./releases/resource-timeline/4.0.2/main.min.css' rel='stylesheet' />
     {% endblock %}
+        <script src='./releases/core/4.0.2/main.min.js'></script>
+        <script src='./releases/timeline/4.0.2/main.min.js'></script>
+        <script src='./releases/resource-common/4.0.2/main.min.js'></script>
+        <script src='./releases/resource-timeline/4.0.2/main.min.js'></script>
 </head>
 <body>
 {% block body %}
 
 {% endblock %}
-
 {# we need to change the cdn with local library. in case we dont have internet #}
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
