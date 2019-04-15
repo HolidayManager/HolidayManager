@@ -9,6 +9,10 @@ parameters:
     register_mail_sender: 'noreplay-holidaymanager@libero.it'
     register_mail_text_template: 'Mail/text-registration-mail.html.twig'
     register_mail_html_template: 'Mail/html-registration-mail.html.twig'
+    password_mail_subject: 'Activate your account'
+    password_mail_sender: 'noreplay-holidaymanager@libero.it'
+    password_mail_text_template: 'Mail/text-password-mail.html.twig'
+    password_mail_html_template: 'Mail/html-password-mail.html.twig'
 
 services:
     # default configuration for services in *this* file
@@ -31,6 +35,12 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     App\Mailer\RegistrationMailer:
+        arguments:
+            $subject:       '%register_mail_subject%'
+            $sender:        '%register_mail_sender%'
+            $textTemplate:  '%register_mail_text_template%'
+            $htmlTemplate:  '%register_mail_html_template%'
+    App\Mailer\PasswordMailer:
         arguments:
             $subject:       '%register_mail_subject%'
             $sender:        '%register_mail_sender%'
