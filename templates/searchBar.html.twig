@@ -1,0 +1,13 @@
+{% extends 'navbar.html.twig' %}
+{% block body %}
+{% if is_granted('ROLE_ADMIN')}
+
+<div class="container">
+{{render(controller(
+'App\Controller\\SearchController::searchBar'
+))}}
+
+{{form(form)}}
+
+{% endblock %}
+{% endif %}

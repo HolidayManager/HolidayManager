@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Monda');
+
+/*general setting for base.html.twig*/
+
+*{
+box-sizing: border-box;
+transition-duration: 0.3s;
+}
+
+body{
+  background-color:	#eeeeee;
+  font-family: 'Monda', sans-serif;
+}
+
+/* setting for /login */
+
+#login {
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+}
+
+#signinbutton {
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  display: block;
+  max-width: 100px;
+  background-color: #bdbdbd;
+  border-color: #bdbdbd;
+}
+
+
+div.container {
+  border: 2px solid #bdbdbd;
+  border-radius: 5px;
+  max-width: 350px;
+  margin-top: 100px;
+
+}
