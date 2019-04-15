@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User update successfull{% endblock %}
+{% block body %}User {{ user.getUsername() }} updated with success.
+    <a href="{{ path('dashboard') }}">Go to dashboard</a>
+{% endblock %}
