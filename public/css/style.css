@@ -34,7 +34,7 @@ body{
 div.container {
   border: 2px solid #bdbdbd;
   border-radius: 5px;
-  max-width: 350px;
+  max-width: 400px;
   margin-top: 100px;
 
 }
@@ -42,4 +42,18 @@ div.container {
 .btn:focus,.btn:active:focus,.btn.active:focus,
 .btn.focus,.btn:active.focus,.btn.active.focus {
     outline: none;
+}
+
+/*Setting for newuser.html.twig*/
+div.h5style {
+  margin: 0 auto;
+  text-align: center;
+}
+
+div.container {
+  border: 2px solid #bdbdbd;
+  border-radius: 5px;
+  max-width: 550px;
+  margin-top: 100px;
+
 }
