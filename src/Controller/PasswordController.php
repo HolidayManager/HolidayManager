@@ -77,18 +77,20 @@ class PasswordController extends AbstractController
                 'first_options' =>  ['label'    =>  'Password'],
                 'second_options' =>  ['label'    =>  'Repeat Password'],
             ])
+            ->add("Reset",SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
+
+        $user = $userRepository->findOneByActivationToken($token);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
 
-            $user = $userRepository->findOneBy(["activationToken"=>$token]);
 
-            if($user)
-            {
+            if ($user) {
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
@@ -102,11 +104,15 @@ class PasswordController extends AbstractController
                 $entityManager->flush();
 
 
-                return new Response($twig->render('User/restorePassword.html.twig',["user"=>$user]));
+                return new Response($twig->render('User/restorePassword.html.twig', ["user" => $user]));
             }
 
 
         }
+        else if($user){
+            return new Response($twig->render('User/formConfirmPasswordRestore.html.twig',['formRestorePass'=>$form->createView()]));
+        }
+
         return new Response($twig->render('User/errorRestorePassword.html.twig'));
     }
 
