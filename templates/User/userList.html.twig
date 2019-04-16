@@ -7,8 +7,6 @@
             <th>Lastname</th>
             <th>Position</th>
             <th>Holiday Left</th>
-            <th>Update</th>
-            <th>Delete</th>
         </tr>
         {% for user in users %}
         <tr>
@@ -18,8 +16,6 @@
             <td>{{ user.getLastname() }}</td>
             <td>{{ user.getRoles()[0] }}</td>
             <td>{{ user.getHolidayLeft() }}</td>
-            <td><a href="/user/update/{{ user.getId() }}"><i class="fas fa-pencil-alt"></i></a></td>
-            <td><a href="/user/delete/{{ user.getId() }}"><i class="far fa-times-circle"></i></a></td>
         </tr>
         {% endfor %}
     </table>

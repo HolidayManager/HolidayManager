@@ -179,7 +179,7 @@ class UserController extends AbstractController
      */
     public function showUserInfo(User $user, Environment $twig)
     {
-        return new Response($twig->render('User/userInfo.html.twig',["user"=>$user]));
+        return new Response($twig->render('User/showUser.html.twig',["user"=>$user]));
     }
 
 
