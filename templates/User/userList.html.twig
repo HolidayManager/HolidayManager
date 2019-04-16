@@ -1,0 +1,23 @@
+{% block body %}
+    <table class="userList">
+        <tr>
+            <th>Username</th>
+            <th>Department</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Position</th>
+            <th>Holiday Left</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td><a href="/show/user/{{ user.getId() }}">{{ user.getUsername() }}</a></td>
+            <td>{{ user.getDepartment().getLabel() }}</td>
+            <td>{{ user.getFirstname() }}</td>
+            <td>{{ user.getLastname() }}</td>
+            <td>{{ user.getRoles()[0] }}</td>
+            <td>{{ user.getHolidayLeft() }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

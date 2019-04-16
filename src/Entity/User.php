@@ -65,7 +65,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Email()
      * @Assert\NotBlank()
      * @Assert\NotNull()
