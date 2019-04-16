@@ -1,6 +1,5 @@
 {% block body %}
     <table class="userList">
-        {% for user in users %}
         <tr>
             <th>Username</th>
             <th>Department</th>
@@ -11,15 +10,18 @@
             <th>Update</th>
             <th>Delete</th>
         </tr>
+        {% for user in users %}
         <tr>
-            <td><a href="'/show/user/'{{ user.getId() }}">{{ user.getUsername() }}</a></td>
-            <td>{{ user.getDepartment() }}</td>
+            <td><a href="/show/user/{{ user.getId() }}">{{ user.getUsername() }}</a></td>
+            <td>{{ user.getDepartment().getLabel() }}</td>
             <td>{{ user.getFirstname() }}</td>
             <td>{{ user.getLastname() }}</td>
-            <td>{{ user.getRoles() }}</td>
+            <td>{{ user.getRoles()[0] }}</td>
             <td>{{ user.getHolidayLeft() }}</td>
-            <td><a href="'/user/delete/'{{ user.getId() }}"><i class="fas fa-pencil-alt"></i></a></td>
-            <td><a href="'/user/update/'{{ user.getId() }}"><i class="far fa-times-circle"></i></a></td>
+            <td><a href="/user/update/{{ user.getId() }}"><i class="fas fa-pencil-alt"></i></a></td>
+            <td><a href="/user/delete/{{ user.getId() }}"><i class="far fa-times-circle"></i></a></td>
         </tr>
+        {% endfor %}
     </table>
+
 {% endblock %}
