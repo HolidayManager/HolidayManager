@@ -174,7 +174,15 @@ class UserController extends AbstractController
 
     }
 
-    
+    /**
+     * @Route("/show/user/{user}",name="show_userinfo")
+     */
+    public function showUserInfo(User $user, Environment $twig)
+    {
+        return new Response($twig->render('User/userInfo.html.twig',["user"=>$user]));
+    }
+
+
 
 
 }
