@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}]
-<ul class="list-inline">
 
-    <li class="list-inline-item">HolidayManager SA</li>
-
-    {% if not is_granted('ROLE_ADMIN') %}
-
-    <li class="list-inline-item">Department: {{ user.getUsername() }} </li>
-    <li class="list-inline-item">Firstname: {{ user.getFirstname() }}</li>
+    {% if not is_granted('ROLE_ADMIN')%}
+    <div class="d-flex">
+      <div class="mr-auto p-2">HolidayManager SA</div>
+      <div class="p-2">Department: {{ user.getDepartment().getLabel()}}</div>
+      <div class="p-2">Name: {{ user.getFirstname() }} {{user.getLastname()}}</div>
+    </div>
     {% endif %}
-    <li class="list-inline-item">Roles:</li>
 
-</ul>
+    {% if is_granted('ROLE_ADMIN')%}
+    <div class="d-flex">
+      <div class="mr-auto p-2">HolidayManager SA</div>
+      <div class="p-2">Administrator</div>
+    </div>
+    {% endif %}
+
+
 
 {% endblock %}

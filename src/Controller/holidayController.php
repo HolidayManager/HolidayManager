@@ -6,13 +6,14 @@ use App\Entity\Holiday;
 use App\Form\HolidayFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
 class holidayController extends AbstractController
 {
     /**
-     * @Route("/holiday/create", name="holiday_create", methods={"CREATE"})
+     * @Route("/holiday/create", name="holiday_create")
      */
 
     public function createHoliday(Request $request, Environment $twig)
@@ -21,20 +22,22 @@ class holidayController extends AbstractController
 
         $form = $this->createForm(HolidayFormType::class, $holiday,['standalone'=>true]);
 
-        $form->submit($request->request->all());
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $holiday->setDateRequest(\DateTime());
+            $holiday->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($holiday);
             $entityManager->flush();
         }
 
 
-        return new Response($twig->render('createHoliday.html.twig',['holiday'   => $holiday]));
+        return new Response($twig->render('dashboard.html.twig',['formHoliday'   => $form]));
     }
 
     /**
-     * @Route("/holiday/{holiday}", name="holiday_delete", methods={"DELETE"})
+     * @Route("/holiday/delete/{holiday}", name="holiday_delete")
      */
 
     public function deleteHoliday(Holiday $holiday)
@@ -43,4 +46,6 @@ class holidayController extends AbstractController
         $manager->remove($holiday);
         $manager->flush();
     }
+
+
 }

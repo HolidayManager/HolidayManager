@@ -5,10 +5,28 @@
     {% block title %} New User {% endblock %}
 
     {% block body %}
-        <h3>CREATE NEW USER</h3>
+    {% include 'Dashboard/navbar.html.twig' %}
+     <div class="container">
 
-        {{ form(createForm) }}
+        <h5 class="h5style">CREATE A NEW USER</h5>
+        {{form_start(createForm)}}
 
+        {{form_row(createForm.username)}}
+        {{form_widget(createForm.username)}}
+        {{form_row(createForm.roles)}}
+        {{form_row(createForm.password)}}
+        {{form_row(createForm.firstname)}}
+        {{form_row(createForm.lastname)}}
+        {{form_row(createForm.email)}}
+        {{form_row(createForm.birthDate)}}
+        {{form_row(createForm.startDate)}}
+        {{form_row(createForm.holidayLeft)}}
+        {{form_row(createForm.department)}}
+
+
+        {{form_end(createForm)}}
+
+      </div>
     {% endblock %}
 
 {% endif %}

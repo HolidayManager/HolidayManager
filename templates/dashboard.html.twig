@@ -9,6 +9,8 @@
 {% if (is_granted('ROLE_USER') or is_granted('ROLE_MANAGER')) %}
     {% include 'Dashboard/navbar.html.twig' %}
     {% include 'Dashboard/dashboardnavbar.html.twig' %}
+    {% include 'Holiday/createHoliday.html.twig' %}
+    {% include 'calendarEmployee.html.twig' %}
 {% endif %}
     
 {% if is_granted('ROLE_ADMIN') %}
