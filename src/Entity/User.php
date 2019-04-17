@@ -42,6 +42,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\Length(min="8")
+     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&,])[A-Za-z\d@$!%*?&, ]{8,}$/",message="Password have to contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")
      */
     private $password;
 
@@ -143,16 +144,18 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        if (is_array($roles)) {
+            $roles[] = 'ROLE_USER';
+            return array_unique($roles);
+        }
+        return $roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
 

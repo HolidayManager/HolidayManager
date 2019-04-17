@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
@@ -57,9 +59,8 @@ class UserFormType extends AbstractType
                 'multiple'      =>  false,
                 'label'     =>      'Department'
 
-            ])
-        ;
-
+            ]);
+        $builder->get('roles')->resetViewTransformers();
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(
                 function ($rolesArray) {
@@ -68,9 +69,14 @@ class UserFormType extends AbstractType
                 },
                 function ($rolesString) {
                     // transform the string back to an array
-                    return [$rolesString];
+                    return $rolesString;
                 }
             ));
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event){
+            $data = $event->getData();
+            $data->setRoles([$data->getRoles()]);
+        });
 
         if($options['standalone']==true)
         {
