@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Holiday;
+use App\Entity\User;
 use App\Repository\HolidayRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,8 +51,22 @@ class ApiController extends AbstractController
 
     public function showUCalendarsers(Request $request)
     {
-        $holidayRep = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
+        $userRepo = $this->getDoctrine()->getManager()->getRepository(User::class);
 
+        $users = $userRepo->findByDepartment($this->getUser()->getDepartment());
+
+        $api = [];
+
+        foreach($users as $user)
+        {
+            $api[] = [
+                'id' => $user->getId(),
+                'building'  => $user->getDepartment()->getLabel(),
+                'title' => $user->getFirstname() . " " . $user->getLastname()
+            ];
+        }
+
+        return $this->json($api);
 
     }
 }
