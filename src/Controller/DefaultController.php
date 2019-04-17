@@ -51,11 +51,11 @@ class DefaultController extends AbstractController
             $entityManager->flush();
         }
 
-        return new Response($this->render('dashboard.html.twig', [
+        return $this->render('dashboard.html.twig', [
             'user' => $user,
             'users' => $userList,
             'formHoliday' => $form->createView()
-        ]));
+        ]);
 
         $defaultData = ['message' => 'Type your message here'];
 //        $searchForm['name'], 'searchForm';

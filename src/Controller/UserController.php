@@ -70,9 +70,9 @@ class UserController extends AbstractController
             return new Response($twig->render('User/createduser.html.twig',['user'   => $user]));
         }
 
-        return new Response($this->render('User/newuser.html.twig', [
+        return $this->render('User/newuser.html.twig', [
             'createForm' => $form->createView(),
-        ]));
+        ]);
     }
 
     /**
@@ -168,9 +168,9 @@ class UserController extends AbstractController
             return new Response($twig->render('User/updateConfirmation.html.twig',['user'   => $user]));
         }
 
-        return new Response($this->render('User/newuser.html.twig', [
+        return $this->render('User/newuser.html.twig', [
             'createForm' => $form->createView(),
-        ]));
+        ]);
 
     }
 

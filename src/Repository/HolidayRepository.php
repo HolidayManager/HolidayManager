@@ -28,7 +28,7 @@ class HolidayRepository extends ServiceEntityRepository
 
     public function getHolidayIn($start, $end)
     {
-        $this->logger->debug(sprintf('Trying to find holidays in [%s, %s]', $start, $end));
+
 
         $qb = $this->createQueryBuilder('h');
 
@@ -49,7 +49,7 @@ class HolidayRepository extends ServiceEntityRepository
             )
         )->setParameter('start', $start)->setParameter('end', $end)->getQuery()->getResult();
 
-        $this->logger->debug(sprintf('%d results found', count($result)));
+
 
         return $result;
     }
