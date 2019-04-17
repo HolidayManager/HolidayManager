@@ -15,11 +15,15 @@ class ApiController extends AbstractController
     /**
      * @Route("/calendar/show/holidays",name="show_calendar_holidays",methods={"GET"})
      */
-    public function showCalendarHolidays(Request $request){
+    public function showCalendarHolidays(Request $request)
+    {
+        $start = $request->query->get('start');
+        $end = $request->query->get('end');
         $holidayRep = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
+
         $holidays =  $holidayRep->getHolidayIn(
-            substr($request->query->get('start'),0,11),
-            substr($request->query->get('end'),0,11)
+            substr($start,0,strpos($start, 'T')),
+            substr($end,0,strpos($end, 'T'))
         );
 
         $api = [];
@@ -28,14 +32,26 @@ class ApiController extends AbstractController
         {
             $api[] = [
 
-                    'resourceId'         =>     $holiday->getUser()->getId(), /*this id will be replaced by the uuid of the user comming from the database*/
-                    "title"      =>     '',
+                    'resourceId'         =>     $holiday->getUser()->getId(), //this id will be replaced by the uuid of the user comming from the database
+                    "title"      =>     'Holiday',
                     'start'      =>     $holiday->getStartDate()->format('Y-m-d') . 'T'  . $holiday->getStartDate()->format('H:i:s') . '+00:00',
                     'end'      =>     $holiday->getEndDate()->format('Y-m-d') . 'T'  . $holiday->getEndDate()->format('H:i:s') . '+00:00'
 
             ];
         }
 
+
         return $this->json($api);
+    }
+
+    /**
+     * @Route("/calendar/show/users",name="show_calendar_department")
+     */
+
+    public function showUCalendarsers(Request $request)
+    {
+        $holidayRep = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
+
+
     }
 }

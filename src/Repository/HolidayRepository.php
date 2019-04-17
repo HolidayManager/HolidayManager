@@ -30,18 +30,28 @@ class HolidayRepository extends ServiceEntityRepository
     {
         $this->logger->debug(sprintf('Trying to find holidays in [%s, %s]', $start, $end));
 
-        $qb = $this->createQueryBuilder('h')
-            ->where('h.startDate >= :start')
-            ->andWhere('h.endDate <= :end')
-            ->andWhere('h.status=:status')
-            ->orWhere('h.startDate <= :start')
-            ->andWhere('h.endDate >= :end')
-            ->setParameter('start', $start)
-            ->setParameter('end',$end)
-            ->setParameter('status','a')
-            ->getQuery();
+        $qb = $this->createQueryBuilder('h');
 
-        return $qb->getResult();
+        $result = $qb->where(
+            $qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->gte('h.startDate', ':start'),
+                    $qb->expr()->gte('h.endDate', ':end')
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->lte('h.startDate', ':start'),
+                    $qb->expr()->gte('h.endDate', ':start')
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->lte('h.startDate', ':end'),
+                    $qb->expr()->gte('h.endDate', ':end')
+                )
+            )
+        )->setParameter('start', $start)->setParameter('end', $end)->getQuery()->getResult();
+
+        $this->logger->debug(sprintf('%d results found', count($result)));
+
+        return $result;
     }
 
     // /**
