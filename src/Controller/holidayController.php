@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 use Twig\Environment;
 
 class holidayController extends AbstractController
@@ -19,17 +20,13 @@ class holidayController extends AbstractController
     public function createHoliday(Request $request, Environment $twig)
     {
         $holiday = new Holiday();
-
         $form = $this->createForm(HolidayFormType::class, $holiday,['standalone'=>true]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $holiday->setDateRequest(\DateTime());
-            $holiday->setUser($this->getUser());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($holiday);
-            $entityManager->flush();
+
+
         }
 
 

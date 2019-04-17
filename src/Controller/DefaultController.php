@@ -38,6 +38,10 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $holiday->setDateRequest(new \DateTime());
+            $holiday->setUser($this->getUser());
+            $holiday->setStatus('p');
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($holiday);
             $entityManager->flush();
