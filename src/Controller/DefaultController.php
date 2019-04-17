@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Entity\Holiday;
 use App\Form\HolidayFormType;
 use App\Repository\UserRepository;
-
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +19,16 @@ class DefaultController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function dashboard(UserRepository $userRepository, Request $request, Environment $twig):Response
+    public function dashboard(UserRepository $userRepository, Request $request, Environment $twig, PaginatorInterface $paginator):Response
     {
         $user = $this->getUser();
         $userList = null;
 
         if(in_array('ROLE_ADMIN',$user->getRoles()))
         {
-            $userList = $userRepository->findAll();
+            $userList = $userRepository->findPaginated(
+              $request, $paginator
+            );
         }
 
 
