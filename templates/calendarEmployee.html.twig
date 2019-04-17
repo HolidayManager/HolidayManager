@@ -1,8 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{#{% parent() %}#}
+<link rel="stylesheet" href="/css/calendar.css">
+{% endblock %}
+
 {% block body %}
 
+  <!--
     <div class='demo-topbar'>
         Timeline view resource grouping
     </div>
+-->
     <div id='calendar'></div>
 
         <script>

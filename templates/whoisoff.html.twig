@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{%  block title %} Who is off {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
+
+{% block body %}
+{# need to check the navbar - Username not found?????
+{% include 'Dashboard/navbar.html.twig' %}
+#}
+
+{% include 'Dashboard/dashboardnavbar.html.twig' %}
+{% include 'calendarEmployee.html.twig' %}
+{% endblock %}

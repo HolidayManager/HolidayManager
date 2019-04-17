@@ -58,4 +58,13 @@ class DefaultController extends AbstractController
 
     }
 
+    /**
+    * @Route("/whoisoff", name="whoisoff")
+    */
+
+    public function whoisoff(Environment $twig) {
+      return new Response($twig->render('whoisoff.html.twig'));
+    }
+
+
 }
