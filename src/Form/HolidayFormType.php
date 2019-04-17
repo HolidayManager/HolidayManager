@@ -3,22 +3,34 @@
 namespace App\Form;
 
 use App\Entity\Holiday;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Date;
 
 class HolidayFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate', DateType::class, ['label' => 'Start Date'])
-            ->add('endDate', DateType::class, ['label' => 'End Date']);
+            ->add(
+                'startDate',
+                DateType::class,
+                [
+                    'label' => 'Start Date',
+                    'days' => range(1, 31),
+                    'years' => range(\date('Y'),\date('Y') + 1),
+                    'data' => new \DateTime()
+                ]
+            )->add('endDate', DateType::class,
+                [
+                    'label' => 'End Date',
+                    'days' => range(1, 31),
+                    'years' => range(\date('Y'),\date('Y') + 1),
+                    'data' => new \DateTime()
+                ]);
 
         if($options['standalone'] == true) {
             $builder->add("submit", SubmitType::class);
