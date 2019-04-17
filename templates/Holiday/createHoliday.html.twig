@@ -1,4 +1,3 @@
-{% extends 'base.html.twig' %}
 {% block body %}
     <div class="input-group date" data-provide="datepicker">
         <h3>HolidayRequest</h3>
@@ -8,4 +7,5 @@
         <div class="rowLeaveHoliday"><span>Total Days</span>{{ form_widget(formHoliday.endDate) }}</div>
         {{ form_end(formHoliday) }}
     </div>
+    <script src="../../public/js/javascript.js"></script>
 {% endblock %}

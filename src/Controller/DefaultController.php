@@ -8,6 +8,8 @@ use App\Form\HolidayFormType;
 use App\Repository\UserRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,12 +49,25 @@ class DefaultController extends AbstractController
             $entityManager->flush();
         }
 
-
         return new Response($this->render('dashboard.html.twig', [
             'user' => $user,
             'users' => $userList,
             'formHoliday' => $form->createView()
         ]));
+
+        $defaultData = ['message' => 'Type your message here'];
+//        $searchForm['name'], 'searchForm';
+        $searchForm = $this->createFormBuilder($defaultData)
+            ->add('department', ChoiceType::class)
+            ->add('roles', ChoiceType::class)
+            ->add('submit', SubmitType::class, ['label' => 'Search'])
+            ->getForm();
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+        }
+
     }
 
     /**
