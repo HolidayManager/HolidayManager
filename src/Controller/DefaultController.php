@@ -6,8 +6,10 @@ namespace App\Controller;
 use App\Entity\Holiday;
 use App\Form\HolidayFormType;
 use App\Repository\UserRepository;
-
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,14 +21,16 @@ class DefaultController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function dashboard(UserRepository $userRepository, Request $request, Environment $twig):Response
+    public function dashboard(UserRepository $userRepository, Request $request, Environment $twig, PaginatorInterface $paginator):Response
     {
         $user = $this->getUser();
         $userList = null;
 
         if(in_array('ROLE_ADMIN',$user->getRoles()))
         {
-            $userList = $userRepository->findAll();
+            $userList = $userRepository->findPaginated(
+              $request, $paginator
+            );
         }
 
 
@@ -47,12 +51,25 @@ class DefaultController extends AbstractController
             $entityManager->flush();
         }
 
-
         return new Response($this->render('dashboard.html.twig', [
             'user' => $user,
             'users' => $userList,
             'formHoliday' => $form->createView()
         ]));
+
+        $defaultData = ['message' => 'Type your message here'];
+//        $searchForm['name'], 'searchForm';
+        $searchForm = $this->createFormBuilder($defaultData)
+            ->add('department', ChoiceType::class)
+            ->add('roles', ChoiceType::class)
+            ->add('submit', SubmitType::class, ['label' => 'Search'])
+            ->getForm();
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+        }
+
     }
 
     /**

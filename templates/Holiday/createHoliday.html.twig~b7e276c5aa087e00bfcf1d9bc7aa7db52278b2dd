@@ -1,11 +1,10 @@
 {% block body %}
-    <div class="input-group date" data-provide="datepicker">
+    <div class="leaveHolidayContainer">
         <h3>HolidayRequest</h3>
         {{ form_start(formHoliday) }}
-        <div class="input-group input-daterange"><span>{{ form_label(formHoliday.startDate) }}</span>{{ form_widget(formHoliday.startDate) }}</div>
+        <div class="rowLeaveHoliday"><span>{{ form_label(formHoliday.startDate) }}</span>{{ form_widget(formHoliday.startDate) }}</div>
         <div class="rowLeaveHoliday"><span>{{ form_label(formHoliday.endDate) }}</span>{{ form_widget(formHoliday.endDate) }}</div>
         <div class="rowLeaveHoliday"><span>Total Days</span>{{ form_widget(formHoliday.endDate) }}</div>
         {{ form_end(formHoliday) }}
     </div>
-    <script src="../../public/js/javascript.js"></script>
 {% endblock %}

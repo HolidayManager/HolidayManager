@@ -6,6 +6,8 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +22,15 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-
+    public function findPaginated(Request $request, PaginatorInterface $paginator)
+    {
+      $queryBuilder = $this->createQueryBuilder('p');
+      return $paginator->paginate(
+          $queryBuilder->getQuery(),
+          $request->query->getInt('page',1),
+          10
+        );
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects
