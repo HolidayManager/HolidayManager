@@ -12,13 +12,12 @@
     {% include 'Holiday/createHoliday.html.twig' %}
     {% include 'calendarEmployee.html.twig' %}
 {% endif %}
-    
+
 {% if is_granted('ROLE_ADMIN') %}
-    {% include 'User/searchUser.html.twig' %}
-    {% include 'User/userList.html.twig' %}
+{% include 'User/userList.html.twig' %}
+<div class="navigation">
+  {{knp_pagination_render(users)}}
+</div>
 {% endif %}
 
 {% endblock %}
-
-
-
