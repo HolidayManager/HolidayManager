@@ -1,13 +1,11 @@
-{% extends 'navbar.html.twig' %}
+{% extends 'Dashboard/navbar.html.twig' %}
 {% block body %}
-{% if is_granted('ROLE_ADMIN')}
+    {% if is_granted('ROLE_ADMIN') %}
 
-<div class="container">
-{{render(controller(
-'App\Controller\\SearchController::searchBar'
-))}}
+        <div class="container">
 
-{{form(form)}}
-
+            {{form(searchBar)}}
+        </div>
+    {% endif %}
 {% endblock %}
-{% endif %}
+

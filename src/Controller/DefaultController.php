@@ -3,15 +3,21 @@
 namespace App\Controller;
 
 
+use App\Entity\Department;
 use App\Entity\Holiday;
+use App\Entity\Manager;
 use App\Form\HolidayFormType;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Log\Logger;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
@@ -37,8 +43,12 @@ class DefaultController extends AbstractController
         if(in_array('ROLE_MANAGER',$user->getRoles()))
         {
             $holidayRep = $this->getDoctrine()->getRepository(Holiday::class);
+            $managerRepo = $this->getDoctrine()->getRepository(Manager::class);
 
-            $pending = $holidayRep->getPending($user->getDepartment()->getId());
+
+            $manager = $managerRepo->findOneByManagerUser($user);
+
+            $pending = $holidayRep->getPending($manager->getDepartment()->getId());
 
 
 
@@ -64,25 +74,45 @@ class DefaultController extends AbstractController
             $entityManager->flush();
         }
 
+
+
+        //$searchForm['name'], 'searchForm';
+        $defaultData = ['message' => 'Search users'];
+
+        $searchForm = $this->createFormBuilder($defaultData)
+            ->add('department', EntityType::class, [
+                "class" =>  Department::class,
+                "choice_label"  =>  "label",
+                "expanded"  =>  false,
+                "multiple"  =>  false
+            ])
+            ->add('roles', ChoiceType::class, [
+                'expanded'  =>  false,
+                'multiple'  =>  false,
+                'choices'   => [
+                                'Employee' => 'ROLE_USER',
+                                'Manager'   => 'ROLE_MANAGER',
+                                'Admin' =>  'ROLE_ADMIN'
+                                ]
+            ])
+            ->add('firstname', TextType::class, ["label"    =>  "Firstname"])
+            ->add('lastname', TextType::class, ["label"     =>  "Lastname"])
+            ->add('submit', SubmitType::class, ['label' => 'Search'])
+            ->getForm();
+
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            
+        }
+
         return $this->render('dashboard.html.twig', [
             'user' => $user,
             'users' => $userList,
             'formHoliday' => $form->createView(),
-            'pending' => $pending
+            'pending' => $pending,
+            'searchBar' => $searchForm->createView()
         ]);
-
-        $defaultData = ['message' => 'Type your message here'];
-//        $searchForm['name'], 'searchForm';
-        $searchForm = $this->createFormBuilder($defaultData)
-            ->add('department', ChoiceType::class)
-            ->add('roles', ChoiceType::class)
-            ->add('submit', SubmitType::class, ['label' => 'Search'])
-            ->getForm();
-        $searchForm->handleRequest($request);
-
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-
-        }
 
     }
 

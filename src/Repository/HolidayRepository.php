@@ -67,8 +67,8 @@ class HolidayRepository extends ServiceEntityRepository
             ->andWhere($qb->expr()->eq("h.status",":status"),
                         $qb->expr()->eq("u.department",":department"))
             ->setParameter("department",$departmentid)
-            ->setParameter("status",'a')
-            //->orderBy("h.dateRequest DESC")
+            ->setParameter("status",'p')
+            ->orderBy("h.dateRequest","DESC")
             ->getQuery()
             ->getResult();
     }
