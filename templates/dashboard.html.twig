@@ -18,6 +18,9 @@
   {% include 'Dashboard/testcal.html.twig' %}
 </div>
 {% endif %}
+{% if is_granted ('ROLE_MANAGER')%}
+{% include 'Holiday/listPending.html.twig'%}
+{% endif %}
 
 {% if is_granted('ROLE_ADMIN') %}
   <br>
