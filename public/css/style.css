@@ -14,7 +14,15 @@ body{
 .btn-primary{
   background-color: #2e2e3e;
   border-color: #2e2e3e;
+  padding: 10px;
 }
+/*not applied!!
+.btn-primary: hover{
+  background-color: #c9d2dd;
+  border-color: #c9d2dd;
+}
+
+*/
 
 /* setting for /login */
 

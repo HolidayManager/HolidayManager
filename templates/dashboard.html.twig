@@ -1,23 +1,29 @@
 {% extends 'base.html.twig' %}
 
-
-
-{%  block title %} Dashboard {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
 
 {% block body %}
 
-{% if (is_granted('ROLE_USER') or is_granted('ROLE_MANAGER')) %}
-    {% include 'Dashboard/navbar.html.twig' %}
-    {% include 'Dashboard/dashboardnavbar.html.twig' %}
-    {% include 'Holiday/createHoliday.html.twig' %}
-    {% include 'calendarEmployee.html.twig' %}
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% include 'Dashboard/navbar.html.twig' %}
+{% endif %}
+
+{% if not is_granted('ROLE_ADMIN') %}
+  {% include 'Dashboard/dashboardnavbar.html.twig' %}
+  <div class="flexdisplay">
+  {% include 'Holiday/createHoliday.html.twig' %}
+  {% include 'Dashboard/testcal.html.twig' %}
+  </div>
 {% endif %}
 
 {% if is_granted('ROLE_ADMIN') %}
+  <br>
+  <h6><a class="btn-primary" href="user/create" style="margin:0 20px;">Create new user</a></h6>
+  <br>
 {% include 'User/userList.html.twig' %}
-<div class="navigation">
-  {{knp_pagination_render(users)}}
-</div>
+
 {% endif %}
 
 {% endblock %}

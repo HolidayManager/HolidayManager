@@ -1,12 +1,14 @@
 {% block body %}
-    <table class="userList">
-        <tr>
-            <th>Username</th>
-            <th>Department</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Position</th>
-            <th>Holiday Left</th>
+<div class="" style="margin:0 20px;">
+
+    <table class= "table table-striped" class="userList">
+        <tr style="color:grey;">
+            <th scope="col">Username</th>
+            <th scope="col">Department</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Position</th>
+            <th scope="col">Holiday Left</th>
         </tr>
         {% for user in users %}
         <tr>
@@ -20,7 +22,8 @@
         {% endfor %}
     </table>
     <div class="navigation">
-      
+      {{knp_pagination_render(users)}}
     </div>
 
+</div>
 {% endblock %}

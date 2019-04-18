@@ -7,6 +7,7 @@
       <div class="mr-auto p-2">HolidayManager SA</div>
       <div class="p-2">Department: {{ user.getDepartment().getLabel()}}</div>
       <div class="p-2">Name: {{ user.getFirstname() }} {{user.getLastname()}}</div>
+      <div class="p-2"><a class="btn-primary" href="{{path("app_logout")}}">Logout</a></div>
     </div>
     {% endif %}
 
@@ -14,9 +15,9 @@
     <div class="d-flex">
       <div class="mr-auto p-2">HolidayManager SA</div>
       <div class="p-2">Administrator</div>
+      <div class="p-2"><a class="btn-primary" href="{{path("app_logout")}}">Logout</a></div>
     </div>
     {% endif %}
-
 
 
 {% endblock %}
