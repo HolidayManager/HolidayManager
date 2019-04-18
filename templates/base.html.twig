@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    {% block head %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -18,6 +19,7 @@
             <script src='./releases/timeline/4.0.2/main.min.js'></script>
             <script src='./releases/resource-common/4.0.2/main.min.js'></script>
             <script src='./releases/resource-timeline/4.0.2/main.min.js'></script>
+    {% endblock %}
     </head>
     <body>
     {% block body %}
@@ -30,4 +32,5 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     {% endblock %}
     </body>
+
 </html>
