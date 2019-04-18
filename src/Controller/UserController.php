@@ -46,12 +46,15 @@ class UserController extends AbstractController
             );
 
             $entityManager = $this->getDoctrine()->getManager();
+            $user->setActivationToken(Uuid::uuid4());
+            $user->setActive(false);
+            $user->setReferenceYear(new \DateTime("Y"));
 
-            if(in_array($user->getRoles(),'ROLE_MANAGER'))
+            if(in_array('ROLE_MANAGER',$user->getRoles()))
             {
                 $manager = new Manager();
 
-                $manager->setId(Uuid::uuid4());
+
                 $manager->setDepartment($form->get('manageDep')->getData());
                 $manager->setManagerUser($user);
 
@@ -60,17 +63,12 @@ class UserController extends AbstractController
                 $entityManager->flush();
             }
 
-            $user->setActivationToken(Uuid::uuid4());
-            $user->setActive(false);
-            $user->setReferenceYear(new \DateTime("Y"));
-
-            $mailer->sendMail($user);
-
-
 
             $entityManager->persist($user);
             $entityManager->flush();
 
+
+            $mailer->sendMail($user);
             /*if(in_array('ROLE_MANAGER',$user->getRoles()))
             {
                 $manager = new Manager();

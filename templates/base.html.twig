@@ -11,14 +11,17 @@
             <link rel="stylesheet" href="/css/style.css">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-            <link href='./releases/core/4.0.2/main.min.css' rel='stylesheet' />
-            <link href='./releases/timeline/4.0.2/main.min.css' rel='stylesheet' />
-            <link href='./releases/resource-timeline/4.0.2/main.min.css' rel='stylesheet' />
+            <link href='{{ asset('./releases/core/4.0.2/main.min.css') }}' rel='stylesheet' />
+            <link href='{{ asset('./releases/timeline/4.0.2/main.min.css') }}' rel='stylesheet' />
+            <link href='{{ asset('./releases/resource-timeline/4.0.2/main.min.css') }}' rel='stylesheet' />
         {% endblock %}
-            <script src='./releases/core/4.0.2/main.min.js'></script>
-            <script src='./releases/timeline/4.0.2/main.min.js'></script>
-            <script src='./releases/resource-common/4.0.2/main.min.js'></script>
-            <script src='./releases/resource-timeline/4.0.2/main.min.js'></script>
+
+            <script src='{{ asset('./releases/core/4.0.2/main.min.js') }}'></script>
+            <script src='{{ asset('./releases/timeline/4.0.2/main.min.js') }}'></script>
+            <script src='{{ asset('./releases/resource-common/4.0.2/main.min.js') }}'></script>
+            <script src='{{ asset('./releases/resource-timeline/4.0.2/main.min.js') }}'></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
     {% endblock %}
     </head>
     <body>
@@ -27,10 +30,11 @@
     {% endblock %}
     {# we need to change the cdn with local library. in case we dont have internet #}
     {% block javascripts %}
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
     {% endblock %}
+
     </body>
 
 </html>

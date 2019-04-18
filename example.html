@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <label
+      >Begin Date:
+      <input type="text" name="datepicker" id="begin" class="datepicker" />
+    </label>
+    <label
+      >End Date:
+      <input type="text" name="datepicker" id="end" class="datepicker" />
+    </label>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script scr="https://momentjs.com/downloads/moment.min.js"></script>
+    <script>
+      $(function() {
+        $('#end').datepicker();
+        $('#begin')
+          .datepicker({
+            startDate: '04-01-2019'
+          })
+          .on('changeDate', function() {
+            let dayLeft = $('#begin').datepicker('getDate');
+            dayLeft.setDate(dayLeft.getDate() + 25);
+            $('#end').datepicker('setEndDate', dayLeft);
+          });
+      });
+    </script>
+  </body>
+</html>

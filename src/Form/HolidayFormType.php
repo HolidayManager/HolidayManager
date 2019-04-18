@@ -3,10 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Holiday;
-use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,16 +20,15 @@ class HolidayFormType extends AbstractType
                 DateType::class,
                 [
                     'label' => 'Start Date',
-                    'days' => range(1, 31),
-                    'years' => range(\date('Y'),\date('Y') + 1),
-                    'data' => new \DateTime()
+                    'widget' => 'single_text',
+                    'attr' => ['class' => 'js-datepicker']
                 ]
-            )->add('endDate', DateType::class,
+            )->add('endDate',
+                DateType::class,
                 [
                     'label' => 'End Date',
-                    'days' => range(1, 31),
-                    'years' => range(\date('Y'),\date('Y') + 1),
-                    'data' => new \DateTime()
+                    'widget' => 'single_text',
+                    'attr' => ['class' => 'js-datepicker']
                 ]);
 
         if($options['standalone'] == true) {
