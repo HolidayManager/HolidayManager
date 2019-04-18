@@ -61,12 +61,14 @@ class HolidayRepository extends ServiceEntityRepository
     }
 
     public function getPending($departmentid){
-        return $qb = $this->createQueryBuilder('h')
-            ->leftJoin('h.user','u')
-            ->where("h.status=:status AND u.department=:department")
+        $qb = $this->createQueryBuilder('h');
+
+        return    $qb->leftJoin('h.user','u')
+            ->andWhere($qb->expr()->eq("h.status",":status"),
+                        $qb->expr()->eq("u.department",":department"))
             ->setParameter("department",$departmentid)
             ->setParameter("status",'a')
-            ->orderBy("h.dateRequest DESC")
+            //->orderBy("h.dateRequest DESC")
             ->getQuery()
             ->getResult();
     }

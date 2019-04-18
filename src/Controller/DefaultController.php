@@ -4,9 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Holiday;
-use App\Entity\Manager;
 use App\Form\HolidayFormType;
-use App\Repository\HolidayRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +36,7 @@ class DefaultController extends AbstractController
 
         if(in_array('ROLE_MANAGER',$user->getRoles()))
         {
-            $holidayRep = $this->getDoctrine()->getRepository(HolidayRepository::class);
+            $holidayRep = $this->getDoctrine()->getRepository(Holiday::class);
 
             $pending = $holidayRep->getPending($user->getDepartment()->getId());
 

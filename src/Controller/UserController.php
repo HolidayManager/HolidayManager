@@ -36,6 +36,10 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
+        $user->setActivationToken(Uuid::uuid4());
+        $user->setActive(false);
+        $user->setReferenceYear(new \DateTime("Y"));
+
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -47,11 +51,11 @@ class UserController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            if(in_array($user->getRoles(),'ROLE_MANAGER'))
+            if(in_array('ROLE_MANAGER',$user->getRoles()))
             {
                 $manager = new Manager();
 
-                $manager->setId(Uuid::uuid4());
+
                 $manager->setDepartment($form->get('manageDep')->getData());
                 $manager->setManagerUser($user);
 
@@ -60,9 +64,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
             }
 
-            $user->setActivationToken(Uuid::uuid4());
-            $user->setActive(false);
-            $user->setReferenceYear(new \DateTime("Y"));
+
 
             $mailer->sendMail($user);
 

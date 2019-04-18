@@ -2,8 +2,8 @@
     <div>
         <div>{{ holiday.getUser().getFirstName() }}</div>
         <div>{{ holiday.getUser().getLastname() }}</div>
-        <div>{{ holiday.getStartDate() }}</div>
-        <div>{{ holiday.getEndDate() }}</div>
+        <div>{{ holiday.getStartDate() | date }}</div>
+        <div>{{ holiday.getEndDate() | date }}</div>
         <div><a href="">accept</a></div>
         <div><a href="">cancel</a></div>
     </div>
