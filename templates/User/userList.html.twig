@@ -1,6 +1,10 @@
-{% block body %}
-<div class="" style="margin:0 20px;">
 
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
+
+{% block body %}
+<div id="userlisttable">
     <table class= "table table-striped" class="userList">
         <tr style="color:grey;">
             <th scope="col">Username</th>
@@ -21,9 +25,12 @@
         </tr>
         {% endfor %}
     </table>
+
     <div class="navigation">
       {{knp_pagination_render(users)}}
     </div>
+
+
 
 </div>
 {% endblock %}

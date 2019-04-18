@@ -1,6 +1,8 @@
-{% include 'base.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/style.css">
+{% endblock %}
 
-{% block body %}]
+{% block body %}
 
     {% if not is_granted('ROLE_ADMIN')%}
     <div class="d-flex">

@@ -1,11 +1,13 @@
-{% extends 'base.html.twig' %}
+{% include 'base.html.twig' %}
 
-{% block title %}User Info{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
 
 {% block body %}
     {% include 'Dashboard/navbar.html.twig' %}
     <div>
-        <table>
+        <table class= "table table-striped">
             <tr><th>Firstname</th><td>{{ user.getFirstname() }}</td><tr>
             <tr><th>Lastname</th><td>{{ user.getLastname() }}</td></tr>
             <tr><th>Email</th><td>{{ user.getEmail() }}</td></tr>

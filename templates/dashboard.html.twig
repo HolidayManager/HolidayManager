@@ -1,8 +1,9 @@
 {% include 'base.html.twig' %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
 {% endblock %}
+
 
 {% block body %}
 
@@ -15,12 +16,12 @@
   <div class="flexdisplay">
   {% include 'Holiday/createHoliday.html.twig' %}
   {% include 'Dashboard/testcal.html.twig' %}
-  </div>
+</div>
 {% endif %}
 
 {% if is_granted('ROLE_ADMIN') %}
   <br>
-  <h6><a class="btn-primary" href="user/create" style="margin:0 20px;">Create new user</a></h6>
+  <h6><a id="createuser" class="btn-primary" href="user/create">Create new user</a></h6>
   <br>
 {% include 'User/userList.html.twig' %}
 

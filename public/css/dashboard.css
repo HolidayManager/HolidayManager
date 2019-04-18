@@ -1,5 +1,18 @@
-div.flexdisplay{
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px; 
+
+/*button*/
+#createuser{
+  position: absolute;
+  top: 70px;
+  margin-left: 20px;
+}
+
+#backtodashboard{
+  position: absolute;
+  top: 70px;
+  margin-left: 20px;
+}
+
+/*userlist of admin*/
+#userlisttable{
+  margin: 30px 20px;
 }
