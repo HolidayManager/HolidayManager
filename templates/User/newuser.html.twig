@@ -13,19 +13,22 @@
      <div class="container">
 
         <h5 class="h5style">CREATE A NEW USER</h5>
-        {{form_start(createForm)}}
+            {{form_start(createForm)}}
 
-        {{form_row(createForm.username)}}
-        {{form_widget(createForm.username)}}
-        {{form_row(createForm.roles)}}
-        {{form_row(createForm.password)}}
-        {{form_row(createForm.firstname)}}
-        {{form_row(createForm.lastname)}}
-        {{form_row(createForm.email)}}
-        {{form_row(createForm.birthDate)}}
-        {{form_row(createForm.startDate)}}
-        {{form_row(createForm.holidayLeft)}}
-        {{form_row(createForm.department)}}
+            {{form_row(createForm.username)}}
+            {{form_widget(createForm.username)}}
+            {{form_row(createForm.roles)}}
+         <div class="handlingDep">
+             {{form_row(createForm.manageDep)}}
+         </div>
+            {{form_row(createForm.password)}}
+            {{form_row(createForm.firstname)}}
+            {{form_row(createForm.lastname)}}
+            {{form_row(createForm.email)}}
+            {{form_row(createForm.birthDate)}}
+            {{form_row(createForm.startDate)}}
+            {{form_row(createForm.holidayLeft)}}
+
 
 
         {{form_end(createForm)}}

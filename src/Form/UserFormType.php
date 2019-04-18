@@ -40,6 +40,14 @@ class UserFormType extends AbstractType
                     'Admin' =>  'ROLE_ADMIN'
                 ]
             ])
+            ->add('manageDep',EntityType::class,[
+                'class' =>  Department::class,
+                'choice_label'  => 'label',
+                'multiple'  =>  false,
+                'expanded'  =>  false,
+                'label' =>  'Manage Department',
+                'mapped'    =>  false
+            ])
             ->add('password',RepeatedType::class,[
                 'type'      =>  PasswordType::class,
                 'label'   =>    'Password',

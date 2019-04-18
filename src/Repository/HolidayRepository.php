@@ -36,22 +36,39 @@ class HolidayRepository extends ServiceEntityRepository
             $qb->expr()->orX(
                 $qb->expr()->andX(
                     $qb->expr()->gte('h.startDate', ':start'),
-                    $qb->expr()->gte('h.endDate', ':end')
+                    $qb->expr()->gte('h.endDate', ':end'),
+                    $qb->expr()->eq('h.status',':status')
                 ),
                 $qb->expr()->andX(
                     $qb->expr()->lte('h.startDate', ':start'),
-                    $qb->expr()->gte('h.endDate', ':start')
+                    $qb->expr()->gte('h.endDate', ':start'),
+                    $qb->expr()->eq('h.status',':status')
                 ),
                 $qb->expr()->andX(
                     $qb->expr()->lte('h.startDate', ':end'),
-                    $qb->expr()->gte('h.endDate', ':end')
+                    $qb->expr()->gte('h.endDate', ':end'),
+                    $qb->expr()->eq('h.status',':status')
                 )
             )
-        )->setParameter('start', $start)->setParameter('end', $end)->getQuery()->getResult();
+        )->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->setParameter('status','a')
+            ->getQuery()->getResult();
 
 
 
         return $result;
+    }
+
+    public function getPending($departmentid){
+        return $qb = $this->createQueryBuilder('h')
+            ->leftJoin('h.user','u')
+            ->where("h.status=:status AND u.department=:department")
+            ->setParameter("department",$departmentid)
+            ->setParameter("status",'a')
+            ->orderBy("h.dateRequest DESC")
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
