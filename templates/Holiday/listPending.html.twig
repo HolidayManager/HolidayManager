@@ -4,8 +4,9 @@
         <div>{{ holiday.getUser().getLastname() }}</div>
         <div>{{ holiday.getStartDate() | date }}</div>
         <div>{{ holiday.getEndDate() | date }}</div>
-        <div><a class="accept" href="/holiday/accept/{{ holiday.getId() }}" id="{{ holiday.getId() }}">Accept</a></div>
+        <div><span class="accept" href="/holiday/accept/{{ holiday.getId() }}" id="{{ holiday.getId() }}">Accept</span></div>
         <div><a class="refuse" href="/holiday/refuse/{{ holiday.getId() }}">Refuse</a></div>
     </div>
 {% endfor %}
-<script src="{{ asset('/js/javascript.js') }}"></script>
+
+

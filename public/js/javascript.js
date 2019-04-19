@@ -30,17 +30,26 @@ $(function() {
   $(".accept").on("click",function(event){
       event.preventDefault();
 
+
+
       let id = $(this).attr("id");
 
-      $().ajax(
+      let elementDiv = $(this).parent(".pendingRow");
+
+      console.log(id);
+      $.ajax(
           {
               url: '/holiday/accept/'+id,
               method: 'GET',
-              success: function(){
-                  let div = $(this).closest("div");
-                  div.html("Accepted");
-                  div.addClass(".accepted",{duration:500});
-                  div.fadeOut();
+              success: function(json,elementDiv){
+                  console.log(elementDiv);
+
+                  $(elementDiv).html("Accepted");
+                  $(elementDiv).addClass(".accepted",{duration:500});
+                  $(elementDiv).fadeOut();
+              },
+              error: function(){
+                  console.log("error");
               }
           }
       );
