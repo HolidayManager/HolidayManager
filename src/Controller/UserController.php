@@ -50,6 +50,9 @@ class UserController extends AbstractController
             );
 
             $entityManager = $this->getDoctrine()->getManager();
+            $user->setActivationToken(Uuid::uuid4());
+            $user->setActive(false);
+            $user->setReferenceYear(new \DateTime("Y"));
 
             if(in_array('ROLE_MANAGER',$user->getRoles()))
             {
@@ -64,15 +67,20 @@ class UserController extends AbstractController
                 $entityManager->flush();
             }
 
+<<<<<<< HEAD
 
 
             $mailer->sendMail($user);
 
 
+=======
+>>>>>>> 8b0e9daa0c0635d2d87cbec9cac9d17ff91f50ba
 
             $entityManager->persist($user);
             $entityManager->flush();
 
+
+            $mailer->sendMail($user);
             /*if(in_array('ROLE_MANAGER',$user->getRoles()))
             {
                 $manager = new Manager();

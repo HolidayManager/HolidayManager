@@ -2,6 +2,11 @@
 
 /*general setting for base.html.twig*/
 
+/*handling department select*/
+.handlingDep{
+    display:none;
+}
+
 *{
 box-sizing: border-box;
 transition-duration: 0.3s;
