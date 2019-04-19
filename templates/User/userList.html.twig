@@ -16,7 +16,7 @@
         </tr>
         {% for user in users %}
         <tr>
-            <td><a href="/show/user/{{ user.getId() }}">{{ user.getUsername() }}</a></td>
+            <td><a id="username_click" href="/show/user/{{ user.getId() }}">{{ user.getUsername() }}</a></td>
             <td>{{ user.getDepartment().getLabel() }}</td>
             <td>{{ user.getFirstname() }}</td>
             <td>{{ user.getLastname() }}</td>
