@@ -1,11 +1,22 @@
 {% extends 'Dashboard/navbar.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
+
 {% block body %}
     {% if is_granted('ROLE_ADMIN') %}
 
-        <div class="container">
-
-            {{form(searchBar)}}
-        </div>
+      <div class="">
+          {#  {{form(searchBar)}} #}
+            {{form_start(searchBar)}}
+            <ul id="inline_block">
+              <li class="inline">{{form_row(searchBar.department)}}</li>
+              <li class="inline">{{form_row(searchBar.roles)}}</li>
+              <li class="inline">{{form_row(searchBar.firstname)}}</li>
+              <li class="inline">{{form_row(searchBar.lastname)}}</li>
+              <li class="inline">{{form_end(searchBar)}}</li>
+            </ul>
+     </div>
     {% endif %}
 {% endblock %}
-

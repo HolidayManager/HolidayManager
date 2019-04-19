@@ -1,8 +1,25 @@
+/*MAIN DASHBOARD*/
+
+div.flexdisplay{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+div.bg{
+  background-image: url("/images/dashboardbg2.png");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
 
 /*buttons*/
 
 #createuser{
-  position: absolute;
+  position: absolute;1§
   top: 70px;
   margin-left: 20px;
   text-decoration: none;
@@ -33,7 +50,45 @@
   background-color: #3c5594;
 }
 
-/*create new user of admin*/
+
+/*admin: searchBar*/
+
+#form_submit.btn-primary.btn{
+  padding: 5px 15px;
+  margin-bottom: 5px;
+}
+
+#form_submit.btn-primary.btn:hover{
+  background-color: #3c5594;
+}
+
+select#form_department.form-control,
+select#form_roles.form-control,
+input#form_firstname.form-control,
+input#form_lastname.form-control {
+  max-width: 150px;
+  margin: 5px 10px;
+}
+
+#inline_block{
+  background-color: #c9d2dd;
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+li.inline{
+  display: inline-block;
+  font-size: 15px;
+  width: 120px;
+  padding: 10px;
+  margin: auto;
+  text-align: center;
+}
+
+
+/*admin: create new user*/
 div.form-group{
 /**/
 }
@@ -52,7 +107,7 @@ div.form-group #user_form_submit{
   background-color: #3c5594;
 }
 
-/*usesrlist of admin*/
+/* admin: usesrlist */
 #username_click{
   text-decoration: none;
   color: #3c5594;
@@ -64,7 +119,7 @@ div.form-group #user_form_submit{
 
 
 
-/*showuserlist of admin*/
+/* admin showuserlist */
 #userlisttable{
   margin: 30px 20px;
 }
@@ -91,4 +146,30 @@ div.userchange{
 
 #updateuser:hover, #deleteuser:hover{
   background-color: #3c5594;
+}
+
+/*manager/user: Holidayrequest - createHoliday*/
+#holiday_form_submit:hover{
+  background-color: #3c5594;
+}
+
+.dashboardcontainer{
+  margin: 5px 10px;
+}
+
+/*manager/user: testcalendar */
+
+
+/*manager: listPending*/
+a.btn-primary{
+  text-decoration: none;
+}
+
+a.btn-primary:hover{
+  background-color: #3c5594;
+}
+
+
+#listPending.container{
+  list-style-type: none;
 }

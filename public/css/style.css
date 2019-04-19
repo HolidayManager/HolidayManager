@@ -6,7 +6,12 @@
 .handlingDep{
     display:none;
 }
-
+.accepted{
+    background-color: palegreen;
+}
+.refused {
+    background-color: lightcoral;
+}
 *{
 box-sizing: border-box;
 transition-duration: 0.3s;
@@ -72,7 +77,10 @@ div.container {
   border-radius: 5px;
   max-width: 500px;
   margin-top: 100px;
+}
 
+.container {
+  background-color: #eeeeee;
 }
 
 .form-control{
