@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Repository\HolidayRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ApiController extends AbstractController
@@ -68,5 +69,40 @@ class ApiController extends AbstractController
 
         return $this->json($api);
 
+    }
+
+    /**
+     * @Route("/holiday/accept/{holiday}")
+     */
+    public function acceptHoliday(Holiday $holiday)
+    {
+        if($holiday){
+            $holiday->setStatus('a');
+
+            $manager = $this->getDoctrine()->getManager();
+
+            $manager->persist($holiday);
+            $manager->flush();
+
+            return new Response('Accepted',200);
+        }
+        return new Response('Not Accepted', 304);
+    }
+    /**
+     * @Route("/holiday/refuse/{holiday}")
+     */
+    public function refuseHoliday(Holiday $holiday)
+    {
+        if($holiday){
+            $holiday->setStatus('r');
+
+            $manager = $this->getDoctrine()->getManager();
+
+            $manager->persist($holiday);
+            $manager->flush();
+
+            return new Response('Refused',200);
+        }
+        return new Response('Not Refused', 304);
     }
 }
