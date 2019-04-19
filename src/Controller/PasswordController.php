@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Twig\Environment;
 
 class PasswordController extends AbstractController
@@ -73,6 +74,12 @@ class PasswordController extends AbstractController
         $form = $this->createFormBuilder($defaultData)
             ->add('resetPassword', RepeatedType::class,[
                 'type'      =>  PasswordType::class,
+                'constraints'   =>   new Regex(
+                    [
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&,])[A-Za-z\d@$!%*?&, ]{8,}$/',
+                        'message' => "Password have to contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+
+                    ]),
                 'label'   =>    'New Password',
                 'first_options' =>  ['label'    =>  'Password'],
                 'second_options' =>  ['label'    =>  'Repeat Password'],

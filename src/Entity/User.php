@@ -91,7 +91,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotNull()
      *
      */
     private $holidayLeft;
