@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 
+use App\DTO\UserSearch;
 use App\Entity\Department;
 use App\Entity\Holiday;
 use App\Entity\Manager;
+use App\Entity\User;
 use App\Form\HolidayFormType;
+use App\Form\SearchUserListFormType;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
@@ -49,11 +52,6 @@ class DefaultController extends AbstractController
             $manager = $managerRepo->findOneByManagerUser($user);
 
             $pending = $holidayRep->getPending($manager->getDepartment()->getId());
-
-
-
-
-
         }
 
 
@@ -76,33 +74,19 @@ class DefaultController extends AbstractController
 
 
 
-        //$searchForm['name'], 'searchForm';
-        $defaultData = ['message' => 'Search users'];
 
-        $searchForm = $this->createFormBuilder($defaultData)
-            ->add('department', EntityType::class, [
-                "class" =>  Department::class,
-                "choice_label"  =>  "label",
-                "expanded"  =>  false,
-                "multiple"  =>  false
-            ])
-            ->add('roles', ChoiceType::class, [
-                'expanded'  =>  false,
-                'multiple'  =>  false,
-                'choices'   => [
-                                'Employee' => 'ROLE_USER',
-                                'Manager'   => 'ROLE_MANAGER',
-                                'Admin' =>  'ROLE_ADMIN'
-                                ]
-            ])
-            ->add('firstname', TextType::class, ["label"    =>  "Firstname"])
-            ->add('lastname', TextType::class, ["label"     =>  "Lastname"])
-            ->add('submit', SubmitType::class, ['label' => 'Search'])
-            ->getForm();
+        $userSearched = new UserSearch();
+
+        $searchForm = $this->createForm(SearchUserListFormType::class, $userSearched,["standalone"=>true]);
 
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $data = $searchForm->getData();
+
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+
+            $userList = $userRepository->searchUsers($userSearched, $paginator, $request);
 
         }
 

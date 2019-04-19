@@ -31,7 +31,7 @@ class HolidayRepository extends ServiceEntityRepository
 
 
         $qb = $this->createQueryBuilder('h');
-
+        /*
         $result = $qb->where(
             $qb->expr()->orX(
                 $qb->expr()->andX(
@@ -50,7 +50,12 @@ class HolidayRepository extends ServiceEntityRepository
                     $qb->expr()->eq('h.status',':status')
                 )
             )
-        )->setParameter('start', $start)
+        )*/
+
+        $result = $qb->orWhere("h.startDate<=:start AND h.endDate>=:start AND h.status=:status",
+                                "h.startDate>=:start AND h.endDate<=:end AND h.status=:status",
+                                "h.startDate<=:end AND h.endDate>=:end AND h.status=:status")
+            ->setParameter('start', $start)
             ->setParameter('end', $end)
             ->setParameter('status','a')
             ->getQuery()->getResult();
