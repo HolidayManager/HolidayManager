@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DTO\UserSearch;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
@@ -32,6 +33,31 @@ class UserRepository extends ServiceEntityRepository
         );
     }
 
+    public function searchUsers(UserSearch $user, PaginatorInterface $paginator, Request $request){
+        $qb = $this->createQueryBuilder('u')
+            ->andWhere("u.department = :department")
+            ->andWhere("u.roles LIKE :roles")
+            ->setParameter("roles", sprintf('%%%s%%', $user->roles))
+            ->setParameter("department",$user->department);
+
+        if ($user->firstname) {
+            $qb->andWhere("u.firstname LIKE :firstname")
+                ->setParameter("firstname", sprintf('%%%s%%', $user->firstname));
+        }
+        if ($user->lastname) {
+            $qb->andWhere("u.lastname LIKE :lastname")
+                ->setParameter("lastname", sprintf('%%%s%%', $user->lastname));
+        }
+
+
+        return $paginator->paginate(
+            $qb->getQuery(),
+            $request->query->getInt('page',1),
+            10
+        );
+
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
@@ -60,4 +86,6 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
 }
