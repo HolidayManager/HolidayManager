@@ -31,6 +31,10 @@ body, html{
   border-color: #bdbdbd;
 }
 
+#signinbutton:hover {
+  background-color: #2e2e3e;
+}
+
 
 div.container {
   border: 2px solid #fffefc;
@@ -39,6 +43,15 @@ div.container {
   max-width: 400px;
   margin:auto;
   text-align: center;
+}
+
+a.forgotpassword{
+  color: #2e2e3e;
+  text-decoration: none;
+}
+
+a.forgotpassword:hover{
+  color: #bdbdbd;
 }
 
 /*
@@ -56,7 +69,3 @@ div.vertical-center {
   transform: translateY(-50%);
 }
 */
-.btn:focus,.btn:active:focus,.btn.active:focus,
-.btn.focus,.btn:active.focus,.btn.active.focus {
-    outline: none;
-}
