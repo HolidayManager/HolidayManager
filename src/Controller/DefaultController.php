@@ -103,7 +103,7 @@ class DefaultController extends AbstractController
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            
+
         }
 
         return $this->render('dashboard.html.twig', [
@@ -128,7 +128,7 @@ class DefaultController extends AbstractController
     */
 
     public function whoisoff(Environment $twig) {
-      return new Response($twig->render('whoisoff.html.twig'));
+      return new Response($twig->render('whoisoff.html.twig',["user"=>$this->getUser()]));
     }
 
 
