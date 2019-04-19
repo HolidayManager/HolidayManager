@@ -6,9 +6,12 @@
 
 {% block body %}
     {% include 'Dashboard/navbar.html.twig' %}
-    <div>
-        <table class= "table table-striped">
-            <tr><th>Firstname</th><td>{{ user.getFirstname() }}</td><tr>
+
+    <h6><a id="backtodashboard2" class="btn-primary" href="/dashboard">Back to Dashboard</a></h6>
+
+        <table id="showuserlist" class= "table table-striped">
+
+            <tr><th>Firstname</th><td>{{ user.getFirstname() }}</td></tr>
             <tr><th>Lastname</th><td>{{ user.getLastname() }}</td></tr>
             <tr><th>Email</th><td>{{ user.getEmail() }}</td></tr>
             <tr><th>Date of Birth</th><td>{{ user.getBirthDate()| date }}</td></tr>
@@ -17,9 +20,9 @@
             <tr><th>Start day of work</th><td>{{ user.getReferenceYear() | date }}</td></tr>
             <tr><th>Holidays Left</th><td>{{ user.getHolidayLeft() }}</td></tr>
         </table>
+    <div class="userchange">
+        <a id="updateuser" href="/user/update/{{ user.getId() }}"><span>Update <i class="fas fa-pencil-alt"></i></a>
+        <a id="deleteuser" href="/user/delete/{{ user.getId() }}">Delete  <i class="far fa-times-circle"></i></a>
     </div>
-    <div>
-        <a href="/user/update/{{ user.getId() }}"><span>Update<i class="fas fa-pencil-alt"></i></a>
-        <a href="/user/delete/{{ user.getId() }}">Delete<i class="far fa-times-circle"></i></a>
     </div>
 {% endblock %}

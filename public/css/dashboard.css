@@ -1,18 +1,94 @@
 
-/*button*/
+/*buttons*/
+
 #createuser{
   position: absolute;
   top: 70px;
   margin-left: 20px;
+  text-decoration: none;
 }
+
+#createuser:hover{
+  background-color: #3c5594;
+}
+
 
 #backtodashboard{
   position: absolute;
   top: 70px;
   margin-left: 20px;
+  text-decoration: none;
+  padding: 5px 10px;
 }
 
-/*userlist of admin*/
+#backtodashboard2{
+  position: absolute;
+  top: 70px;
+  margin-left: 20px;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+#backtodashboard2:hover{
+  background-color: #3c5594;
+}
+
+/*create new user of admin*/
+div.form-group{
+/**/
+}
+
+h5.h5style{
+  margin-top: 10px;
+  text-align: center;
+}
+
+div.form-group #user_form_submit{
+  margin: 0 auto;
+  text-align: center;
+}
+
+#user_form_submit:hover{
+  background-color: #3c5594;
+}
+
+/*usesrlist of admin*/
+#username_click{
+  text-decoration: none;
+  color: #3c5594;
+}
+#username_click:hover{
+  color: #1faac2;
+}
+
+
+
+
+/*showuserlist of admin*/
 #userlisttable{
   margin: 30px 20px;
+}
+
+#showuserlist{
+  margin: 70px 20px;
+}
+
+div.userchange{
+  margin: auto;
+  text-align: center;
+}
+
+#updateuser, #deleteuser{
+  background-color: #2e2e3e;
+  border-radius: 0.25em;
+  color: #eeeeee;
+  padding: 10px 25px;
+  margin: 10px 10px;
+  font-weight: 900;
+  text-decoration: NONE;
+
+}
+
+#updateuser:hover, #deleteuser:hover{
+  background-color: #3c5594;
 }
