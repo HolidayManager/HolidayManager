@@ -34,26 +34,58 @@ $(function() {
 
       let id = $(this).attr("id");
 
-      let elementDiv = $(this).parent(".pendingRow");
+      let elementDiv = $(this).parent().parent();
 
       console.log(id);
       $.ajax(
           {
               url: '/holiday/accept/'+id,
               method: 'GET',
-              success: function(json,elementDiv){
-                  console.log(elementDiv);
+              success: function(json){
+                  console.log(this);
 
-                  $(elementDiv).html("Accepted");
-                  $(elementDiv).addClass(".accepted",{duration:500});
-                  $(elementDiv).fadeOut();
-              },
+                  $(this).html("Accepted");
+                  $(this).addClass("accepted");
+
+                  window.setTimeout(function(){
+                    $(this).fadeOut();
+                  }.bind(this), 3000);
+              }.bind(elementDiv),
               error: function(){
                   console.log("error");
               }
           }
       );
   });
+    $(".refuse").on("click",function(event){
+        event.preventDefault();
 
+
+
+        let id = $(this).parent().prev().children().attr("id");
+
+        let elementDiv = $(this).parent().parent();
+
+        console.log(id);
+        $.ajax(
+            {
+                url: '/holiday/refuse/'+id,
+                method: 'GET',
+                success: function(json){
+                    console.log(this);
+
+                    $(this).html("Refused");
+                    $(this).addClass("refused");
+
+                    window.setTimeout(function(){
+                        $(this).fadeOut();
+                    }.bind(this), 3000);
+                }.bind(elementDiv),
+                error: function(){
+                    console.log("error");
+                }
+            }
+        );
+    });
 
 });

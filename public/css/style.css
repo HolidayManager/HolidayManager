@@ -9,6 +9,9 @@
 .accepted{
     background-color: palegreen;
 }
+.refused {
+    background-color: lightcoral;
+}
 *{
 box-sizing: border-box;
 transition-duration: 0.3s;
