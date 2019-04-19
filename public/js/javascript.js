@@ -13,14 +13,17 @@ $('#user_form_roles').on('change', function() {
 });
 
 //Datepicker
-$(function(){
 
+$(function() {
+  $('.dateBegin')
+      .datepicker({
+        format: 'dd-mm-yyyy',
+        startDate: '04-01-2019'
+      })
+      .on('changeDate', function() {
+        let dayLeft = $('#begin').datepicker('getDate');
+        dayLeft.setDate(dayLeft.getDate() + 25);
+        $('#end').datepicker('setEndDate', dayLeft);
+      });
+  $('.dateEnd').datepicker();
 });
-$('.js-datepicker').datepicker({
-  startDate: "04-08-2019"
-}).on("changeDate",function(){
-  console.log("change");
-});
-
-  console.log("ciao adrien");
-

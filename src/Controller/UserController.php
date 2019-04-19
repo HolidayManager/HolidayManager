@@ -67,14 +67,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
             }
 
-<<<<<<< HEAD
-
-
             $mailer->sendMail($user);
-
-
-=======
->>>>>>> 8b0e9daa0c0635d2d87cbec9cac9d17ff91f50ba
 
             $entityManager->persist($user);
             $entityManager->flush();

@@ -6,7 +6,6 @@ use App\Entity\Holiday;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,14 +20,15 @@ class HolidayFormType extends AbstractType
                 [
                     'label' => 'Start Date',
                     'widget' => 'single_text',
-                    'attr' => ['class' => 'js-datepicker']
+                    'attr' => ['class' => 'dateBegin'],
+                    'html5' => false
                 ]
             )->add('endDate',
                 DateType::class,
                 [
                     'label' => 'End Date',
                     'widget' => 'single_text',
-                    'attr' => ['class' => 'js-datepicker']
+                    'attr' => ['class' => 'dateEnd']
                 ]);
 
         if($options['standalone'] == true) {
