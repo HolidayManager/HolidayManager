@@ -30,7 +30,7 @@ $(function() {
 // Accept and refuse holiday for managers
   $(".accept").on("click",function(event){
       event.preventDefault();
-      console.log("ciao");
+
 
       let id = $(this).attr("id");
 
@@ -42,18 +42,13 @@ $(function() {
               url: '/holiday/accept/'+id,
               method: 'GET',
               success: function(json){
-                  console.log(this);
-
                   $(this).html("Accepted");
                   $(this).addClass("accepted");
 
                   window.setTimeout(function(){
                     $(this).fadeOut();
                   }.bind(this), 3000);
-              }.bind(elementDiv),
-              error: function(){
-                  console.log("error");
-              }
+              }.bind(elementDiv)
           }
       );
   });
@@ -65,24 +60,18 @@ $(function() {
 
         let elementDiv = $(this).parent().parent();
 
-        console.log(id);
         $.ajax(
             {
                 url: '/holiday/refuse/'+id,
                 method: 'GET',
                 success: function(json){
-                    console.log(this);
-
                     $(this).html("Refused");
                     $(this).addClass("refused");
 
                     window.setTimeout(function(){
                         $(this).fadeOut();
                     }.bind(this), 3000);
-                }.bind(elementDiv),
-                error: function(){
-                    console.log("error");
-                }
+                }.bind(elementDiv)
             }
         );
     });

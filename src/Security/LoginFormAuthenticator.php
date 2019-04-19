@@ -93,12 +93,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         //reset holiday in the reference year   vvvvvvvvv
+        $dateDatabase = new \DateTime($user->getReferenceYear()->format("Y-m-d"));
+        $dateBeginYear = new \DateTime(date("Y")."01-01");
 
 
 
-        if(date("Y")>$user->getReferenceYear())
+
+        if($dateBeginYear>$dateDatabase)
         {
-            $user->setReferenceYear(date("Y"));
+            $user->setReferenceYear(new \DateTime('first day of January ' . date('Y')));
             $user->setHolidayLeft(25);
 
             $manager = $this->entityManager;

@@ -78,6 +78,32 @@ class HolidayRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function spentCurrentYear($userid,$endDate){
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb->leftJoin("h.user" , "u")
+                ->andWhere("h.status",":status",
+                            "h.user=:user",
+                            "h.endDate<=:end")
+            ->setParameter("status","a")
+            ->setParameter("end",date("Y-m-d"))
+            ->setParameter("user",$userid)
+            ->getQuery()->getResult();
+    }
+    public function toSpentYear($userid,$endDate){
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb->leftJoin("h.user" , "u")
+            ->andWhere("h.status",":status",
+                "h.user=:user",
+                "h.startDate>=:now",
+                "h.startDate>=:firstDayOfYear")
+            ->setParameter("status","a")
+            ->setParameter("start",date("Y-m-d"))
+            ->setParameter("user",$userid)
+            ->setParameter("now",date("Y-m-d"))
+            ->getQuery()->getResult();
+    }
     // /**
     //  * @return Holiday[] Returns an array of Holiday objects
     //  */

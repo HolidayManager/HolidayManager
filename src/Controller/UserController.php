@@ -54,13 +54,13 @@ class UserController extends AbstractController
             $user->setActive(false);
             $user->setReferenceYear(new \DateTime("Y"));
 
-            /*$month = new \DateTime($user->getStartDate()->format("Y-m-d"));
+            $month = new \DateTime($user->getStartDate()->format("Y-m-d"));
             $endYear = new \DateTime(date("Y-m-d",strtotime("Dec 31")));
 
             $interval = $endYear->diff($month);
 
-            $user->setHolidayLeft($interval->format("months"));
-*/
+            $user->setHolidayLeft($interval->format("%m")*2);
+
 
             if(in_array('ROLE_MANAGER',$user->getRoles()))
             {

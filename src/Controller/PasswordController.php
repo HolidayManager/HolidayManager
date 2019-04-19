@@ -4,7 +4,9 @@
 namespace App\Controller;
 
 
+use App\DTO\RestorePassword;
 use App\Entity\User;
+use App\Form\RestorePasswordFormType;
 use App\Mailer\PasswordMailer;
 use App\Repository\UserRepository;
 use Ramsey\Uuid\Uuid;
@@ -71,21 +73,9 @@ class PasswordController extends AbstractController
     public function restorePassword(Environment $twig, $token,UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, Request $request){
         $defaultData = ['message' => 'Type your password here'];
 
-        $form = $this->createFormBuilder($defaultData)
-            ->add('resetPassword', RepeatedType::class,[
-                'type'      =>  PasswordType::class,
-                'constraints'   =>   new Regex(
-                    [
-                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&,])[A-Za-z\d@$!%*?&, ]{8,}$/',
-                        'message' => "Password have to contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+        $restoreData = new RestorePassword();
 
-                    ]),
-                'label'   =>    'New Password',
-                'first_options' =>  ['label'    =>  'Password'],
-                'second_options' =>  ['label'    =>  'Repeat Password'],
-            ])
-            ->add("Reset",SubmitType::class)
-            ->getForm();
+        $form = $this->createForm(RestorePasswordFormType::class,$restoreData,["standalone"=>true]);
 
         $form->handleRequest($request);
 
@@ -94,14 +84,11 @@ class PasswordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
-            $data = $form->getData();
-
-
             if ($user) {
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
-                        $data["resetPassword"]
+                        $restoreData->password
                     )
                 );
 
