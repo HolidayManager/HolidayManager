@@ -30,6 +30,7 @@ $(function() {
 // Accept and refuse holiday for managers
   $(".accept").on("click",function(event){
       event.preventDefault();
+      console.log("ciao");
 
       let id = $(this).attr("id");
 
