@@ -66,7 +66,7 @@ class UserController extends AbstractController
                 $entityManager->persist($manager);
                 $entityManager->flush();
             }
-            
+
 
             $mailer->sendMail($user);
 
