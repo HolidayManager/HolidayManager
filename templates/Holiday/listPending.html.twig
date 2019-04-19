@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% for holiday in pending %}
     <div class="pendingRow">
         <div>{{ holiday.getUser().getFirstName() }}</div>
@@ -10,3 +11,29 @@
 {% endfor %}
 
 
+=======
+{% include 'base.html.twig' %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
+
+
+
+<div class="container">
+
+
+<ul> <h5 class="h5style">Received Requests</h5> </ul>
+  {% for holiday in pending %}
+    <li id="listPending" class="container">
+          <p>
+            {{ holiday.getUser().getFirstName() }} {{ holiday.getUser().getLastname()}}
+            {{ holiday.getStartDate() | date('d/m/Y') }} - {{holiday.getEndDate() | date('d/m/Y')}}
+          </p>
+          <p>
+            <a class="btn-primary" href="">Accept</a> <a class="btn-primary" href="">Refuse</a>
+          </p>
+    </li>
+{% endfor %}
+</div>
+>>>>>>> fridaytwig

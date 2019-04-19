@@ -11,16 +11,20 @@
   {% include 'Dashboard/navbar.html.twig' %}
 {% endif %}
 
+<div class="bg">
 {% if not is_granted('ROLE_ADMIN') %}
   {% include 'Dashboard/dashboardnavbar.html.twig' %}
   <div class="flexdisplay">
   {% include 'Holiday/createHoliday.html.twig' %}
   {% include 'Dashboard/testcal.html.twig' %}
-  </div>
 {% endif %}
+  </div>
+
 {% if is_granted ('ROLE_MANAGER')%}
 {% include 'Holiday/listPending.html.twig'%}
 {% endif %}
+
+
 
 {% if is_granted('ROLE_ADMIN') %}
   <br>
@@ -33,4 +37,7 @@
 
 {% endif %}
 
+</div>
 {% endblock %}
+
+</div>
