@@ -6,7 +6,9 @@
 .handlingDep{
     display:none;
 }
-
+.accepted{
+    background-color: palegreen;
+}
 *{
 box-sizing: border-box;
 transition-duration: 0.3s;

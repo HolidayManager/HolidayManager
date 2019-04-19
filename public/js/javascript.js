@@ -26,4 +26,25 @@ $(function() {
         $('#end').datepicker('setEndDate', dayLeft);
       });
   $('.dateEnd').datepicker();
+
+  $(".accept").on("click",function(event){
+      event.preventDefault();
+
+      let id = $(this).attr("id");
+
+      $().ajax(
+          {
+              url: '/holiday/accept/'+id,
+              method: 'GET',
+              success: function(){
+                  let div = $(this).closest("div");
+                  div.html("Accepted");
+                  div.addClass(".accepted",{duration:500});
+                  div.fadeOut();
+              }
+          }
+      );
+  });
+
+
 });

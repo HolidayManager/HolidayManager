@@ -1,10 +1,11 @@
 {% for holiday in pending %}
-    <div>
+    <div class="pendingRow">
         <div>{{ holiday.getUser().getFirstName() }}</div>
         <div>{{ holiday.getUser().getLastname() }}</div>
         <div>{{ holiday.getStartDate() | date }}</div>
         <div>{{ holiday.getEndDate() | date }}</div>
-        <div><a class="accept" href="/holiday/accept/{{ holiday.getId() }}">Accept</a></div>
+        <div><a class="accept" href="/holiday/accept/{{ holiday.getId() }}" id="{{ holiday.getId() }}">Accept</a></div>
         <div><a class="refuse" href="/holiday/refuse/{{ holiday.getId() }}">Refuse</a></div>
     </div>
 {% endfor %}
+<script src="{{ asset('/js/javascript.js') }}"></script>
