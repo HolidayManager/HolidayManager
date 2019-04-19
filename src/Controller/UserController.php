@@ -63,7 +63,7 @@ class UserController extends AbstractController
                 $manager->setManagerUser($user);
 
 
-                $entityManager->persist($manager);
+                $entityManager->persist($holiday);
                 $entityManager->flush();
             }
 
