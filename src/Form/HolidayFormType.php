@@ -4,8 +4,8 @@ namespace App\Form;
 
 use App\Entity\Holiday;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +14,15 @@ class HolidayFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
+            ->add("startDate", TextType::class,[
+                "label" => "Begin Holiday",
+                'attr' => ["class" => "dateBegin"]])
+            ->add("endDate", TextType::class, [
+                "label" => "End Holiday",
+                'attr' => ["class" => "dateEnd"]
+            ]);
+
+            /*->add(
                 'startDate',
                 DateType::class,
                 [
@@ -28,8 +36,9 @@ class HolidayFormType extends AbstractType
                 [
                     'label' => 'End Date',
                     'widget' => 'single_text',
-                    'attr' => ['class' => 'dateEnd']
-                ]);
+                    'attr' => ['class' => 'dateEnd'],
+                    'html5' => false
+                ]);*/
 
         if($options['standalone'] == true) {
             $builder->add("submit", SubmitType::class);

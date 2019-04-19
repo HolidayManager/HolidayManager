@@ -4,7 +4,7 @@
 $('#user_form_roles').on('change', function() {
 
   if ($(this).val()=='ROLE_MANAGER') {
-    console.log("Ciao");
+
     $('.handlingDep').show();
 
   } else {
@@ -15,22 +15,21 @@ $('#user_form_roles').on('change', function() {
 //Datepicker
 
 $(function() {
-  $('.dateBegin')
+  $('.dateBegin').datepicker();/*
       .datepicker({
-        format: 'dd-mm-yyyy',
-        startDate: '04-01-2019'
+          format: 'dd-mm-yyyy',
+          startDate: '04-01-2019'
       })
       .on('changeDate', function() {
         let dayLeft = $('#begin').datepicker('getDate');
         dayLeft.setDate(dayLeft.getDate() + 25);
         $('#end').datepicker('setEndDate', dayLeft);
-      });
+      });*/
   $('.dateEnd').datepicker();
 
+// Accept and refuse holiday for managers
   $(".accept").on("click",function(event){
       event.preventDefault();
-
-
 
       let id = $(this).attr("id");
 
@@ -57,10 +56,9 @@ $(function() {
           }
       );
   });
-    $(".refuse").on("click",function(event){
+
+  $(".refuse").on("click",function(event){
         event.preventDefault();
-
-
 
         let id = $(this).parent().prev().children().attr("id");
 
