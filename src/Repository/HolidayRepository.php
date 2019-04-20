@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Holiday;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -78,31 +79,35 @@ class HolidayRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function spentCurrentYear($userid,$endDate){
-        $qb = $this->createQueryBuilder('u');
+    public function spentCurrentYear(User $user){
 
-        return $qb->leftJoin("h.user" , "u")
-                ->andWhere("h.status",":status",
+
+        return $this->createQueryBuilder('h')
+                ->andWhere("h.status=:status",
                             "h.user=:user",
-                            "h.endDate<=:end")
+                            "h.endDate<=:end",
+                            "h.startDate>=:start")
             ->setParameter("status","a")
             ->setParameter("end",date("Y-m-d"))
-            ->setParameter("user",$userid)
+            ->setParameter("user",$user->getId())
+            ->setParameter("start",date("Y-01-01"))
             ->getQuery()->getResult();
     }
-    public function toSpentYear($userid,$endDate){
-        $qb = $this->createQueryBuilder('u');
 
-        return $qb->leftJoin("h.user" , "u")
-            ->andWhere("h.status",":status",
+    public function toSpentYear(User $user){
+
+        return $this->createQueryBuilder('h')
+            ->andWhere("h.status=:status",
                 "h.user=:user",
-                "h.startDate>=:now",
-                "h.startDate>=:firstDayOfYear")
+                "h.endDate<=:end",
+                "h.startDate>=:start")
             ->setParameter("status","a")
+            ->setParameter("end",date("Y-12-31"))
+            ->setParameter("user",$user->getId())
             ->setParameter("start",date("Y-m-d"))
-            ->setParameter("user",$userid)
-            ->setParameter("now",date("Y-m-d"))
             ->getQuery()->getResult();
+
+
     }
     // /**
     //  * @return Holiday[] Returns an array of Holiday objects

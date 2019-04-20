@@ -35,6 +35,7 @@ class DefaultController extends AbstractController
         $user = $this->getUser();
         $userList = null;
         $pending = null;
+        $infoHoliday = [];
 
         if(in_array('ROLE_ADMIN',$user->getRoles()))
         {
@@ -52,6 +53,16 @@ class DefaultController extends AbstractController
             $manager = $managerRepo->findOneByManagerUser($user);
 
             $pending = $holidayRep->getPending($manager->getDepartment()->getId());
+        }
+
+        if(in_array("ROLE_USER",$user->getRoles())){
+            $holidayInfo = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
+
+            $info = [
+                "holidaySpent" => count($holidayInfo->spentCurrentYear($user)),
+                "holidayInProgram"=> count($holidayInfo->toSpentYear($user)),
+                "holidayLeft"   => $user->getHolidayLeft()
+            ];
         }
 
 
@@ -95,7 +106,8 @@ class DefaultController extends AbstractController
             'users' => $userList,
             'formHoliday' => $form->createView(),
             'pending' => $pending,
-            'searchBar' => $searchForm->createView()
+            'searchBar' => $searchForm->createView(),
+            'infoHoliday'   => $info
         ]);
 
     }
