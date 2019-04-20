@@ -1,31 +1,65 @@
 
-// Department display for manager only
-// Manager department handling (hide for users and admin, but not for managers)
-$('#user_form_roles').on('change', function() {
 
-  if ($(this).val()=='ROLE_MANAGER') {
 
-    $('.handlingDep').show();
-
-  } else {
-    $('.handlingDep').hide();
-  }
-});
 
 //Datepicker
 
-$(function() {
-  $('.dateBegin').datepicker();/*
-      .datepicker({
-          format: 'dd-mm-yyyy',
-          startDate: '04-01-2019'
-      })
-      .on('changeDate', function() {
-        let dayLeft = $('#begin').datepicker('getDate');
-        dayLeft.setDate(dayLeft.getDate() + 25);
-        $('#end').datepicker('setEndDate', dayLeft);
-      });*/
-  $('.dateEnd').datepicker();
+$(document).ready(function() {
+    $('#user_form_roles').on('change', function() {
+
+        if ($(this).val()=='ROLE_MANAGER') {
+
+            $('.handlingDep').show();
+
+        } else {
+            $('.handlingDep').hide();
+        }
+    });
+
+    // Department display for manager only
+// Manager department handling (hide for users and admin, but not for managers)
+
+
+    /*$('#holiday_form_endDate').datepicker({
+        format: "dd/mm/yyyy"
+    });
+*/
+    $('#holiday_form_startDate').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: new Date()
+
+        })
+        .on('changeDate', function() {
+
+            let dayLeft = $('#holiday_form_startDate').datepicker('getDate');
+
+            dayLeft.setDate(dayLeft.getDate()+Number($('#holidayLeft').text()));
+
+            date = moment(dayLeft); // use a clone
+
+            console.log("dayLeft: " + dayLeft);
+
+            while (dayLeft > 0) {
+                date = date.add(1, 'days');
+                // decrease "days" only if it's a weekday.
+                if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
+                    dayLeft -= 1;
+                }
+            }
+
+            console.log("date: " + date);
+
+            //dayLeft.setDate(dayLeft.getDate()+Number($('#holidayLeft').text()));
+            //console.log(dayLeft.getDate());
+            $('#holiday_form_endDate').datepicker('setEndDate',date);
+
+        });
+    $('#holiday_form_endDate').datepicker({
+        format: "dd/mm/yyyy",
+        startDate: new Date()
+    });
+
+
 
 // Accept and refuse holiday for managers
   $(".accept").on("click",function(event){
