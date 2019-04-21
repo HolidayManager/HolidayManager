@@ -74,13 +74,39 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $holiday->setDateRequest(new \DateTime());
-            $holiday->setUser($this->getUser());
-            $holiday->setStatus('p');
+            $startDate = $holiday->getStartDate();
+            $endDate = $holiday->getEndDate();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($holiday);
-            $entityManager->flush();
+            $today=new \DateTime();
+
+            if($startDate>=$today&&$endDate>=$startDate)
+            {
+                if(DateTime::createFromFormat('m/d/Y', $startDate) !== false &&
+                    DateTime::createFromFormat('m/d/Y', $endDate) !== false)
+                {
+                    $countHolidays=0;
+                    while($startDate<=$endDate){
+                        if($startDate->format("N")!="6"||$startDate->format("N")!="7")
+                            $countHolidays++;
+                        $startDate->add(new \DateInterval("P1D"));
+                    }
+
+                    if($countHolidays<=$user->getHolidayLeft())
+                    {
+                        $holiday->setDateRequest(new \DateTime());
+                        $holiday->setUser($this->getUser());
+                        $holiday->setStatus('p');
+
+                        $entityManager = $this->getDoctrine()->getManager();
+                        $entityManager->persist($holiday);
+                        $entityManager->flush();
+
+                    }
+
+                }
+
+            }
+
         }
 
 

@@ -41,3 +41,4 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/dashboard$, roles: ROLE_USER }
         - { path: ^/user/*, roles: ROLE_ADMIN }
+        - { path: ^/holiday/*, roles: ROLE_MANAGER }

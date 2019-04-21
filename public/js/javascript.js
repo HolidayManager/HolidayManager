@@ -25,17 +25,27 @@ $(document).ready(function() {
     });
 */
     $('#holiday_form_startDate').datepicker({
-            format: "dd/mm/yyyy",
-            startDate: new Date()
+        format: {
+            toDisplay: function (date, format, language) {
+                var d = new Date("dd-mm-yyyy", date);
+                return d.toISOString();
+            },
+            toValue: function (date, format, language) {
+                var d = new Date("yyyy-mm-dd", date);
+                return new Date(d);
+            },
+        },
+        startDate: new Date()
 
-        })
+    })
         .on('changeDate', function() {
+            let beginDate = $('#holiday_form_startDate').datepicker('getDate');
 
-            let dayLeft = $('#holiday_form_startDate').datepicker('getDate');
+            let dayLeft = Number($('#holidayLeft').text());
 
-            dayLeft.setDate(dayLeft.getDate()+Number($('#holidayLeft').text()));
+            //dayLeft.setDate(dayLeft.getDate()+Number($('#holidayLeft').text()));
 
-            date = moment(dayLeft); // use a clone
+            date = moment(beginDate); // use a clone
 
             console.log("dayLeft: " + dayLeft);
 
@@ -47,15 +57,26 @@ $(document).ready(function() {
                 }
             }
 
-            console.log("date: " + date);
+            console.log("begindate: " + new Date(beginDate));
 
             //dayLeft.setDate(dayLeft.getDate()+Number($('#holidayLeft').text()));
             //console.log(dayLeft.getDate());
-            $('#holiday_form_endDate').datepicker('setEndDate',date);
+            $('#holiday_form_endDate').datepicker('setEndDate', new Date(date.get()));
+            $('#holiday_form_endDate').datepicker('setStartDate', new Date(beginDate));
+
 
         });
     $('#holiday_form_endDate').datepicker({
-        format: "dd/mm/yyyy",
+        format: {
+            toDisplay: function (date, format, language) {
+                var d = new Date("dd-mm-yyyy",date);
+                return d.toISOString();
+            },
+            toValue: function (date, format, language) {
+                var d = new Date("yyyy-mm-dd",date);
+                return new Date(d);
+            }
+        },
         startDate: new Date()
     });
 

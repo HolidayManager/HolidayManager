@@ -77,10 +77,27 @@ class ApiController extends AbstractController
     public function acceptHoliday(Holiday $holiday)
     {
         if($holiday){
+
+            $startDate = $holiday->getStartDate();
+            $endDate = $holiday->getEndDate();
+
+
+            $countHolidays = 0;
+
+            while ($startDate <= $endDate) {
+                if ($startDate->format("N") != "6" || $startDate->format("N") != "7")
+                    $countHolidays++;
+                $startDate->add(new \DateInterval("P1D"));
+            }
+            $user = $this->getUser();
+
+            $user->setHolidayLeft($user->getHolidayLeft()-$countHolidays);
+
             $holiday->setStatus('a');
 
             $manager = $this->getDoctrine()->getManager();
 
+            $manager->persist($user);
             $manager->persist($holiday);
             $manager->flush();
 
