@@ -4,6 +4,17 @@
 
 {% block body %}
 
+{#
+<div class="d-flex">
+  <div class="mr-auto p-2">HolidayManager <img src="/images/Holiday_tae.png" alt="logo" height=30 width="25"> </div>
+  {% if not is_granted('ROLE_ADMIN')%}
+  <div class="p-2">Department: {{ user.getDepartment().getLabel()}}</div>
+  <div class="p-2">Name: {{ user.getFirstname() }} {{user.getLastname()}}</div>
+  {% endif %}
+  <div class="p-2"><a id="logoutbutton" class="btn-primary" href="{{path("app_login")}}">Logout</a></div>
+</div>
+#}  
+
     {% if not is_granted('ROLE_ADMIN')%}
     <div class="d-flex">
       <div class="mr-auto p-2">HolidayManager <img src="/images/Holiday_tae.png" alt="logo" height=30 width="25"> </div>

@@ -43,6 +43,10 @@ div.container {
   max-width: 400px;
   margin:auto;
   text-align: center;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+
 }
 
 a.forgotpassword{
@@ -53,19 +57,3 @@ a.forgotpassword{
 a.forgotpassword:hover{
   color: #bdbdbd;
 }
-
-/*
-div.vertical-center {
-  border: 2px solid #bdbdbd;
-  background-color:#bdbdbd;
-  border-radius: 5px;
-  max-width: 400px;
-
-  margin:auto;
-  text-align: center;
-  position: absolute;
-  top: 20%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-*/
