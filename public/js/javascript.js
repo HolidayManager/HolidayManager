@@ -25,16 +25,7 @@ $(document).ready(function() {
     });
 */
     $('#holiday_form_startDate').datepicker({
-        format: {
-            toDisplay: function (date, format, language) {
-                var d = new Date("dd-mm-yyyy", date);
-                return d.toISOString();
-            },
-            toValue: function (date, format, language) {
-                var d = new Date("yyyy-mm-dd", date);
-                return new Date(d);
-            },
-        },
+        format: "dd-mm-yyyy",
         startDate: new Date()
 
     })
@@ -67,16 +58,7 @@ $(document).ready(function() {
 
         });
     $('#holiday_form_endDate').datepicker({
-        format: {
-            toDisplay: function (date, format, language) {
-                var d = new Date("dd-mm-yyyy",date);
-                return d.toISOString();
-            },
-            toValue: function (date, format, language) {
-                var d = new Date("yyyy-mm-dd",date);
-                return new Date(d);
-            }
-        },
+        format: "dd-mm-yyyy",
         startDate: new Date()
     });
 
