@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\DTO\HolidayRequest;
 use App\Entity\Holiday;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,23 +15,24 @@ class HolidayFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        $builder/*
             ->add("startDate", TextType::class,[
                 "label" => "Begin Holiday",
                 'attr' => ["class" => "dateBegin"]])
             ->add("endDate", TextType::class, [
                 "label" => "End Holiday",
                 'attr' => ["class" => "dateEnd"]
-            ]);
+            ]);*/
 
-            /*->add(
+            ->add(
                 'startDate',
                 DateType::class,
                 [
                     'label' => 'Start Date',
                     'widget' => 'single_text',
                     'attr' => ['class' => 'dateBegin'],
-                    'html5' => false
+                    'html5' => false,
+                    'format' => 'dd-MM-yyyy'
                 ]
             )->add('endDate',
                 DateType::class,
@@ -37,8 +40,9 @@ class HolidayFormType extends AbstractType
                     'label' => 'End Date',
                     'widget' => 'single_text',
                     'attr' => ['class' => 'dateEnd'],
+                    'format' =>  'dd-MM-yyyy',
                     'html5' => false
-                ]);*/
+                ]);
 
         if($options['standalone'] == true) {
             $builder->add("submit", SubmitType::class);
@@ -48,7 +52,7 @@ class HolidayFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Holiday::class,
+            'data_class' => HolidayRequest::class,
             'standalone' => false
         ]);
     }

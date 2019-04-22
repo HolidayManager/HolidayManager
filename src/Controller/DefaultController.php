@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\DTO\HolidayRequest;
 use App\DTO\UserSearch;
 use App\Entity\Department;
 use App\Entity\Holiday;
@@ -27,6 +28,13 @@ use Twig\Environment;
 
 class DefaultController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @Route("/dashboard", name="dashboard")
      */
@@ -69,18 +77,52 @@ class DefaultController extends AbstractController
 
         $holiday = new Holiday();
 
-        $form = $this->createForm(HolidayFormType::class, $holiday,['standalone'=>true]);
+        $holidayRequest = new HolidayRequest();
+
+        $form = $this->createForm(HolidayFormType::class, $holidayRequest,['standalone'=>true]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $holiday->setDateRequest(new \DateTime());
-            $holiday->setUser($this->getUser());
-            $holiday->setStatus('p');
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($holiday);
-            $entityManager->flush();
+            $startDate = $holidayRequest->startDate;
+            $endDate = $holidayRequest->endDate;
+
+            $today=new \DateTime();
+
+            if($startDate>=$today&&$endDate>=$startDate)
+            {
+
+                /*if(\DateTime::createFromFormat('m/d/Y', $startDate) !== false &&
+                    \DateTime::createFromFormat('m/d/Y', $endDate) !== false)
+                {*/
+                    $this->logger->info("Ciao");
+                    $countHolidays=0;
+                    while($startDate<=$endDate){
+                        if($startDate->format("N")!="6"||$startDate->format("N")!="7")
+                            $countHolidays++;
+                        $startDate->add(new \DateInterval("P1D"));
+                    }
+
+                    if($countHolidays<=$user->getHolidayLeft())
+                    {
+                        $holiday->setDateRequest(new \DateTime());
+                        $holiday->setUser($this->getUser());
+                        $holiday->setStatus('p');
+
+                        $holiday->setStartDate($holidayRequest->startDate);
+                        $holiday->setEndDate($holidayRequest->endDate);
+
+                        $entityManager = $this->getDoctrine()->getManager();
+                        $entityManager->persist($holiday);
+                        $entityManager->flush();
+
+                    }
+
+                //}
+
+            }
+
         }
 
 
