@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Holiday;
 use App\Entity\User;
 use App\Repository\HolidayRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApiController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
     /**
      * @Route("/calendar/show/holidays",name="show_calendar_holidays",methods={"GET"})
      */
@@ -76,7 +83,7 @@ class ApiController extends AbstractController
      */
     public function acceptHoliday(Holiday $holiday)
     {
-        if($holiday){
+        if($holiday&&$holiday->getStatus()=='p'){
 
             $startDate = $holiday->getStartDate();
             $endDate = $holiday->getEndDate();
@@ -85,23 +92,33 @@ class ApiController extends AbstractController
             $countHolidays = 0;
 
             while ($startDate <= $endDate) {
-                if ($startDate->format("N") != "6" || $startDate->format("N") != "7")
+                if ($startDate->format("D") != "Sun" && $startDate->format("D") != "Sat"){
+
                     $countHolidays++;
+                }
                 $startDate->add(new \DateInterval("P1D"));
             }
-            $user = $this->getUser();
+            $user = $this->getDoctrine()->getRepository(User::class)
+                ->find($holiday->getUser());
 
-            $user->setHolidayLeft($user->getHolidayLeft()-$countHolidays);
+            $this->logger->info("count holidays" . $countHolidays);
 
-            $holiday->setStatus('a');
+            if($countHolidays<=$user->getHolidayLeft())
+            {
+                $user->setHolidayLeft($user->getHolidayLeft()-$countHolidays);
 
-            $manager = $this->getDoctrine()->getManager();
+                $holiday->setStatus('a');
 
-            $manager->persist($user);
-            $manager->persist($holiday);
-            $manager->flush();
+                $manager = $this->getDoctrine()->getManager();
 
-            return new Response('Accepted',200);
+                $manager->persist($user);
+                $manager->persist($holiday);
+                $manager->flush();
+
+                return new Response('Accepted',200);
+
+            }
+
         }
         return new Response('Not Accepted', 304);
     }

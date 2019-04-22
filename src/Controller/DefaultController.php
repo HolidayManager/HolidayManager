@@ -28,12 +28,7 @@ use Twig\Environment;
 
 class DefaultController extends AbstractController
 {
-    private $logger;
 
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
 
     /**
      * @Route("/dashboard", name="dashboard")
@@ -76,6 +71,7 @@ class DefaultController extends AbstractController
 
 
         $holiday = new Holiday();
+        $holidayFeedback=null;
 
         $holidayRequest = new HolidayRequest();
 
@@ -85,8 +81,8 @@ class DefaultController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $startDate = $holidayRequest->startDate;
-            $endDate = $holidayRequest->endDate;
+            $startDate = clone $holidayRequest->startDate;
+            $endDate = clone $holidayRequest->endDate;
 
             $today=new \DateTime();
 
@@ -96,13 +92,15 @@ class DefaultController extends AbstractController
                 /*if(\DateTime::createFromFormat('m/d/Y', $startDate) !== false &&
                     \DateTime::createFromFormat('m/d/Y', $endDate) !== false)
                 {*/
-                    $this->logger->info("Ciao");
+
                     $countHolidays=0;
                     while($startDate<=$endDate){
                         if($startDate->format("N")!="6"||$startDate->format("N")!="7")
                             $countHolidays++;
                         $startDate->add(new \DateInterval("P1D"));
                     }
+
+
 
                     if($countHolidays<=$user->getHolidayLeft())
                     {
@@ -116,6 +114,8 @@ class DefaultController extends AbstractController
                         $entityManager = $this->getDoctrine()->getManager();
                         $entityManager->persist($holiday);
                         $entityManager->flush();
+
+                        $holidayFeedback = true;
 
                     }
 
@@ -149,7 +149,8 @@ class DefaultController extends AbstractController
             'formHoliday' => $form->createView(),
             'pending' => $pending,
             'searchBar' => $searchForm->createView(),
-            'infoHoliday'   => $info
+            'infoHoliday'   => $info,
+            'holidayFeedback' => $holidayFeedback
         ]);
 
     }
