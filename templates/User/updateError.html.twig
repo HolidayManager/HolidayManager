@@ -1,6 +1,17 @@
-{% extends 'base.html.twig' %}
+{% include 'base.html.twig' %}
 
-{% block title %}Update User error{% endblock %}
-{% block body %}The User that you try to update don't exist. Please try again with a correct user.
-    <a href="{{ path('dashboard') }}">Go to dashboard</a>
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/user.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="bg">
+ <div class="container">
+    <p>The user you tried to update doesn't exist.</p>
+    <p>Please try again with a correct username.</p>
+    <br>
+    <a class="btn-primary" href="{{ path('dashboard') }}">Go to dashboard</a>
+ </div>
+</div>
 {% endblock %}

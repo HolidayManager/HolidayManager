@@ -1,12 +1,18 @@
-{% extends 'base.html.twig' %}
+{% include 'base.html.twig' %}
 
-    {% block title %} User created successful!! {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/user.css">
+{% endblock %}
 
-    {% block body %}
-        <h3>User created successfull!!</h3>
+{% block body %}
 
-        <p>The user <b>{{ user.getUsername() }}</b> has created succefull
-            and will receive an activation mail a the address {{ user.getEmail() }} </p>
+ <div class="bg" >
+   <div class="container">
+    <h5 class="h5style">New user created.</h5>
+    <p>The user <span>{{user.getUsername()}}</span> has been successfully created.</p>
+    <p>An email to activate the account will be sent to <span>{{user.getEmail()}}</span>.</p>
 
-        <a href="{{ path('dashboard') }}">Go to dashboard</a>
-    {% endblock %}
+    <h6><a class="btn-primary" href="{{path('dashboard')}}">Go to dashboard</a></h6>
+  </div>
+ </div>
+{% endblock %}

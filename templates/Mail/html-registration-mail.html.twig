@@ -1,16 +1,27 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Activation account</title>
-</head>
-<body>
-    <h1>Activation account</h1>
-    <p>Welcome {{ user.getUsername() }} follow the link above for activate your account</p>
-    <
-    <a href="{{ url('activate_user', {'token': user.getActivationToken()}) }}">click here for activate</a>
-</body>
-</html>
+{% include 'base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/mail.css">
+{% endblock %}
+
+{% block body %}
+<div class="bg">
+  <div class="container">
+    <h5 class="h5style">Activate your Account!</h5>
+    <br>
+    <p>Welcome to the HolidayManager SA!</p>
+    <br>
+    <p>Hi <span>{{user.getFirstname()}} {{user.getLastname()}}</span> </p>
+    <br>
+    <p>Your account at HolidayManager SA has been created.</p>
+    <br>
+    <br>
+    <p>Username: <span>{{user.getUsername()}}</span></p>
+    <p>Password: <span>{{user.getPassword()}}</span> </p>
+    <br>
+    <br>
+    <p>You just need to click the link below, to activate your account.</p>
+    <a class="btn-primary" href="{{ url('activate_user', {'token' : user.getActivationToken()}) }}">Activation</a>
+  </div>
+</div>
+{% endblock %}

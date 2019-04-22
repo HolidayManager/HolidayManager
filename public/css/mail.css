@@ -15,46 +15,28 @@ body, html{
 }
 
 
-#login {
-  margin: auto;
-  margin-top: 10px;
-  text-align: center;
-}
-
-#signinbutton {
-  margin: auto;
-  margin-top: 10px;
-  margin-bottom: 25px;
-  display: block;
-  max-width: 100px;
-  background-color: #bdbdbd;
-  border-color: #bdbdbd;
-}
-
-#signinbutton:hover {
-  background-color: #2e2e3e;
-}
-
-
-div.container {
+.container {
   border: 2px solid #fffefc;
   background-color:#fffefc;
   border-radius: 5px;
   max-width: 400px;
   margin:auto;
+  padding: 50px 30px;
   text-align: center;
   top: 50%;
   position: relative;
   transform: translateY(-50%);
 }
 
-
-a.forgotpassword {
-  color: #2e2e3e;
+a.btn-primary{
   text-decoration: none;
 }
 
+.btn-primary:hover{
+  background-color: #3c5594;
+}
 
-a.forgotpassword:hover{
-  color: #bdbdbd;
+span{
+  font-weight: 1000;
+  color: #1faac2;
 }

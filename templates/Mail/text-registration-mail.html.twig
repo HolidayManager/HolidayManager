@@ -1,7 +1,13 @@
+Activate your Account!
 
-'Activate your account'
+Welcome to the HolidayManager SA!
 
-Hi {{ user.getUsername() }} your account was successfully created on HolidayManager, just one more step to activate!!'
+Hi {{user.getFirstname()}} {{user.getLastname()}},
 
+Your account at HolidayManager SA has been created.
+
+Username: {{user.getUsername()}}
+Password: {{user.getPassword()}}
+
+You just need to click the link below, to activate your account.
 {{ url('activate_user', {'token' : user.getActivationToken()}) }}
-

@@ -138,9 +138,10 @@ div.form-group #user_form_submit{
 }
 
 
-
-#showuserlist{
-  margin: 70px 20px;
+#showuserlist {
+  max-width: 800px;
+  padding: 30px 20px;
+  margin-top: 100px;
 }
 
 div.userchange{
@@ -187,4 +188,10 @@ a.btn-primary:hover{
 
 #listPending.container{
   list-style-type: none;
+}
+
+/* who is off*/
+#whoisoffcontainer {
+  max-width: 1200px;
+  height: 100%;
 }
