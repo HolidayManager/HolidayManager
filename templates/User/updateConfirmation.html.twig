@@ -1,6 +1,16 @@
-{% extends 'base.html.twig' %}
+{% include 'base.html.twig' %}
 
-{% block title %}User update successfull{% endblock %}
-{% block body %}User {{ user.getUsername() }} updated with success.
-    <a href="{{ path('dashboard') }}">Go to dashboard</a>
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/user.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="bg">
+ <div class="container">
+    <p>The user data of <span> {{user.getUsername()}} </span> has been successfully updated.</p>
+    <br>
+    <a class="btn-primary" href="{{ path('dashboard') }}">Go to dashboard</a>
+ </div>
+</div>
 {% endblock %}

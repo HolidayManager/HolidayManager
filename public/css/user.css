@@ -1,0 +1,46 @@
+html,body{
+margin:0;
+height: 100%;
+}
+
+.bg {
+  background-image: url("/images/dashboardbg2.png");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.sf-toolbar {
+  position:fixed;
+}
+
+.container {
+  border: 2px solid #fffefc;
+  background-color:#fffefc;
+  border-radius: 5px;
+  max-width: 400px;
+  margin:auto;
+  padding: 30px 15px;
+  text-align: center;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+}
+
+.h5style{
+  padding-top: 10px;
+}
+
+span{
+  font-weight: 1000;
+  color: #1faac2;
+}
+
+a.btn-primary{
+  text-decoration: none;
+}
+
+.btn-primary:hover{
+  background-color: #3c5594;
+}
