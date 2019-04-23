@@ -1,9 +1,7 @@
 
 
-
-
-//Datepicker
-
+// Department display for manager only
+// Manager department handling (hide for users and admin, but not for managers)
 $(document).ready(function() {
     $('#user_form_roles').on('change', function() {
 
@@ -16,10 +14,8 @@ $(document).ready(function() {
         }
     });
 
-    // Department display for manager only
-// Manager department handling (hide for users and admin, but not for managers)
 
-
+// Datepicker for holidays request
     /*$('#holiday_form_endDate').datepicker({
         format: "dd/mm/yyyy"
     });
@@ -62,6 +58,15 @@ $(document).ready(function() {
         startDate: new Date()
     });
 
+// Datepicker for user create (birthdate and startdate)
+    //birthDate
+    $(".dateBirth").datepicker({
+        format: "dd-mm-yyyy",
+        endDate: new Date()
+    });
+
+    //startDate
+    $(".startDate").datepicker();
 
 
 // Accept and refuse holiday for managers
