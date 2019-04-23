@@ -4,16 +4,14 @@
   <link rel="stylesheet" href="/css/dashboard.css">
 {% endblock %}
 
-
 {% block body %}
-
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       {% include 'Dashboard/navbar.html.twig' %}
     {% endif %}
 
-    <div class="bg">
       {% if not is_granted('ROLE_ADMIN') %}
           {% include 'Dashboard/dashboardnavbar.html.twig' %}
+          <div class="bg">
           <div class="flexdisplay">
             {% include 'Holiday/createHoliday.html.twig' %}
             {% include 'Dashboard/testcal.html.twig' %}
