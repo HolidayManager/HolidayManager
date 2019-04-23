@@ -4,16 +4,14 @@
   <link rel="stylesheet" href="/css/dashboard.css">
 {% endblock %}
 
-
 {% block body %}
-
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       {% include 'Dashboard/navbar.html.twig' %}
     {% endif %}
 
-    <div class="bg">
       {% if not is_granted('ROLE_ADMIN') %}
           {% include 'Dashboard/dashboardnavbar.html.twig' %}
+          <div class="bg">
           <div class="flexdisplay">
             {% include 'Holiday/createHoliday.html.twig' %}
             {% include 'Dashboard/testcal.html.twig' %}
@@ -24,7 +22,15 @@
         {% include 'Holiday/listPending.html.twig'%}
       {% endif %}
 
-
+        {% if not (is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN'))  %}
+            {% if  lastRequestedHoliday is not null %}
+                <div>
+                    <h3>Pending Request</h3>
+                    <div><span>From: </span>{{ lastRequestedHoliday.getStartDate()| date }} <span>To: {{ lastRequestedHoliday.getEndDate()| date }}</span></div>
+                    <div><span>Status: </span>{{ lastRequestedHoliday.getStatus() }}</div>
+                </div>
+            {% endif %}
+        {% endif %}
 
       {% if is_granted('ROLE_ADMIN') %}
         <br>
@@ -35,10 +41,10 @@
         </div>
         {% include 'User/userList.html.twig' %}
 
-      {% endif %}{% include 'User/infoHoliday.html.twig' %}
+      {% endif %}
+      {% if not is_granted('ROLE_ADMIN') %}
+      {% include 'User/infoHoliday.html.twig' %}
+      {% endif %}
   </div>
 </div>
 {% endblock %}
-
-
-

@@ -29,6 +29,12 @@ use Twig\Environment;
 class DefaultController extends AbstractController
 {
 
+    /**
+     * @Route("/",name="homepage")
+     */
+    public function homepage(){
+        return $this->render('homepage.html.twig');
+    }
 
     /**
      * @Route("/dashboard", name="dashboard")
@@ -39,6 +45,7 @@ class DefaultController extends AbstractController
         $userList = null;
         $pending = null;
         $infoHoliday = [];
+        $lastRequestHoliday = null;
 
         if(in_array('ROLE_ADMIN',$user->getRoles()))
         {
@@ -60,6 +67,8 @@ class DefaultController extends AbstractController
 
         if(in_array("ROLE_USER",$user->getRoles())){
             $holidayInfo = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
+
+            $lastRequestHoliday = $holidayInfo->lastRequested($user);
 
             $info = [
                 "holidaySpent" => count($holidayInfo->spentCurrentYear($user)),
@@ -150,7 +159,8 @@ class DefaultController extends AbstractController
             'pending' => $pending,
             'searchBar' => $searchForm->createView(),
             'infoHoliday'   => $info,
-            'holidayFeedback' => $holidayFeedback
+            'holidayFeedback' => $holidayFeedback,
+            'lastRequestedHoliday' => $lastRequestHoliday
         ]);
 
     }

@@ -107,6 +107,10 @@ div.form-group #user_form_submit{
   background-color: #3c5594;
 }
 
+#createdContainer {
+  margin: 15px auto;
+}
+
 /* admin: usesrlist */
 #username_click{
   text-decoration: none;

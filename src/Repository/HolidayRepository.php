@@ -109,6 +109,16 @@ class HolidayRepository extends ServiceEntityRepository
 
 
     }
+
+    public function lastRequested($user){
+        return $this->createQueryBuilder('h')
+            ->leftJoin("h.user","u")
+            ->andWhere("h.user=:user")
+            ->orderBy("h.dateRequest","DESC")
+            ->setParameter("user",$user)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
     // /**
     //  * @return Holiday[] Returns an array of Holiday objects
     //  */

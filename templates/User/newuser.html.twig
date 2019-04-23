@@ -9,10 +9,13 @@
     {% block body %}
     {% include 'Dashboard/navbar.html.twig' %}
 
-      <h6><a id="backtodashboard2" class="btn-primary" href="/dashboard">Back to Dashboard</a></h6>
-     <div class="container">
+    <div class="bg">
 
-        <h5 class="h5style">CREATE A NEW USER</h5>
+      <h6><a id="backtodashboard2" class="btn-primary" href="/dashboard">Back to Dashboard</a></h6>
+    <div id="createdContainer">
+     <div class="container" >
+
+        <h5 class="h5style"></h5>
             {{form_start(createForm)}}
 
             {{form_row(createForm.username)}}
@@ -28,11 +31,12 @@
             {{form_row(createForm.birthDate)}}
             {{form_row(createForm.startDate)}}
 
+            {{form_end(createForm)}}
 
-
-        {{form_end(createForm)}}
-
+       </div>
+        
       </div>
+    </div>
         <script src="{{ asset('/js/javascript.js') }}"></script>
     {% endblock %}
 
