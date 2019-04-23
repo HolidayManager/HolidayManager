@@ -24,8 +24,8 @@
         {% include 'Holiday/listPending.html.twig'%}
       {% endif %}
 
-        {% if is_granted('ROLE_USER') %}
-            {% if  lastRequestedHoliday is defined %}
+        {% if not (is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN'))  %}
+            {% if  lastRequestedHoliday is not null %}
                 <div>
                     <h3>Pending Request</h3>
                     <div><span>From: </span>{{ lastRequestedHoliday.getStartDate()| date }} <span>To: {{ lastRequestedHoliday.getEndDate()| date }}</span></div>
