@@ -173,7 +173,35 @@ a.btn-primary:hover{
   background-color: #3c5594;
 }
 
+div.pendingRow {
+  margin: 0 auto;
+  text-align: center;
+}
 
-#listPending.container{
+#listPending {
   list-style-type: none;
+}
+
+#requestUser {
+  font-weight: 1200;
+  color: #1faac2;
+}
+
+span.accept,
+span.refuse {
+  color: #fff;
+  background-color: #2e2e3e;
+  border-radius: 3px;
+  padding: 0 5px;
+  margin: 0 3px;
+}
+
+span.accept:hover,
+span.refuse:hover {
+  background-color: #3c5594;
+}
+
+div.holidayInfoContainer{
+  margin: 0 auto;
+  text-align: center;
 }

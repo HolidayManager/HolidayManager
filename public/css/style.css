@@ -75,6 +75,7 @@ div.container {
   border: 2px solid #c9d2dd;
   border-radius: 5px;
   max-width: 500px;
+  margin: 20px 5px 0 0;
 }
 
 .container {
