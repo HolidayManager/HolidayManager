@@ -1,8 +1,5 @@
-{% include 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="/css/dashboard.css">
-{% endblock %}
 
 {% if is_granted('ROLE_ADMIN') %}
 
@@ -37,7 +34,7 @@
         
       </div>
     </div>
-        <script src="{{ asset('/js/javascript.js') }}"></script>
+        
     {% endblock %}
 
 {% endif %}

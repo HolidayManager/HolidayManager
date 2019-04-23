@@ -177,7 +177,13 @@ class DefaultController extends AbstractController
     */
 
     public function whoisoff(Environment $twig) {
-      return new Response($twig->render('whoisoff.html.twig',["user"=>$this->getUser()]));
+        $searchForm = new UserSearch();
+
+        $searchForm = $this->createForm(SearchUserListFormType::class,$searchForm,["standalone"=>true]);
+      return new Response($twig->render('whoisoff.html.twig',[
+          "user"=>$this->getUser(),
+          "searchBar"  => $searchForm->createView()
+      ]));
     }
 
 
