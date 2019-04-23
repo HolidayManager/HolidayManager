@@ -1,6 +1,19 @@
-{% extends 'base.html.twig' %}
+{% include 'base.html.twig' %}
 
-{% block title %}User activation successfull{% endblock %}
-{% block body %}User {{ user.getUsername() }} activated with success. you are able to login in the system
-    <a href="{{ path('dashboard') }}">Go to dashboard</a>
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/user.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="bg" >
+  <div class="container">
+   <h5 class="h5style">Account activated!!</h5>
+   <p>Your account <span>{{user.getUsername()}}</span> has been successfully activated.</p>
+   <p>You are able to access to the system.</p>
+
+   <h6><a class="btn-primary" href="{{path('dashboard')}}">Go to dashboard</a></h6>
+ </div>
+</div>
+
 {% endblock %}
