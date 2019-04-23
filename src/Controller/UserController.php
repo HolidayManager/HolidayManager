@@ -83,15 +83,6 @@ class UserController extends AbstractController
             $entityManager->flush();
 
 
-            $mailer->sendMail($user);
-            /*if(in_array('ROLE_MANAGER',$user->getRoles()))
-            {
-                $manager = new Manager();
-
-                $manager->setDepartment($user->getDepartment());
-                $manager->setManagerUser($user->getId());
-
-            }*/
 
             // do anything else you need here, like send an email
 
