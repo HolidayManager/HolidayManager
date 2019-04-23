@@ -34,7 +34,10 @@
         </div>
         {% include 'User/userList.html.twig' %}
 
-      {% endif %}{% include 'User/infoHoliday.html.twig' %}
+      {% endif %}
+      {% if not is_granted('ROLE_ADMIN') %}
+      {% include 'User/infoHoliday.html.twig' %}
+      {% endif %}
   </div>
 </div>
 {% endblock %}
