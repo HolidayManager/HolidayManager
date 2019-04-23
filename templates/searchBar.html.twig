@@ -1,4 +1,3 @@
-{% extends 'Dashboard/navbar.html.twig' %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/css/dashboard.css">
@@ -17,6 +16,7 @@
               <li class="inline">{{form_row(searchBar.lastname)}}</li>
               <li class="inline">{{form_end(searchBar)}}</li>
             </ul>
+            {{form_end(searchBar)}}
      </div>
     {% endif %}
 {% endblock %}

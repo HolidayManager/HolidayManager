@@ -1,4 +1,19 @@
-{% for holiday in pending %}
+{% include 'base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/dashboard.css">
+{% endblock %}
+
+
+  <div class="container">
+    <h5 class="h5style">Received Requests</h5>
+    <p>Test</p>
+    <p>Test</p>
+    <p>Test</p>
+    <p>Test</p>
+    <p>Test</p>
+    <p>Test</p>
+    {% for holiday in pending %}
     <div class="pendingRow">
         <div>{{ holiday.getUser().getFirstName() }}</div>
         <div>{{ holiday.getUser().getLastname() }}</div>
@@ -7,4 +22,5 @@
         <div class="idaccept"><span class="accept" href="/holiday/accept/{{ holiday.getId() }}" id="{{ holiday.getId() }}">Accept</span></div>
         <div><span class="refuse" href="/holiday/refuse/{{ holiday.getId() }}">Refuse</span></div>
     </div>
+  </div>
 {% endfor %}

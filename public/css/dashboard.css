@@ -3,23 +3,28 @@
 div.flexdisplay{
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 
 div.bg{
+  position: fixed;
   background-image: url("/images/dashboardbg2.png");
+  width: 100%;
   height: 100%;
+  top: 0px;
+  left: 0px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: -1;
 
 }
-
 
 /*buttons*/
 
 #createuser{
-  position: absolute;1§
+  position: absolute;
   top: 70px;
   margin-left: 20px;
   text-decoration: none;
@@ -58,7 +63,7 @@ div.bg{
   margin-bottom: 5px;
 }
 
-#form_submit.btn-primary.btn:hover{
+#search_user_list_form_search:hover{
   background-color: #3c5594;
 }
 
@@ -71,10 +76,10 @@ input#form_lastname.form-control {
 }
 
 #inline_block{
-  background-color: #c9d2dd;
+  background-color: #ffffff;
   list-style-type: none;
   text-align: center;
-  margin: 0;
+  margin: 45px 0 0 0;
   padding: 0;
 }
 
@@ -82,7 +87,7 @@ li.inline{
   display: inline-block;
   font-size: 15px;
   width: 120px;
-  padding: 10px;
+  padding: 5px;
   margin: auto;
   text-align: center;
 }
@@ -116,13 +121,23 @@ div.form-group #user_form_submit{
   color: #1faac2;
 }
 
+#newusercontainer{
+  margin: 80px 0;
+  width: 700px;
+}
 
 
 
 /* admin showuserlist */
 #userlisttable{
   margin: 30px 20px;
+  border: 2px solid #c9d2dd;
+  border-radius: 5px;
+  background-color: #eeeeee;
+  text-align: center;
 }
+
+
 
 #showuserlist{
   margin: 70px 20px;
