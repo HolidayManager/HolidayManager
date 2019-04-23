@@ -7,6 +7,7 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -57,8 +58,25 @@ class UserFormType extends AbstractType
             ->add('firstname',TextType::class,["label" =>   'Firstname'])
             ->add('lastname', TextType::class, ['label' =>  'Lastname'])
             ->add('email',EmailType::class, ['label'    =>  'Email'])
-            ->add('birthDate', DateType::class, ['label'    =>  'Birth Date'])
-            ->add('startDate',DateType::class, ['label' =>  'Begin Date'])
+            ->add('birthDate',
+                DateType::class,
+                [
+                    'label'    =>  'Birth Date',
+                    'widget'   =>  'single_text',
+                    'attr'     =>  ['class' => 'dateBirth'],
+                    'format'   =>   'dd-MM-yyyy',
+                    'html5'    =>   false
+
+                ])
+            ->add('startDate',
+                DateType::class,
+                [
+                    'label'    =>  'Begin Date',
+                    'widget'   =>  'single_text',
+                    'attr'     =>  ['class' => 'startDate'],
+                    'format'   =>   'dd-MM-yyyy',
+                    'html5'    =>   false
+                ])
             ->add('department',EntityType::class, [
                 'class'     =>      Department::class,
                 'choice_label'  =>  'label',
