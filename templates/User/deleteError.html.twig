@@ -1,6 +1,16 @@
-{% extends 'base.html.twig' %}
+{% include 'base.html.twig' %}
 
-{% block title %}Delete User error{% endblock %}
-{% block body %}The User that you try to delete don't exist. Please try again with a correct user.
-    <a href="{{ path('dashboard') }}">Go to dashboard</a>
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/error.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="bg">
+  <div class="container">
+    <p> The User you tried to delete doesn't exist. Please try again with a correct username.</p>
+    <a class="btn-primary" href="{{ path('dashboard') }}">Go to dashboard</a>
+  </div>
+</div>
+
 {% endblock %}
