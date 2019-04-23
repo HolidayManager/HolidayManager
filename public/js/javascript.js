@@ -22,7 +22,8 @@ $(document).ready(function() {
 */
     $('#holiday_form_startDate').datepicker({
         format: "dd-mm-yyyy",
-        startDate: new Date()
+        startDate: new Date(),
+        todayHighlight: true
 
     })
         .on('changeDate', function() {
@@ -55,18 +56,23 @@ $(document).ready(function() {
         });
     $('#holiday_form_endDate').datepicker({
         format: "dd-mm-yyyy",
-        startDate: new Date()
+        startDate: new Date(),
+        todayHighlight: true
     });
 
 // Datepicker for user create (birthdate and startdate)
     //birthDate
     $(".dateBirth").datepicker({
         format: "dd-mm-yyyy",
-        endDate: new Date()
+        endDate: new Date(),
+        todayHighlight: true
     });
 
     //startDate
-    $(".startDate").datepicker();
+    $(".startDate").datepicker({
+        format: "dd-mm-yyyy",
+        todayHighlight: true
+    });
 
 
 // Accept and refuse holiday for managers
