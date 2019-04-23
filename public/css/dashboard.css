@@ -1,26 +1,23 @@
 /*MAIN DASHBOARD*/
 
+
 div.flexdisplay{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
-
-div.bg{
-  background-image: url("/images/dashboardbg2.png");
-  height: 100%;
+.bg{
+  width: 100%;
+  z-index: -1;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
 }
-
 
 /*buttons*/
 
 #createuser{
-  position: absolute;1§
-  top: 70px;
+  position: absolute;
   margin-left: 20px;
   text-decoration: none;
 }
@@ -32,7 +29,6 @@ div.bg{
 
 #backtodashboard{
   position: absolute;
-  top: 70px;
   margin-left: 20px;
   text-decoration: none;
   padding: 5px 10px;
@@ -40,7 +36,6 @@ div.bg{
 
 #backtodashboard2{
   position: absolute;
-  top: 70px;
   margin-left: 20px;
   text-decoration: none;
   padding: 5px 10px;
@@ -50,6 +45,25 @@ div.bg{
   background-color: #3c5594;
 }
 
+
+/*admin show user*/
+
+#sfwdtcdaaa0{
+  display: none;
+}
+
+.backgroundimage{
+  background-image: url(/images/dashboardbg2.png);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  }
 
 /*admin: searchBar*/
 
@@ -88,6 +102,12 @@ li.inline{
 }
 
 
+/*admin Dashboard*/
+
+#admin_userList {
+max-width: 900px;
+}
+
 /*admin: create new user*/
 div.form-group{
 /**/
@@ -96,6 +116,7 @@ div.form-group{
 h5.h5style{
   margin-top: 10px;
   text-align: center;
+  color: #3c5594;
 }
 
 div.form-group #user_form_submit{
@@ -108,7 +129,7 @@ div.form-group #user_form_submit{
 }
 
 #createdContainer {
-  margin: 15px auto;
+  padding: 5px;
 }
 
 /* admin: usesrlist */
@@ -129,23 +150,25 @@ div.form-group #user_form_submit{
 }
 
 #showuserlist{
-  margin: 70px 20px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 div.userchange{
   margin: auto;
   text-align: center;
+
 }
 
 #updateuser, #deleteuser{
   background-color: #2e2e3e;
   border-radius: 0.25em;
   color: #eeeeee;
-  padding: 10px 25px;
+  padding: 10px 5px;
   margin: 10px 10px;
   font-weight: 900;
-  text-decoration: NONE;
-
+  text-decoration: none;
+  display: inline-block;
 }
 
 #updateuser:hover, #deleteuser:hover{
@@ -204,4 +227,39 @@ span.refuse:hover {
 div.holidayInfoContainer{
   margin: 0 auto;
   text-align: center;
+}
+
+div.holidayInfoCol{
+  border: 1px solid #c9d2dd;
+}
+
+span.dayscolor {
+  font-weight: 1200;
+  color: #1faac2;
+}
+
+/*latest pending request*/
+#latestrequest {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#latestrequest_middle {
+  top: 50%;
+  position: relative;
+  transform: translateY(50%)
+}
+#lateststatus {
+  font-weight: 1200;
+  color: #1faac2;
+}
+
+/*searchBar*/
+
+#search_user_list_form_search {
+  margin-bottom: 7px;
+}
+
+#search_user_list_form_search:hover {
+  background-color: #3c5594;
 }

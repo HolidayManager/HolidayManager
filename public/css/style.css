@@ -75,7 +75,8 @@ div.container {
   border: 2px solid #c9d2dd;
   border-radius: 5px;
   max-width: 500px;
-  margin: 20px 5px 0 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .container {
@@ -93,9 +94,11 @@ div.container {
 
 
 /*Setting for newuser.html.twig*/
-div.h5style {
+.h5style {
   margin: 0 auto;
   text-align: center;
+  font-weight: 1200;
+  padding: 5px 3px;
 }
 
 /* Dashboard - HolidayRequest Form*/

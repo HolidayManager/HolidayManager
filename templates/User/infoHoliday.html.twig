@@ -3,19 +3,17 @@
       <h5 class="h5style">Holiday Status {{ "now"| date("Y") }}</h3>
       <div class="holidayInfoCol">
           Holiday Spent
-          <div class="holidayInfoValue">{{ infoHoliday.holidaySpent }}</div>
+          <div class="holidayInfoValue"> <span class="dayscolor">{{ infoHoliday.holidaySpent }}</span></div>
       </div>
-      <br>
       <div class="holidayInfoCol">
           Upcoming Holidays
-          <div class="holidayInfoValue">{{ infoHoliday.holidayInProgram }}</div>
+          <div class="holidayInfoValue"><span class="dayscolor">{{ infoHoliday.holidayInProgram }}</span></div>
       </div>
-      <br>
       <div class="holidayInfoCol">
           Holiday Left
-          <div class="holidayInfoValue" id="holidayLeft">{{ infoHoliday.holidayLeft }}</div>
+          <div class="holidayInfoValue" id="holidayLeft"><span class="dayscolor">{{ infoHoliday.holidayLeft }}</span></div>
       </div>
-      <br>
+      
   </div>
 
 </div>

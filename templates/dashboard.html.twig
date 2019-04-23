@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       {% include 'Dashboard/navbar.html.twig' %}
@@ -9,6 +7,7 @@
 
       {% if not is_granted('ROLE_ADMIN') %}
           {% include 'Dashboard/dashboardnavbar.html.twig' %}
+          <div class="backgroundimage"></div>
           <div class="bg">
           <div class="flexdisplay">
             {% include 'Holiday/createHoliday.html.twig' %}
@@ -16,33 +15,46 @@
           </div>
       {% endif %}
 
+      <div class="flexdisplay">
+
       {% if is_granted ('ROLE_MANAGER')%}
         {% include 'Holiday/listPending.html.twig'%}
       {% endif %}
 
         {% if not (is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN'))  %}
             {% if  lastRequestedHoliday is not null %}
-                <div>
-                    <h3>Pending Request</h3>
-                    <div><span>From: </span>{{ lastRequestedHoliday.getStartDate()| date }} <span>To: {{ lastRequestedHoliday.getEndDate()| date }}</span></div>
-                    <div><span>Status: </span>{{ lastRequestedHoliday.getStatus() }}</div>
+                <div class="container">
+                  <div id="latestrequest">
+                    <h5 class="h5style">Latest Holiday Request</h5>
+                    <div id="latestrequest_middle">
+                    <div><span>From: </span>{{ lastRequestedHoliday.getStartDate()| date('d/m/Y') }}
+                      <span>To: {{ lastRequestedHoliday.getEndDate()| date('d/m/Y') }}</span></div>
+                    <div><span id="lateststatus">Status: {{ lastRequestedHoliday.getStatus() }}</span></div>
+                    </div>
+                  </div>
                 </div>
             {% endif %}
         {% endif %}
 
+        {% if not is_granted('ROLE_ADMIN') %}
+        {% include 'User/infoHoliday.html.twig' %}
+        {% endif %}
+
+        </div>
+
       {% if is_granted('ROLE_ADMIN') %}
-        <br>
+      <div class="backgroundimage"></div>
+        <div class="bg">
         <h6><a id="createuser" class="btn-primary" href="user/create">Create new user</a></h6>
-        <br>
         <div id="searchBar">
           {% include 'searchBar.html.twig' %}
         </div>
+            <div class="container" id="admin_userList">
         {% include 'User/userList.html.twig' %}
+          </div>
+        </div>
+      {% endif %}
 
-      {% endif %}
-      {% if not is_granted('ROLE_ADMIN') %}
-      {% include 'User/infoHoliday.html.twig' %}
-      {% endif %}
   </div>
-</div>
+
 {% endblock %}
