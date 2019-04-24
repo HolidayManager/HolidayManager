@@ -20,9 +20,11 @@ class SearchHolidayFormType extends AbstractType
     {
         $builder
             ->add('startDate',DateType::class,[
+                'widget'    => 'single_text',
                 'format'=>'dd-MM-yyyy'
             ])
             ->add('endDate',DateType::class,[
+                'widget'    => 'single_text',
                 'format'=>'dd-MM-yyyy'
             ])
             ->add('role', TextType::class)

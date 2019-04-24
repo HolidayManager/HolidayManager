@@ -143,8 +143,8 @@ class HolidayRepository extends ServiceEntityRepository
                 ->setParameter('lastname',sprintf('%%%s%%', $searchedHoliday->lastname));
         }
         return $qb
-            ->setParameter('startDate',$searchedHoliday->startDate)
-            ->setParameter('endDate',$searchedHoliday->endDate)
+            ->setParameter('startDate',$searchedHoliday->startDate->format("Y-m-d"))
+            ->setParameter('endDate',$searchedHoliday->endDate->format("Y-m-d"))
             ->setParameter('status','a')
             ->getQuery()
             ->getResult();

@@ -243,7 +243,7 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        //if($form->isSubmitted() && $form->isValid()) {
 
             $holidayRepo = $this->getDoctrine()->getRepository(Holiday::class);
 
@@ -253,15 +253,15 @@ class UserController extends AbstractController
             $users = [];
 
             foreach ($holidays as $holiday) {
-                $holidayArray = [
+                $holidayArray[] = [
                     'resourceId' => $holiday->getUser()->getId(),
                     'start' => $holiday->getStartDate(),
                     'end' => $holiday->getEndDate(),
                     'title' => 'Holiday'
                 ];
 
-                $users = [
-                    'id' => $holidayArray->getUser()->getId(),
+                $users[] = [
+                    'id' => $holiday->getUser()->getId(),
                     'building' => $holiday->getUser()->getDepartment()->getLabel(),
                     'title' => $holiday->getUser()->getFirstname() . " " . $holiday->getUser()->getLastname()
                 ];
@@ -274,9 +274,9 @@ class UserController extends AbstractController
             ];
 
 
-            $this->logger->info(implode($holidays));
+            $this->logger->info($searchedHoliday->startDate->format("d-m-Y"));
 
             return $this->json($res);
-        }
+        //}
     }
 }

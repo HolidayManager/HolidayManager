@@ -11,7 +11,7 @@
     </div>
 -->
     {% include 'searchBar.html.twig' %}
-    <div id="resultSearch"></div>
+    <div id="resultSearch">idfhiuhiughuitrh</div>
     <div id='calendar'></div>
 
         <script>
@@ -52,9 +52,11 @@
 
                         console.log("startdate: " + startDate);
                         console.log("enddate: " + endDate);
+
                         $.ajax({
                             url: '/search/users',
                             type: 'POST',
+                            dataType: 'json',
                             data: {
                                 startDate: format(startDate),
                                 endDate:  format(endDate),
@@ -63,13 +65,17 @@
                                 firstname: firstname,
                                 lastname: lastname
                             },
-                            success: function (data) {
+                            success: function(data) {
+
+                                console.log("holidays: " + data[0].count_result);
 
                                 calendar.Calendar({
-                                    'resources': data[users],
-                                    'events': data[holidays]
+                                    'resources': data.users,
+                                    'events': data.holidays
                                 });
-                                $('#resultSearch').text(data[events].length + "Result found in the database.");
+
+
+                                $('#resultSearch').text(data[0].count_result + "Result found in the database.");
                             }
                         });
                     };
