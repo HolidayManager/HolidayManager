@@ -51,6 +51,7 @@ div.flexdisplay{
   display: none;
 }
 
+
 .backgroundimage{
   background-image: url(/images/dashboardbg2.png);
   position: fixed;
@@ -268,8 +269,6 @@ span.dayscolor {
 #search_user_list_form_search:hover {
   background-color: #3c5594;
 }
-
-
 
 
 

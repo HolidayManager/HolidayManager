@@ -1,13 +1,23 @@
-.homeLogo {
-    width: 14rem;
-    height: 14rem;
-    position: absolute;
-    top: 3rem;
-    left: 3rem;
-    border-radius: 50%;
+
+@import url('https://fonts.googleapis.com/css?family=Monda');
+
+*{
+  font-family: 'Monda';
 }
 
-.homeImage {
-    background-size: cover;
-    width: 100%;
+.carousel {
+  margin: 0 auto;
+}
+
+#carousel-container {
+  max-width: 800px;
+  margin-top: 70px;
+  padding: 20px 30px;
+}
+
+.carouselStyle {
+  color: #3c5594;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
 }
