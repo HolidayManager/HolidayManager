@@ -154,6 +154,14 @@ class UserController extends AbstractController
 
             }
 
+            $holidayRepo = $this->getDoctrine()->getRepository(Holiday::class);
+
+            $holidays = $holidayRepo->findByUser($user);
+
+            foreach ($holidays as $holiday){
+                $manager->remove($holiday);
+            }
+
             $manager->remove($user);
 
             $manager->flush();

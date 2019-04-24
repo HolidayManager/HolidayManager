@@ -103,7 +103,7 @@ $(document).ready(function() {
   $(".refuse").on("click",function(event){
         event.preventDefault();
 
-        let id = $(this).parent().prev().children().attr("id");
+        let id = $(".accept").attr("id");
 
         let elementDiv = $(this).parent().parent();
 

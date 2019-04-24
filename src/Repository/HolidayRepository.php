@@ -149,6 +149,23 @@ class HolidayRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function tokenHoliday(\DateTime $startDate, \DateTime $endDate, User $user){
+        $qb = $this->createQueryBuilder('h');
+
+        return    $qb->andWhere($qb->expr()->orX("h.startDate<=:startDate AND h.endDate>=:startDate",
+            "h.startDate>=:startDate AND h.endDate<=:endDate",
+            "h.startDate<=:endDate AND h.endDate>=:endDate"),
+                        "h.user=:user",
+                        "h.status!=:status")
+            ->setParameter("startDate",$startDate)
+            ->setParameter("endDate",$endDate)
+            ->setParameter("user",$user)
+            ->setParameter("status","r")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
     // /**
     //  * @return Holiday[] Returns an array of Holiday objects
     //  */

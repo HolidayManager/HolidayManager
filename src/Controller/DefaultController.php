@@ -65,17 +65,6 @@ class DefaultController extends AbstractController
             $pending = $holidayRep->getPending($manager->getDepartment()->getId());
         }
 
-        if(in_array("ROLE_USER",$user->getRoles())){
-            $holidayInfo = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
-
-            $lastRequestHoliday = $holidayInfo->lastRequested($user);
-
-            $info = [
-                "holidaySpent" => count($holidayInfo->spentCurrentYear($user)),
-                "holidayInProgram"=> count($holidayInfo->toSpentYear($user)),
-                "holidayLeft"   => $user->getHolidayLeft()
-            ];
-        }
 
 
         $holiday = new Holiday();
@@ -107,8 +96,11 @@ class DefaultController extends AbstractController
                             $countHolidays++;
                         $startDate->add(new \DateInterval("P1D"));
                     }
+                    $holidayRep = $this->getDoctrine()->getRepository(Holiday::class);
 
-                    if($countHolidays<=$user->getHolidayLeft())
+                    $token = $holidayRep->tokenHoliday($holidayRequest->startDate,$endDate,$this->getUser());
+
+                    if($countHolidays<=$user->getHolidayLeft() && !$token)
                     {
                         $holiday->setDateRequest(new \DateTime());
                         $holiday->setUser($this->getUser());
@@ -142,6 +134,18 @@ class DefaultController extends AbstractController
             $userList = $userRepository->searchUsers($userSearched, $paginator, $request);
         }
 
+        if(in_array("ROLE_USER",$user->getRoles())){
+            $holidayInfo = $this->getDoctrine()->getManager()->getRepository(Holiday::class);
+
+            $lastRequestHoliday = $holidayInfo->lastRequested($user);
+
+            $info = [
+                "holidaySpent" => count($holidayInfo->spentCurrentYear($user)),
+                "holidayInProgram"=> count($holidayInfo->toSpentYear($user)),
+                "holidayLeft"   => $user->getHolidayLeft()
+            ];
+        }
+
         return $this->render('dashboard.html.twig', [
             'user' => $user,
             'users' => $userList,
@@ -159,7 +163,7 @@ class DefaultController extends AbstractController
      * @Route("/logout",name="app_logout")
      */
     public function logout(){
-
+        return $this->redirectToRoute('homepage');
     }
 
     /**
