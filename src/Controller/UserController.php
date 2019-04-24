@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\DTO\searchHoliday;
+use App\Entity\Holiday;
 use App\Entity\Manager;
 use App\Entity\User;
+use App\Form\SearchHolidayFormType;
 use App\Form\UserFormType;
 use App\Mailer\RegistrationMailer;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +24,14 @@ use Twig\Environment;
 
 class UserController extends AbstractController
 {
+    /**
+     * @var Logger
+     */
+    private $logger;
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
     /**
      * @Route("/user/create", name="user_create")
      */
@@ -133,6 +146,14 @@ class UserController extends AbstractController
 
         if($user)
         {
+            if(in_array("ROLE_MANAGER", $user->getRoles()))
+            {
+                $managerUser = $manager->getRepository(Manager::class)->findOneByManagerUser($user);
+
+                $manager->remove($managerUser);
+
+            }
+
             $manager->remove($user);
 
             $manager->flush();
@@ -202,6 +223,52 @@ class UserController extends AbstractController
     }
 
 
+    /**
+     * @Route("/search/users",name="search_holiday", methods={"POST"})
+     */
+    public function searchHoliday(Request $request){
+        $searchedHoliday = new searchHoliday();
+
+        $form = $this->createForm(SearchHolidayFormType::class,$searchedHoliday);
+
+        $form->submit($request->request->all());
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $holidayRepo = $this->getDoctrine()->getRepository(Holiday::class);
+
+            $holidays = $holidayRepo->searchedHoliday($searchedHoliday);
+
+            $holidayArray = [];
+            $users = [];
+
+            foreach ($holidays as $holiday) {
+                $holidayArray = [
+                    'resourceId' => $holiday->getUser()->getId(),
+                    'start' => $holiday->getStartDate(),
+                    'end' => $holiday->getEndDate(),
+                    'title' => 'Holiday'
+                ];
+
+                $users = [
+                    'id' => $holidayArray->getUser()->getId(),
+                    'building' => $holiday->getUser()->getDepartment()->getLabel(),
+                    'title' => $holiday->getUser()->getFirstname() . " " . $holiday->getUser()->getLastname()
+                ];
+            }
+            $res[] = [
+                'count_result' => count($holidays),
+                'holidays' => $holidayArray,
+                'users' => $users
+
+            ];
 
 
+            $this->logger->info(implode($holidays));
+
+            return $this->json($res);
+        }
+    }
 }

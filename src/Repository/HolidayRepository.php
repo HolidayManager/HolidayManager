@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DTO\searchHoliday;
 use App\Entity\Holiday;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -94,6 +95,8 @@ class HolidayRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+
+
     public function toSpentYear(User $user){
 
         return $this->createQueryBuilder('h')
@@ -107,8 +110,8 @@ class HolidayRepository extends ServiceEntityRepository
             ->setParameter("start",date("Y-m-d"))
             ->getQuery()->getResult();
 
-
     }
+
 
     public function lastRequested($user){
         return $this->createQueryBuilder('h')
@@ -118,6 +121,33 @@ class HolidayRepository extends ServiceEntityRepository
             ->setParameter("user",$user)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
+    }
+
+
+
+    public function searchedHoliday(searchHoliday $searchedHoliday)
+    {
+        $qb = $this->createQueryBuilder('h');
+        $qb->leftJoin('h.user','u')
+            ->andWhere(
+                'h.startDate>=:startDate',
+                'h.endDate<=:endDate',
+                'h.status=:status');
+        if(!empty($searchedHoliday->firstname)){
+            $qb->andWhere("u.firstname LIKE :firstname")
+            ->setParameter('firstname',sprintf('%%%s%%', $searchedHoliday->firstname));
+        }
+
+        if(!empty($searchedHoliday->lastname)){
+            $qb->andWhere("u.lastname LIKE :lastname")
+                ->setParameter('lastname',sprintf('%%%s%%', $searchedHoliday->lastname));
+        }
+        return $qb
+            ->setParameter('startDate',$searchedHoliday->startDate)
+            ->setParameter('endDate',$searchedHoliday->endDate)
+            ->setParameter('status','a')
+            ->getQuery()
+            ->getResult();
     }
     // /**
     //  * @return Holiday[] Returns an array of Holiday objects

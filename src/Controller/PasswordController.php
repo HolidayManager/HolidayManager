@@ -37,7 +37,7 @@ class PasswordController extends AbstractController
                 new NotBlank()
             ],
                 'label' =>  "Email:"])
-            ->add("submit",SubmitType::class,["label"=>'Sent'])
+            ->add("submit",SubmitType::class,["label"=>'Send'])
             ->getForm();
 
         $form->handleRequest($request);

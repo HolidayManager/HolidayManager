@@ -11,7 +11,7 @@
     </div>
 -->
     {% include 'searchBar.html.twig' %}
-
+    <div id="resultSearch"></div>
     <div id='calendar'></div>
 
         <script>
@@ -20,11 +20,11 @@
                 var calendarEl = document.getElementById('calendar');
 
                 var calendar = new FullCalendar.Calendar(calendarEl, {
-                    plugins: [ 'resourceTimeline' ],
+                    plugins: ['resourceTimeline'],
                     header: {
                         left: 'today prev,next',
                         center: 'title',
-                        right: 'resourceTimelineDay,resourceTimelineWeek'
+                        right: 'resourceTimelineWeek,resourceTimelineMonth'
                     },
                     aspectRatio: 1.6,
                     defaultView: 'resourceTimelineMonth',
@@ -35,6 +35,62 @@
                 });
 
                 calendar.render();
+
+                $().ready(function () {
+                    $("form").on("submit", search);
+
+                    function search(e) {
+                        e.preventDefault();
+
+                        let department = $("#search_user_list_form_department").val();
+                        let role = $("#search_user_list_form_roles").val();
+                        let firstname = $("#search_user_list_form_firstname").val();
+                        let lastname = $("#search_user_list_form_lastname").val();
+
+                        let startDate = calendar.view.currentStart;
+                        let endDate = calendar.view.currentEnd;
+
+                        console.log("startdate: " + startDate);
+                        console.log("enddate: " + endDate);
+                        $.ajax({
+                            url: '/search/users',
+                            type: 'POST',
+                            data: {
+                                startDate: format(startDate),
+                                endDate:  format(endDate),
+                                department: department,
+                                role: role,
+                                firstname: firstname,
+                                lastname: lastname
+                            },
+                            success: function (data) {
+
+                                calendar.Calendar({
+                                    'resources': data[users],
+                                    'events': data[holidays]
+                                });
+                                $('#resultSearch').text(data[events].length + "Result found in the database.");
+                            }
+                        });
+                    };
+                    function format(date){
+                        let dd = date.getDate();
+                        let mm = date.getMonth()+1;
+                        let yyyy = date.getFullYear();
+
+                        if(dd<10)
+                        {
+                            dd='0'+dd;
+                        }
+
+                        if(mm<10)
+                        {
+                            mm='0'+mm;
+                        }
+                        return dd+"-"+mm+"-"+yyyy;
+                    }
+                })
             });
-        </script>
+                </script>
 {% endblock %}
+
