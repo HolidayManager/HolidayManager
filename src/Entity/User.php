@@ -193,7 +193,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-
     public function getFirstname(): ?string
     {
         return $this->firstname;

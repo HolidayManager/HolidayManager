@@ -1,5 +1,4 @@
 
-
 // Department display for manager only
 // Manager department handling (hide for users and admin, but not for managers)
 $(document).ready(function() {
@@ -24,7 +23,6 @@ $(document).ready(function() {
         format: "dd-mm-yyyy",
         startDate: new Date(),
         todayHighlight: true
-
     })
         .on('changeDate', function() {
             let beginDate = $('#holiday_form_startDate').datepicker('getDate');
@@ -59,6 +57,7 @@ $(document).ready(function() {
         startDate: new Date(),
         todayHighlight: true
     });
+
 
 // Datepicker for user create (birthdate and startdate)
     //birthDate
@@ -123,5 +122,4 @@ $(document).ready(function() {
             }
         );
     });
-
 });
