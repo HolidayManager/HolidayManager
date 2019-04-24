@@ -78,7 +78,6 @@ class DefaultController extends AbstractController
         }
 
 
-
         $holiday = new Holiday();
         $holidayFeedback=null;
 
@@ -109,8 +108,6 @@ class DefaultController extends AbstractController
                         $startDate->add(new \DateInterval("P1D"));
                     }
 
-
-
                     if($countHolidays<=$user->getHolidayLeft())
                     {
                         $holiday->setDateRequest(new \DateTime());
@@ -125,16 +122,10 @@ class DefaultController extends AbstractController
                         $entityManager->flush();
 
                         $holidayFeedback = true;
-
                     }
-
                 //}
-
             }
-
         }
-
-
 
 
         $userSearched = new UserSearch();
@@ -149,7 +140,6 @@ class DefaultController extends AbstractController
             $userRepository = $this->getDoctrine()->getRepository(User::class);
 
             $userList = $userRepository->searchUsers($userSearched, $paginator, $request);
-
         }
 
         return $this->render('dashboard.html.twig', [
@@ -175,7 +165,6 @@ class DefaultController extends AbstractController
     /**
     * @Route("/whoisoff", name="whoisoff")
     */
-
     public function whoisoff(Environment $twig) {
         $searchForm = new UserSearch();
 
@@ -185,7 +174,4 @@ class DefaultController extends AbstractController
           "searchBar"  => $searchForm->createView()
       ]));
     }
-
-
-
 }

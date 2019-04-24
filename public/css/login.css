@@ -14,7 +14,6 @@ body, html{
   background-size: cover;
 }
 
-
 #login {
   margin: auto;
   margin-top: 10px;
@@ -34,7 +33,6 @@ body, html{
 #signinbutton:hover {
   background-color: #2e2e3e;
 }
-
 
 div.container {
   border: 2px solid #fffefc;

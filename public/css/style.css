@@ -3,6 +3,7 @@
 /*general setting for base.html.twig*/
 
 /*handling department select*/
+
 .handlingDep{
     display:none;
 }
@@ -70,7 +71,6 @@ div.forgotpassword{
   color: #2e2e3e;
 }
 
-
 div.container {
   border: 2px solid #c9d2dd;
   border-radius: 5px;
@@ -94,12 +94,14 @@ div.container {
 
 
 /*Setting for newuser.html.twig*/
+
 .h5style {
   margin: 0 auto;
   text-align: center;
   font-weight: 1200;
   padding: 5px 3px;
 }
+
 
 /* Dashboard - HolidayRequest Form*/
 
@@ -119,7 +121,9 @@ div.container {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+
 /* navbar */
+
 div.d-flex{
   background-color: #ffffff;
   padding: 10px;

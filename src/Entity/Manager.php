@@ -31,8 +31,6 @@ class Manager
     private $managerUser;
 
 
-
-
     public function getId(): ?string
     {
         return $this->id;
@@ -61,5 +59,4 @@ class Manager
 
         return $this;
     }
-
 }
