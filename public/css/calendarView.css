@@ -1,0 +1,44 @@
+* {
+box-sizing: border-box;
+transition-duration: 0.3s;
+}
+
+div.datepicker-container {
+  text-align: center !important;
+  top: 50%;
+  position: relative;
+  transform: translateY(-63%);
+}
+
+#datapicker-center {
+  display:inline-block; !important;
+  margin: auto !important;
+}
+
+.datepicker-title {
+  width: 50px;
+  color: red;
+}
+
+.datepicker-inline {
+  width: auto;
+}
+
+table.table-condensed {
+  width: 350px;
+}
+
+th.prev,
+th.next,
+th.datepicker-switch {
+ margin-top: 10px;
+ text-align: center;
+ color: #3c5594;
+ font-size: 1.15rem;
+ padding-bottom: 20px;
+ margin-bottom: 20px;
+}
+
+td.today.day:active{
+  background-color: #3c5594;
+}

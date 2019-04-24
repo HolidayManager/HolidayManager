@@ -7,5 +7,12 @@
       <br>
       <div class="rowLeaveHoliday"><span>Total Days</span>{{ form_widget(formHoliday.endDate) }}</div>
       {{ form_end(formHoliday) }}
+
+      {% if holidayFeedback %}
+      <div class="request-message">
+        <p>Your holiday request has been sent.</p>
+      </div>
+      {% endif %}
+
   </div>
 </div>

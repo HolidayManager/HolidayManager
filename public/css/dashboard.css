@@ -231,6 +231,8 @@ div.holidayInfoContainer{
 
 div.holidayInfoCol{
   border: 1px solid #c9d2dd;
+  margin: 3px auto;
+  border-radius: 3px;
 }
 
 span.dayscolor {
