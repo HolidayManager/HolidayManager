@@ -1,0 +1,9 @@
+
+{% if not is_granted('ROLE_ADMIN')%}
+<div class="d-flex">
+  <div class="mr-auto p-2">HolidayManager <img src="/images/Holiday_tae.png" alt="logo" height=30 width="30"> </div>
+  <div class="p-2"></div>
+  <div class="p-2"></div>
+  <div class="p-2"><a id="home_loginbutton" class="btn-primary" href="{{path("app_login")}}"> Login </a></div>
+</div>
+{% endif %}

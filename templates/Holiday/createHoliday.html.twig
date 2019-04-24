@@ -10,9 +10,23 @@
 
       {% if holidayFeedback %}
       <div class="request-message">
-        <p>Your holiday request has been sent.</p>
+        <p id="remessage" class="accepted">Your holiday request has been sent.
+      </p>
       </div>
       {% endif %}
+
+
+      {% block javascript %}
+
+      <script type="text/javascript">
+
+      $(document).ready(function(){
+        $("#remessage").fadeOut(3000);
+      });
+
+      </script>
+
+      {% endblock %}
 
   </div>
 </div>

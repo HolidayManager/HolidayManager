@@ -268,3 +268,36 @@ span.dayscolor {
 #search_user_list_form_search:hover {
   background-color: #3c5594;
 }
+
+
+
+
+
+@media only screen and (max-width: 750px) {
+
+  div.flexdisplay{
+    display: initial;
+  }
+
+  #viewCalendar{
+    display: none;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

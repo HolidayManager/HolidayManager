@@ -1,12 +1,8 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div class="">
-        <!-- src : https://pixabay.com/images/search/meeting/ -->
-        <img class="homeImage" src="/images/homepageimg.jpg">
+        {% include 'homepage_navbar.html.twig'%}
+          
+        <img class="homeImage" src="/images/homepagebg.jpeg">
     </div>
-    <div class="">
-        <img class="homeLogo" src="/images/Holiday_adrien.png">
-    </div>
-
 {% endblock %}
