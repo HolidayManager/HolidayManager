@@ -1,23 +1,16 @@
-
-
-
-
 <div class="container">
 
-<ul> <h5 class="h5style"> Received Requests</h5></ul>
+<ul><h5 class="h5style"> Received Requests</h5></ul>
 {% for holiday in pending %}
 <li id="listPending">
     <div class="pendingRow">
-        <divf holiday.getUser().getFirstName() }}</div>
-        <div>{{ holiday.getUser().getLastname() }}</div>
-        <div>{{ holiday.getStartDate() | date }}</div>
-        <div>{{ holiday.getEndDate() | date }}</div>
-        <div class="idaccept"><span class="accept" href="/holiday/accept/{{ holiday.getId() }}" id="{{ holiday.getId() }}">Accept</span></div>
-        <div><span class="refuse" href="/holiday/refuse/{{ holiday.getId() }}">Refuse</span></div>
+        <p> <span id="requestUser">{{ holiday.getUser().getFirstName() }} {{ holiday.getUser().getLastname() }}</span>
+          from:{{ holiday.getStartDate() | date('d/m/Y') }} to:{{ holiday.getEndDate() | date('d/m/Y') }}</p>
+        <div class="idaccept"><span class="accept" href="/holiday/accept/{{ holiday.getId() }}" id="{{ holiday.getId() }}">Accept</span>
+        <span class="refuse" href="/holiday/refuse/{{ holiday.getId() }}">Refuse</span>
+        </div>
+        <br>
     </div>
   </li>
-
 {% endfor %}
-
-
 </div>

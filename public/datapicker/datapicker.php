@@ -16,16 +16,8 @@
 </head>
 <body>
     <input type="text" class="date">
-
-
-
     <script>
-
             $(".date").datepicker();
-
-
-
-
     </script>
 </body>
 </html>

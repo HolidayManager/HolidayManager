@@ -21,6 +21,7 @@ class ApiController extends AbstractController
     {
         $this->logger = $logger;
     }
+
     /**
      * @Route("/calendar/show/holidays",name="show_calendar_holidays",methods={"GET"})
      */
@@ -56,7 +57,6 @@ class ApiController extends AbstractController
     /**
      * @Route("/calendar/show/users",name="show_calendar_department")
      */
-
     public function showUCalendarsers(Request $request)
     {
         $userRepo = $this->getDoctrine()->getManager()->getRepository(User::class);
@@ -122,6 +122,7 @@ class ApiController extends AbstractController
         }
         return new Response('Not Accepted', 304);
     }
+
     /**
      * @Route("/holiday/refuse/{holiday}")
      */

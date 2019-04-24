@@ -2,25 +2,22 @@
 
 div.flexdisplay{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
-
-div.bg{
-  background-image: url("/images/dashboardbg2.png");
-  height: 100%;
+.bg{
+  width: 100%;
+  z-index: -1;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 
 
 /*buttons*/
 
 #createuser{
-  position: absolute;1§
-  top: 70px;
+  position: absolute;
   margin-left: 20px;
   text-decoration: none;
 }
@@ -29,10 +26,8 @@ div.bg{
   background-color: #3c5594;
 }
 
-
 #backtodashboard{
   position: absolute;
-  top: 70px;
   margin-left: 20px;
   text-decoration: none;
   padding: 5px 10px;
@@ -40,7 +35,6 @@ div.bg{
 
 #backtodashboard2{
   position: absolute;
-  top: 70px;
   margin-left: 20px;
   text-decoration: none;
   padding: 5px 10px;
@@ -49,6 +43,26 @@ div.bg{
 #backtodashboard2:hover{
   background-color: #3c5594;
 }
+
+
+/*admin show user*/
+
+#sfwdtcdaaa0{
+  display: none;
+}
+
+.backgroundimage{
+  background-image: url(/images/dashboardbg2.png);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  }
 
 
 /*admin: searchBar*/
@@ -88,14 +102,19 @@ li.inline{
 }
 
 
-/*admin: create new user*/
-div.form-group{
-/**/
+/*admin Dashboard*/
+
+#admin_userList {
+max-width: 900px;
 }
+
+
+/*admin: create new user*/
 
 h5.h5style{
   margin-top: 10px;
   text-align: center;
+  color: #3c5594;
 }
 
 div.form-group #user_form_submit{
@@ -108,10 +127,12 @@ div.form-group #user_form_submit{
 }
 
 #createdContainer {
-  margin: 15px auto;
+  padding: 5px;
 }
 
+
 /* admin: usesrlist */
+
 #username_click{
   text-decoration: none;
   color: #3c5594;
@@ -121,15 +142,15 @@ div.form-group #user_form_submit{
 }
 
 
-
-
 /* admin showuserlist */
+
 #userlisttable{
   margin: 30px 20px;
 }
 
 #showuserlist{
-  margin: 70px 20px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 div.userchange{
@@ -141,18 +162,20 @@ div.userchange{
   background-color: #2e2e3e;
   border-radius: 0.25em;
   color: #eeeeee;
-  padding: 10px 25px;
+  padding: 10px 5px;
   margin: 10px 10px;
   font-weight: 900;
-  text-decoration: NONE;
-
+  text-decoration: none;
+  display: inline-block;
 }
 
 #updateuser:hover, #deleteuser:hover{
   background-color: #3c5594;
 }
 
+
 /*manager/user: Holidayrequest - createHoliday*/
+
 #holiday_form_submit:hover{
   background-color: #3c5594;
 }
@@ -161,10 +184,10 @@ div.userchange{
   margin: 5px 10px;
 }
 
+
 /*manager/user: testcalendar */
-
-
 /*manager: listPending*/
+
 a.btn-primary{
   text-decoration: none;
 }
@@ -173,7 +196,73 @@ a.btn-primary:hover{
   background-color: #3c5594;
 }
 
+div.pendingRow {
+  margin: 0 auto;
+  text-align: center;
+}
 
-#listPending.container{
+#listPending {
   list-style-type: none;
+}
+
+#requestUser {
+  font-weight: 1200;
+  color: #1faac2;
+}
+
+span.accept,
+span.refuse {
+  color: #fff;
+  background-color: #2e2e3e;
+  border-radius: 3px;
+  padding: 0 5px;
+  margin: 0 3px;
+}
+
+span.accept:hover,
+span.refuse:hover {
+  background-color: #3c5594;
+}
+
+div.holidayInfoContainer{
+  margin: 0 auto;
+  text-align: center;
+}
+
+div.holidayInfoCol{
+  border: 1px solid #c9d2dd;
+}
+
+span.dayscolor {
+  font-weight: 1200;
+  color: #1faac2;
+}
+
+
+/*latest pending request*/
+
+#latestrequest {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#latestrequest_middle {
+  top: 50%;
+  position: relative;
+  transform: translateY(50%)
+}
+#lateststatus {
+  font-weight: 1200;
+  color: #1faac2;
+}
+
+
+/*searchBar*/
+
+#search_user_list_form_search {
+  margin-bottom: 7px;
+}
+
+#search_user_list_form_search:hover {
+  background-color: #3c5594;
 }

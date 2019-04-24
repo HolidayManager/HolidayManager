@@ -26,10 +26,7 @@ class holidayController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
         }
-
-
         return new Response($twig->render('dashboard.html.twig',['formHoliday'   => $form]));
     }
 

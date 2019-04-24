@@ -60,7 +60,6 @@ class PasswordController extends AbstractController
                 $mailer->sendMail($user);
 
                 return new Response($twig->render('User/emailPasswordRestoreSent.html.twig',["user"=>$user]));
-
             }
 
         }
@@ -80,8 +79,7 @@ class PasswordController extends AbstractController
         $form->handleRequest($request);
 
         $user = $userRepository->findOneByActivationToken($token);
-
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             if ($user) {
@@ -92,16 +90,12 @@ class PasswordController extends AbstractController
                     )
                 );
 
-
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-
                 return new Response($twig->render('User/restorePassword.html.twig', ["user" => $user]));
             }
-
-
         }
         else if($user){
             return new Response($twig->render('User/formConfirmPasswordRestore.html.twig',['formRestorePass'=>$form->createView()]));
