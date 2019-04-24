@@ -57,6 +57,26 @@ class UserRepository extends ServiceEntityRepository
         );
 
     }
+    public function searchUsersCalendar(UserSearch $user){
+        $qb = $this->createQueryBuilder('u')
+            ->andWhere("u.department = :department")
+            ->andWhere("u.roles LIKE :roles")
+            ->setParameter("roles", sprintf('%%%s%%', $user->roles))
+            ->setParameter("department",$user->department);
+
+        if ($user->firstname) {
+            $qb->andWhere("u.firstname LIKE :firstname")
+                ->setParameter("firstname", sprintf('%%%s%%', $user->firstname));
+        }
+        if ($user->lastname) {
+            $qb->andWhere("u.lastname LIKE :lastname")
+                ->setParameter("lastname", sprintf('%%%s%%', $user->lastname));
+        }
+
+
+        return $qb->getQuery()->getResult();
+
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects

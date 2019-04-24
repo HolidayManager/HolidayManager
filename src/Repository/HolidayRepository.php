@@ -129,10 +129,11 @@ class HolidayRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('h');
         $qb->leftJoin('h.user','u')
-            ->andWhere(
-                'h.startDate>=:startDate',
-                'h.endDate<=:endDate',
-                'h.status=:status');
+            ->orWhere("h.startDate<=:startDate AND h.endDate>=:startDate AND h.status=:status",
+                "h.startDate>=:startDate AND h.endDate<=:endDate AND h.status=:status",
+                "h.startDate<=:endDate AND h.endDate>=:endDate AND h.status=:status"
+
+                );
         if(!empty($searchedHoliday->firstname)){
             $qb->andWhere("u.firstname LIKE :firstname")
             ->setParameter('firstname',sprintf('%%%s%%', $searchedHoliday->firstname));
@@ -141,6 +142,14 @@ class HolidayRepository extends ServiceEntityRepository
         if(!empty($searchedHoliday->lastname)){
             $qb->andWhere("u.lastname LIKE :lastname")
                 ->setParameter('lastname',sprintf('%%%s%%', $searchedHoliday->lastname));
+        }
+        if(!empty($searchedHoliday->department)){
+            $qb->andWhere("u.department LIKE :department")
+                ->setParameter('department',sprintf('%%%s%%', $searchedHoliday->department));
+        }
+        if(!empty($searchedHoliday->role)){
+            $qb->andWhere("u.roles LIKE :roles")
+                ->setParameter('roles',sprintf('%%%s%%', $searchedHoliday->role));
         }
         return $qb
             ->setParameter('startDate',$searchedHoliday->startDate->format("Y-m-d"))

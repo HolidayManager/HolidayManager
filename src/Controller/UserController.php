@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\DTO\searchHoliday;
+use App\DTO\UserSearch;
 use App\Entity\Holiday;
 use App\Entity\Manager;
 use App\Entity\User;
 use App\Form\SearchHolidayFormType;
 use App\Form\UserFormType;
 use App\Mailer\RegistrationMailer;
+use Knp\Component\Pager\PaginatorInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
@@ -246,6 +248,7 @@ class UserController extends AbstractController
         //if($form->isSubmitted() && $form->isValid()) {
 
             $holidayRepo = $this->getDoctrine()->getRepository(Holiday::class);
+            $usersRepo = $this->getDoctrine()->getRepository(User::class);
 
             $holidays = $holidayRepo->searchedHoliday($searchedHoliday);
 
@@ -259,13 +262,17 @@ class UserController extends AbstractController
                     'end' => $holiday->getEndDate(),
                     'title' => 'Holiday'
                 ];
-
-                $users[] = [
-                    'id' => $holiday->getUser()->getId(),
-                    'building' => $holiday->getUser()->getDepartment()->getLabel(),
-                    'title' => $holiday->getUser()->getFirstname() . " " . $holiday->getUser()->getLastname()
-                ];
             }
+
+            $searchedUser = new UserSearch();
+
+            $searchedUser->firstname = $searchedHoliday->firstname;
+            $searchedUser->lastname = $searchedHoliday->lastname;
+            $searchedUser->roles = $searchedHoliday->role;
+            $searchedUser->department = $searchedHoliday->department;
+
+            $users[] = $usersRepo->searchUsersCalendar($searchedUser);
+
             $res[] = [
                 'count_result' => count($holidays),
                 'holidays' => $holidayArray,
