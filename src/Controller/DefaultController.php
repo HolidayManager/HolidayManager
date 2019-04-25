@@ -54,16 +54,6 @@ class DefaultController extends AbstractController
             );
         }
 
-        if(in_array('ROLE_MANAGER',$user->getRoles()))
-        {
-            $holidayRep = $this->getDoctrine()->getRepository(Holiday::class);
-            $managerRepo = $this->getDoctrine()->getRepository(Manager::class);
-
-
-            $manager = $managerRepo->findOneByManagerUser($user);
-
-            $pending = $holidayRep->getPending($manager->getDepartment()->getId());
-        }
 
 
 
@@ -124,6 +114,18 @@ class DefaultController extends AbstractController
             }
         }
 
+        $pendingManager = null;
+        if(in_array('ROLE_MANAGER',$user->getRoles()))
+        {
+            $holidayRep = $this->getDoctrine()->getRepository(Holiday::class);
+            $managerRepo = $this->getDoctrine()->getRepository(Manager::class);
+
+
+            $manager = $managerRepo->findOneByManagerUser($user);
+
+            $pendingManager = $holidayRep->getPending($user->getDepartment()->getId());
+            $pending = $holidayRep->getPending($manager->getDepartment()->getId());
+        }
 
         $userSearched = new UserSearch();
 
@@ -156,6 +158,7 @@ class DefaultController extends AbstractController
             'users' => $userList,
             'formHoliday' => $form->createView(),
             'pending' => $pending,
+            'pendingManager'    => $pendingManager,
             'searchBar' => $searchForm->createView(),
             'infoHoliday'   => $info,
             'holidayFeedback' => $holidayFeedback,
