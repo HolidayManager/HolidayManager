@@ -69,6 +69,9 @@ class DefaultController extends AbstractController
 
         $holiday = new Holiday();
         $holidayFeedback=null;
+        $token = false;
+        $countHolidaysError = false;
+
 
         $holidayRequest = new HolidayRequest();
 
@@ -114,6 +117,8 @@ class DefaultController extends AbstractController
                         $entityManager->flush();
 
                         $holidayFeedback = true;
+                    }else if($countHolidays<=$user->getHolidayLeft()){
+                        $countHolidaysError = true;
                     }
                 //}
             }
@@ -154,7 +159,9 @@ class DefaultController extends AbstractController
             'searchBar' => $searchForm->createView(),
             'infoHoliday'   => $info,
             'holidayFeedback' => $holidayFeedback,
-            'lastRequestedHoliday' => $lastRequestHoliday
+            'lastRequestedHoliday' => $lastRequestHoliday,
+            'holidayTokenError' => $token,
+            'holidayCountError' => $countHolidaysError
         ]);
 
     }
