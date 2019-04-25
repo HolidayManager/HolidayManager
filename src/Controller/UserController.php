@@ -253,6 +253,7 @@ class UserController extends AbstractController
             $holidays = $holidayRepo->searchedHoliday($searchedHoliday);
 
             $holidayArray = [];
+            $userArray = [];
             $users = [];
 
             foreach ($holidays as $holiday) {
@@ -271,12 +272,21 @@ class UserController extends AbstractController
             $searchedUser->roles = $searchedHoliday->role;
             $searchedUser->department = $searchedHoliday->department;
 
-            $users[] = $usersRepo->searchUsersCalendar($searchedUser);
+            $users = $usersRepo->searchUsersCalendar($searchedUser);
+
+            foreach($users as $user){
+                $userArray[] = [
+                    'id' => $user->getId(),
+                    'building'  => $user->getDepartment()->getLabel(),
+                    'title'  => $user->getFirstname() . " " . $user->getLastname()
+                ];
+
+            }
 
             $res[] = [
                 'count_result' => count($holidays),
                 'holidays' => $holidayArray,
-                'users' => $users
+                'users' => $userArray
 
             ];
 

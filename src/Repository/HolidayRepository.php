@@ -144,8 +144,8 @@ class HolidayRepository extends ServiceEntityRepository
                 ->setParameter('lastname',sprintf('%%%s%%', $searchedHoliday->lastname));
         }
         if(!empty($searchedHoliday->department)){
-            $qb->andWhere("u.department LIKE :department")
-                ->setParameter('department',sprintf('%%%s%%', $searchedHoliday->department));
+            $qb->andWhere("u.department=:department")
+                ->setParameter('department',$searchedHoliday->department);
         }
         if(!empty($searchedHoliday->role)){
             $qb->andWhere("u.roles LIKE :roles")

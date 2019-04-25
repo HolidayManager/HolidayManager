@@ -37,8 +37,8 @@
                 });
 
 
-                calendar.render();
 
+                calendar.render();
 
                     $("form").on("submit", search);
 
@@ -73,13 +73,8 @@
                                 console.log("holidays: " + data[0].holidays);
 
                                 calendar.destroy();
-                                //calendar.setEvents(data[0].holidays);
-                                //calendar.setResouces(data[0].users);
 
-                                /*calendar.fullCalendar({
-                                    'resources': data[0].holidays,
-                                    'events': data[0].users
-                                });*/
+
 
                                 calendar = new FullCalendar.Calendar(calendarEl, {
                                     plugins: ['resourceTimeline'],
@@ -95,6 +90,8 @@
                                     resources: data[0].users,
                                     events: data[0].holidays /* link to the events api php located in apiHolidays.php*/
                                 });
+
+
 
                                 calendar.render();
 
