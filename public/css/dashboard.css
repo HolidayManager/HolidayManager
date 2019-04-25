@@ -272,7 +272,7 @@ span.dayscolor {
 
 
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 650px) {
 
   div.flexdisplay{
     display: initial;
@@ -282,10 +282,14 @@ span.dayscolor {
     display: none;
   }
 
+  #admin_userList {
+  max-width: 650px;
+  }
 
 
-
-
+  table, thead, tbody, th, td, tr {
+		display: block;
+	}
 
 
 
