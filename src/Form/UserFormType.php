@@ -63,7 +63,10 @@ class UserFormType extends AbstractType
                 [
                     'label'    =>  'Birth Date',
                     'widget'   =>  'single_text',
-                    'attr'     =>  ['class' => 'dateBirth'],
+                    'attr'     =>  [
+                        'class' => 'dateBirth',
+                        'autocomplete' => 'off'
+                        ],
                     'format'   =>   'dd-MM-yyyy',
                     'html5'    =>   false
 
@@ -73,7 +76,10 @@ class UserFormType extends AbstractType
                 [
                     'label'    =>  'Begin Date',
                     'widget'   =>  'single_text',
-                    'attr'     =>  ['class' => 'startDate'],
+                    'attr'     =>  [
+                        'class' => 'startDate',
+                        'autocomplete' => 'off'
+                        ],
                     'format'   =>   'dd-MM-yyyy',
                     'html5'    =>   false
                 ])

@@ -13,6 +13,12 @@
 .refused {
     background-color: lightcoral;
 }
+.sameHolidayError {
+    color: red;
+}
+.noMoreHoliday {
+    color: red;
+}
 *{
 box-sizing: border-box;
 transition-duration: 0.3s;

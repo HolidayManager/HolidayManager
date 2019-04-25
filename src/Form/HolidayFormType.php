@@ -30,7 +30,10 @@ class HolidayFormType extends AbstractType
                 [
                     'label' => 'Start Date',
                     'widget' => 'single_text',
-                    'attr' => ['class' => 'dateBegin'],
+                    'attr' => [
+                        'class' => 'dateBegin',
+                        'autocomplete' => 'off'
+                        ],
                     'html5' => false,
                     'format' => 'dd-MM-yyyy'
                 ]
@@ -39,7 +42,10 @@ class HolidayFormType extends AbstractType
                 [
                     'label' => 'End Date',
                     'widget' => 'single_text',
-                    'attr' => ['class' => 'dateEnd'],
+                    'attr' => [
+                        'class' => 'dateEnd',
+                        'autocomplete' => 'off'
+                        ],
                     'format' =>  'dd-MM-yyyy',
                     'html5' => false
                 ]);

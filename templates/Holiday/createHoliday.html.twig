@@ -15,6 +15,17 @@
       </div>
       {% endif %}
 
+      {% if holidayTokenError %}
+          <div class="">
+              <p class="sameHolidayError">The holiday you requested already exists.</p>
+          </div>
+
+      {% elseif holidayCountError %}
+          <div class="">
+              <p class="noMoreHoliday">You already took all your holiday</p>
+          </div>
+      {% endif %}
+
 
       {% block javascript %}
 
