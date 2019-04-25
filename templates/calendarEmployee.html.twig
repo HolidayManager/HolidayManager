@@ -11,7 +11,7 @@
     </div>
 -->
     {% include 'searchBar.html.twig' %}
-    <div id="resultSearch"></div>
+    <div id="resultSearch">idfhiuhiughuitrh</div>
     <div id='calendar'></div>
 
         <script>
@@ -31,12 +31,15 @@
                     resourceGroupField: 'building',
                     schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
                     resources: '/calendar/show/users',
-                    events: 'calendar/show/holidays' /* link to the events api php located in apiHolidays.php*/
+                    events: 'calendar/show/holidays', /* link to the events api php located in apiHolidays.php*/
+
+
                 });
+
+
 
                 calendar.render();
 
-                $().ready(function () {
                     $("form").on("submit", search);
 
                     function search(e) {
@@ -52,9 +55,11 @@
 
                         console.log("startdate: " + startDate);
                         console.log("enddate: " + endDate);
+
                         $.ajax({
                             url: '/search/users',
                             type: 'POST',
+                            dataType: 'json',
                             data: {
                                 startDate: format(startDate),
                                 endDate:  format(endDate),
@@ -63,13 +68,34 @@
                                 firstname: firstname,
                                 lastname: lastname
                             },
-                            success: function (data) {
+                            success: function(data) {
 
-                                calendar.Calendar({
-                                    'resources': data[users],
-                                    'events': data[holidays]
+                                console.log("holidays: " + data[0].holidays);
+
+                                calendar.destroy();
+
+
+
+                                calendar = new FullCalendar.Calendar(calendarEl, {
+                                    plugins: ['resourceTimeline'],
+                                    header: {
+                                        left: 'today prev,next',
+                                        center: 'title',
+                                        right: 'resourceTimelineWeek,resourceTimelineMonth'
+                                    },
+                                    aspectRatio: 1.6,
+                                    defaultView: 'resourceTimelineMonth',
+                                    resourceGroupField: 'building',
+                                    schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+                                    resources: data[0].users,
+                                    events: data[0].holidays /* link to the events api php located in apiHolidays.php*/
                                 });
-                                $('#resultSearch').text(data[events].length + "Result found in the database.");
+
+
+
+                                calendar.render();
+
+                                $('#resultSearch').text(data[0].count_result + "Result found in the database.");
                             }
                         });
                     };
@@ -89,7 +115,7 @@
                         }
                         return dd+"-"+mm+"-"+yyyy;
                     }
-                })
+
             });
                 </script>
 {% endblock %}

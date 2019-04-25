@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\DTO\searchHoliday;
+use App\DTO\UserSearch;
 use App\Entity\Holiday;
 use App\Entity\Manager;
 use App\Entity\User;
 use App\Form\SearchHolidayFormType;
 use App\Form\UserFormType;
 use App\Mailer\RegistrationMailer;
+use Knp\Component\Pager\PaginatorInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
@@ -108,7 +110,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/activate/{token}", name="activate_user")
+     * @Route("/activate/user/{token}", name="activate_user")
      */
     public function activateToken(
         string $token,
@@ -243,40 +245,55 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        //if($form->isSubmitted() && $form->isValid()) {
 
             $holidayRepo = $this->getDoctrine()->getRepository(Holiday::class);
+            $usersRepo = $this->getDoctrine()->getRepository(User::class);
 
             $holidays = $holidayRepo->searchedHoliday($searchedHoliday);
 
             $holidayArray = [];
+            $userArray = [];
             $users = [];
 
             foreach ($holidays as $holiday) {
-                $holidayArray = [
+                $holidayArray[] = [
                     'resourceId' => $holiday->getUser()->getId(),
                     'start' => $holiday->getStartDate(),
                     'end' => $holiday->getEndDate(),
                     'title' => 'Holiday'
                 ];
-
-                $users = [
-                    'id' => $holidayArray->getUser()->getId(),
-                    'building' => $holiday->getUser()->getDepartment()->getLabel(),
-                    'title' => $holiday->getUser()->getFirstname() . " " . $holiday->getUser()->getLastname()
-                ];
             }
+
+            $searchedUser = new UserSearch();
+
+            $searchedUser->firstname = $searchedHoliday->firstname;
+            $searchedUser->lastname = $searchedHoliday->lastname;
+            $searchedUser->roles = $searchedHoliday->role;
+            $searchedUser->department = $searchedHoliday->department;
+
+            $users = $usersRepo->searchUsersCalendar($searchedUser);
+
+            foreach($users as $user){
+                $userArray[] = [
+                    'id' => $user->getId(),
+                    'building'  => $user->getDepartment()->getLabel(),
+                    'title'  => $user->getFirstname() . " " . $user->getLastname()
+                ];
+
+            }
+
             $res[] = [
                 'count_result' => count($holidays),
                 'holidays' => $holidayArray,
-                'users' => $users
+                'users' => $userArray
 
             ];
 
 
-            $this->logger->info(implode($holidays));
+            $this->logger->info($searchedHoliday->startDate->format("d-m-Y"));
 
             return $this->json($res);
-        }
+        //}
     }
 }

@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\DTO\searchHoliday;
 
+use App\Entity\Department;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,10 +22,15 @@ class SearchHolidayFormType extends AbstractType
     {
         $builder
             ->add('startDate',DateType::class,[
+                'widget'    => 'single_text',
                 'format'=>'dd-MM-yyyy'
             ])
             ->add('endDate',DateType::class,[
+                'widget'    => 'single_text',
                 'format'=>'dd-MM-yyyy'
+            ])
+            ->add('department', EntityType::class,[
+                'class' =>  Department::class
             ])
             ->add('role', TextType::class)
             ->add('firstname', TextType::class, [
