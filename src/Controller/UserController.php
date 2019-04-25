@@ -110,7 +110,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/activate/{token}", name="activate_user")
+     * @Route("/activate/user/{token}", name="activate_user")
      */
     public function activateToken(
         string $token,
